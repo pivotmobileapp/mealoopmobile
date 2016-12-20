@@ -78,6 +78,14 @@ padding-top:25px;
 padding-bottom:25px;
 }
 
+.bottombanner{
+	background-image: url(http://mealoop.com/bottombanner.png);
+	background-repeat: no-repeat;
+    background-position: right bottom;
+    margin-right: 200px;
+    background-attachment: fixed;
+}
+
 .tab-bar{
 background:#80CC1D;
 }
