@@ -53,12 +53,12 @@ color:#fff;
 .icon-green,
 .myfa-check
 {
-color:#00B279;
+color:#80CC1D;
 }
 
 
 .button.green-btn{
-background:#00B279;
+background:#80CC1D;
 }
 
 .button.blue-btn{
@@ -79,7 +79,7 @@ padding-bottom:25px;
 }
 
 .tab-bar{
-background:#00B279;
+background:#80CC1D;
 }
 .clear{
 clear:both;
@@ -149,7 +149,7 @@ color:#666;
 }
 
 .results-header{
-background:#00B279;
+background:#80CC1D;
 color:#fff;
 text-align:center;
 padding-top:6px;
@@ -158,7 +158,7 @@ font-size:14px;
 z-index:11;
 }
 
-.arrow_box { position: relative; background: #00B279; } .arrow_box:after { top: 100%; left: 50%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; border-color: rgba(0, 178, 121, 0); border-top-color: #00B279; border-width: 8px; margin-left: -8px; }
+.arrow_box { position: relative; background: #80CC1D; } .arrow_box:after { top: 100%; left: 50%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; border-color: rgba(0, 178, 121, 0); border-top-color: #80CC1D; border-width: 8px; margin-left: -8px; }
 
 .modal{
 background:rgba(255, 255, 255, 0.1);
@@ -283,7 +283,7 @@ padding-left:8px;
 .notification.open,
 .notification.pre-order
 {
-background:#00B279;
+background:#80CC1D;
 }
 
 #category-list .row{
@@ -343,7 +343,7 @@ border-bottom:1px solid #DDDDDD;
 }
 
 #page-itemdisplay .grey-border-bottom{
-border-bottom:2px solid #00B279;
+border-bottom:2px solid #80CC1D;
 }
 #page-itemdisplay .qty{
 width:100%;
@@ -764,7 +764,7 @@ display:none;
 }
 
 .green-color{
-color:#00b279;
+color:#80CC1D;
 }
 
 .top10,
@@ -955,7 +955,7 @@ left:0;
 top:8px;
 width: 20px; 
 height: 20px; 
-background: #00B279; 
+background: #80CC1D; 
 -moz-border-radius: 50px; 
 -webkit-border-radius: 50px; 
 border-radius: 50px;
