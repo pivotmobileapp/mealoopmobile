@@ -80,10 +80,9 @@ padding-bottom:25px;
 
 .bottombanner{
 	background-image: url(http://mealoop.com/bottombanner.png);
-	background-repeat: no-repeat;
-    background-position: right bottom;
-    margin-right: 200px;
-    background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
+	height: 55vh;
 }
 
 .tab-bar{
