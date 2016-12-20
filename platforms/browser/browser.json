@@ -1,0 +1,19 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.pivotmobileapp.appytite"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [],
+    "plugin_metadata": {
+        "cordova.plugins.diagnostic": "3.3.2"
+    }
+}
