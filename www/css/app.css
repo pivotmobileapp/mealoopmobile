@@ -38,12 +38,33 @@ max-width:70%;
 
 .bottombanner{
 	background-image: url(http://mealoop.com/bottombanner.png);
-/*	background-image: url(images/bottombanner.png);*/
 	background-size: cover;
 	background-repeat:no-repeat;
 	background-position: center;
 	height: 33vh;
 	
+}
+
+#navlinks{
+	text-align:right;
+}
+#navlinks > ul{
+	list-style-type:none;
+	margin-top:0;
+}
+#navlinks > ul > li{
+	display:inline;
+	padding:5px;
+}
+#navlinks > ul > li > a{
+	display:inline-block;
+	text-align: right;
+	text-decoration:none;
+	color:inherit;
+}
+#navlinks > ul > li > a:hover{
+	font-weight:bold;
+	cursor:pointer;
 }
 .navigation-bar{
 background:#B1347C;
