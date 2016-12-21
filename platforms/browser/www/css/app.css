@@ -35,6 +35,14 @@ display:block;
 margin:auto;
 max-width:70%;
 }
+
+.bottombanner{
+	background-image: url(http://mealoop.com/bottombanner.png);
+	background-size: cover;
+	background-repeat:no-repeat;
+	background-position: center;
+	height: 43vh;
+}
 .navigation-bar{
 background:#B1347C;
 color:#fff;
@@ -78,13 +86,7 @@ padding-top:25px;
 padding-bottom:25px;
 }
 
-.bottombanner{
-	background-image: url(http://mealoop.com/bottombanner.png);
-	background-size: cover;
-	background-repeat:no-repeat;
-	background-position: center;
-	height: 54vh;
-}
+
 
 .tab-bar{
 background:#80CC1D;
