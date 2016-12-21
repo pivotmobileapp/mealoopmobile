@@ -38,10 +38,12 @@ max-width:70%;
 
 .bottombanner{
 	background-image: url(http://mealoop.com/bottombanner.png);
+/*	background-image: url(images/bottombanner.png);*/
 	background-size: cover;
 	background-repeat:no-repeat;
 	background-position: center;
-	height: 43vh;
+	height: 33vh;
+	
 }
 .navigation-bar{
 background:#B1347C;
