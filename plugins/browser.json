@@ -22,6 +22,12 @@
         },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.mealoop"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.mealoop"
+        },
+        "cordova-plugin-request-location-accuracy": {
+            "PACKAGE_NAME": "com.mealoop"
         }
     },
     "dependent_plugins": {

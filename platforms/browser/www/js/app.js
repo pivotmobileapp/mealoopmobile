@@ -12,7 +12,7 @@ var search_address;
 var ajax_request;
 var cart=[];
 var networkState;
-
+var dziuk=[];
 var easy_category_list='';
 var map;
 var map_search;
@@ -221,7 +221,7 @@ function createElement(elementId,elementvalue)
 function searchMerchant()
 {			
 
-    var s = $('#s').val();  
+    var s ="Antigua";  
      /*`console.log(merch_inf)`*/	
     /*clear all storage*/
     setStorage("search_address",s);   
@@ -658,7 +658,7 @@ var json_text = getStorage('jsonText')
  var arrDat = Array();
  arrDat.push(Jsons) ;
 						if(json_text){
-							r_l=arrDat.length
+							r_l=dziuk.length
 						}
 						else{
 							r_l=data.details.total;
@@ -1087,6 +1087,7 @@ var json_text = getStorage('jsonText')
 
 
                     case "browseRestaurant":
+						removeStorage('jsonText');
                         displayRestaurantResults( data.details.data ,'browse-results');
                         //$(".result-msg").text(data.details.total+" Restaurant found");
                         $(".result-msg").text(data.details.total+" "+ getTrans("Restaurant found",'restaurant_found')  );
@@ -1753,12 +1754,12 @@ function setHomeCallback()
 }
 
 function displayRestaurantResults(data , target_id)
-{	
+{	  
     var json_text = getStorage('jsonText')
     var merch = getStorage('merch_id');
    var Jsons =  JSON.parse(json_text);
     console.log(json_text);
-    //dump(data);
+   dump(data);
     var htm='';	
     /*var arrDat = Array();
         if(Jsons!=null) {
@@ -1768,14 +1769,15 @@ function displayRestaurantResults(data , target_id)
             data = arrDat;
         } 
     */
-             console.log('data', data);
+             
 
     $.each( data, function( key, val ) {
 		
-        console.log('sadadad', val);
+    
         if(json_text){
-        if(val.merchant_id==merch){
-        htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadRestaurantCategory('+val.merchant_id+');" >';
+			for(i=0;i<dziuk.length;i++){
+        if(val.merchant_id==dziuk[i]){
+        htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadRestaurantCategory('+dziuk[i]+');" >';
         htm+='<ons-row class="row">';    	 
         htm+='<ons-col class="col-image border" width="35%">';
         htm+='<div class="logo-wrap2" >';
@@ -1815,11 +1817,11 @@ function displayRestaurantResults(data , target_id)
             }
         }
 
-        /*if ( val.offers.length>0){
+        if ( val.offers.length>0){
             $.each( val.offers, function( key_offer, val_offer ) { 
                 htm+='<p class="top10">'+val_offer+'</p>';
             });
-        }*/
+        }
 
         htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
         htm+='</div>';
@@ -1845,6 +1847,7 @@ function displayRestaurantResults(data , target_id)
 
         htm+='</ons-row>';
         htm+='</ons-list-item>';
+      }
       }
       }
 		else{
@@ -1888,11 +1891,11 @@ function displayRestaurantResults(data , target_id)
             }
         }
 
-        /*if ( val.offers.length>0){
+        if ( val.offers.length>0){
             $.each( val.offers, function( key_offer, val_offer ) { 
                 htm+='<p class="top10">'+val_offer+'</p>';
             });
-        }*/
+        }
 
         htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
         htm+='</div>';
@@ -6529,7 +6532,7 @@ var _arr=[];
 var _arrr=[];
 function h_24(){
 
-   
+   dziuk=[];
     var obj = {}; 
     obj.requests = 13; //количество запросов
     obj.counter = 0;   //счетчик запросов
@@ -6582,9 +6585,12 @@ function h_24(){
 }
 function h_25(cat,_m_id){
 	
-	
+	 
         
-    var _men=$.trim($('#men').val());
+    
+	
+	var _men=$.trim($('#men').val()).substr(0,1).toUpperCase()+$.trim($('#men').val()).substr(1);
+	console.log(_men)
     setStorage("_men",_men); 
 
   var  ajax_request = $.ajax({
@@ -6604,29 +6610,32 @@ function h_25(cat,_m_id){
         success: function (dataa) {
 		 
 	if(dataa.details.item){
+		
           $.each( dataa.details.item, function( key, val ) {
-	
-                
-                if(val.item_name==_men){
+	/*var str = "Visit W3Schools!"; 
+    var n = str.search("v");*/
+             if(val.item_name.search(_men)>0){
+		/*		
+			 }    
+                if(val.item_name==_men){*/
                   
                       
 
                     var json_text = JSON.stringify(dataa.details.merchant_info, null, 2);
                     var add =  dataa.details.merchant_info.country;
                     var merch_id=dataa.details.merchant_info.merchant_id;
+				
+				 if(jQuery.inArray(dataa.details.merchant_info.merchant_id, dziuk)== -1)
+					 {       
+						 	 dziuk.push(dataa.details.merchant_info.merchant_id);
+					 }
+			
+				  console.log(merch_id);
+				  console.log(dziuk);
 		            removeStorage("jsonText")   
                         setStorage("add", add );
                         setStorage("merch_id", merch_id );
-
-
-                        setStorage("jsonText", json_text );
-
-
-
-		////  alert(_men)
-                   /* var _mat_id  = dataa.details.merchant_info.merchant_id;
-                    var _cat_id  = dataa.details.category_info.cat_id;*/
-	
+                       setStorage("jsonText", json_text );
                      
                 }
 
@@ -6662,8 +6671,7 @@ function h_25(cat,_m_id){
 
 function bulki(){
 	if(getStorage('jsonText')!=null){
-	console.log(getStorage('add'));
-	console.log(getStorage('merch_id'));
+	
 	var options= {
                         address : getStorage('add'), 	  	  
                         closeMenu :true,

@@ -39,7 +39,7 @@
 <script src="lib/jquery.mask.min.js"></script>
 
 <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCHBqHExBh8UgSaAnX1NgNZikZtH2aMk0o&libraries=places"></script>
 <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery.geocomplete.min.js"></script>
 
@@ -154,11 +154,11 @@
     </div> 
        
     <div class="home-page wrapper center">       
-       <h4 class="trn" data-trn-key="enter_your_location">Enter your location</h4>
+       <h4 class="trn" data-trn-key="enter_your_location">Enter Food Name</h4>
        
        <section class="field-section">
-         <input id="s" value="" type="text" class="text-input text-input--underbar trn" ng-model="text" placeholder="Street Address,City,State" data-trn-key="home_search_placeholder" 
-         style="display: block; width: 100%">
+           <input id="s" value="" type="text" class="text-input text-input--underbar trn" ng-model="text" placeholder="Street Address,City,State" data-trn-key="home_search_placeholder" 
+         style=" width: 100%;display:none">
 		 <input id="men" value="" type="text" class="text-input text-input--underbar trn" placeholder="Search By Food"
          style="display: block; width: 100%">
        </section>
@@ -170,11 +170,12 @@
        </button>       
        </div>
        
-        <button class="button green-btn button--large" onclick="searchMerchant();">
+    
+  <button class="button green-btn button--large" onclick="searchMerchant();" style="display:none">
 	      <span class="trn" data-trn-key="search_restaurant">Search Restaurant</span>    	      
 	      <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
 	   </button>
-	   <button class="button green-btn button--large" onclick="h_24();" style="margin-top:10px;">
+	   <button class="button green-btn button--large" onclick="h_24();">
 	      <span class="trn" data-trn-key="search_restaurant">Search By Food</span>    	      
 	      <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
 	   </button>
