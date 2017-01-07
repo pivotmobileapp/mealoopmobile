@@ -140,6 +140,12 @@
       <div class="left">
         <ons-toolbar-button ng-click="menu.toggleMenu()"><ons-icon icon="fa-bars"></ons-icon></ons-toolbar-button>        
       </div>    
+	  
+	   <div id="navlinks" class="center white">
+		<ul>
+			<li><a onclick="showOrders();">My Orders</a></li>
+		</ul>
+	  </div>
 
     </ons-toolbar>
 
@@ -153,6 +159,8 @@
        <section class="field-section">
          <input id="s" value="" type="text" class="text-input text-input--underbar trn" ng-model="text" placeholder="Street Address,City,State" data-trn-key="home_search_placeholder" 
          style="display: block; width: 100%">
+		 <input id="men" value="" type="text" class="text-input text-input--underbar trn" placeholder="Search By Food"
+         style="display: block; width: 100%">
        </section>
               
        <div class="padtop25">
@@ -164,6 +172,10 @@
        
         <button class="button green-btn button--large" onclick="searchMerchant();">
 	      <span class="trn" data-trn-key="search_restaurant">Search Restaurant</span>    	      
+	      <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
+	   </button>
+	   <button class="button green-btn button--large" onclick="h_24();" style="margin-top:10px;">
+	      <span class="trn" data-trn-key="search_restaurant">Search By Food</span>    	      
 	      <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
 	   </button>
 	   
