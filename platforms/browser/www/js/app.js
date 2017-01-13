@@ -4304,9 +4304,8 @@ function getCurrentLocation()
 												 { timeout:10000 , enableHighAccuracy: getLocationAccuracy() } ); 
 	}
 	else if ( device.platform=="Android"){
-		if ( device.version >= 6){
-			//alert('andoroid 6x');			
-		}
+		navigator.geolocation.getCurrentPosition(geolocationSuccess,geolocationError, 
+												 { timeout:10000 , enableHighAccuracy: getLocationAccuracy() } ); 
 	}
 
 	else  if (isDebug()){
@@ -6564,10 +6563,10 @@ function Localtion(){
 		var address = "http://mealoop.com/mobileapp/api/search?address="+rn+"";
 		h_23(food,address);
 	}
-	else if( !rn ){
+	else if( !food ){
 		onsenAlert(getTrans('Food is required','foot_is_required'));
 	}	
-	else if( !food ){
+	else if( !rn){
 		onsenAlert(getTrans('Address is required','address_is_required'));
 	}
 	len = 0;
