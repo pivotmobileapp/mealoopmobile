@@ -25,7 +25,9 @@ var drag_marker_bounce=1;
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {  
-	removeStorage('add');
+
+
+
 
 
 
@@ -231,7 +233,6 @@ function searchMerchant()
 	/*`console.log(merch_inf)`*/	
 	/*clear all storage*/
 	setStorage("search_address",s);   
-
 	removeStorage('merchant_id');
 	removeStorage('shipping_address');  
 	removeStorage('merchant_id');
@@ -260,12 +261,13 @@ function searchMerchant()
 			animation: 'slide'	      
 		};	
 		var addd = options.address;
-		menu.setMainPage('searchResults.html',options);
+		menu.setMainPage('browseRestaurant.html',options);
 
 	} else{
 		onsenAlert(   getTrans('Address is required','address_is_required')  );
 	}
 }
+
 
 /*ons.ready(function() {
   kNavigator.on('prepush', function(event) {  	
@@ -1092,10 +1094,16 @@ function callAjax(action,params)
 
 
 					case "browseRestaurant":
-						removeStorage('jsonText');
+						//						removeStorage('jsonText');
 						displayRestaurantResults( data.details.data ,'browse-results');
 						//$(".result-msg").text(data.details.total+" Restaurant found");
-						$(".result-msg").text(data.details.total+" "+ getTrans("Restaurant found",'restaurant_found')  );
+						if(getStorage("dziukLength")){
+							$(".result-msg").text(getStorage("dziukLength")+" "+ getTrans("Restaurant found",'restaurant_found')  );
+						}else{
+							$(".result-msg").text(data.details.total+" "+ getTrans("Restaurant found",'restaurant_found')  );
+						}
+						$("#search-text").html( getStorage("search_address") );
+
 						break;   
 
 					case "getProfile":   
@@ -1259,10 +1267,13 @@ function callAjax(action,params)
 						break;
 
 					case "reverseGeoCoding":
-						setStorage('add', data.details);
-						$("#s").val( data.details );
+						if(data.details){
+							$("#s").val(data.details);
+						}
+						else{
+							$("#s").val(' ');
+						}
 						break;
-
 
 					case "getSettings":      			       
 						if ( data.details.enabled_push==1){		
@@ -1761,10 +1772,11 @@ function setHomeCallback()
 
 function displayRestaurantResults(data , target_id)
 {	  
+
 	var json_text = getStorage('jsonText')
-	var merch = getStorage('merch_id');
+	/*var merch = getStorage('merch_id');
 	var Jsons =  JSON.parse(json_text);
-	console.log(json_text);
+	console.log(json_text);*/
 	dump(data);
 	var htm='';	
 	/*var arrDat = Array();
@@ -1778,7 +1790,7 @@ function displayRestaurantResults(data , target_id)
 
 
 	$.each( data, function( key, val ) {
-
+		/*console.log(dziuk[i])*/
 
 		if(json_text){
 			for(i=0;i<dziuk.length;i++){
@@ -4292,9 +4304,8 @@ function getCurrentLocation()
 												 { timeout:10000 , enableHighAccuracy: getLocationAccuracy() } ); 
 	}
 	else if ( device.platform=="Android"){
-		if ( device.version >= 6){
-			//alert('andoroid 6x');			
-		}
+		navigator.geolocation.getCurrentPosition(geolocationSuccess,geolocationError, 
+												 { timeout:10000 , enableHighAccuracy: getLocationAccuracy() } ); 
 	}
 
 	else  if (isDebug()){
@@ -6541,97 +6552,121 @@ function fillShippingAddress()
 var _arr=[];
 var _arrr=[];
 
+var len = 0;
+
 function Localtion(){
-	if($('#men').val()==""){
-		onsenAlert(   getTrans('Address is required','address_is_required')  );
+	dziuk = [];
+	var rn = $.trim($('#s').val());
+	var food = $.trim($('#men').val());
 
-	}else{
-		if(getStorage('add')){
-			$("#s").val(getStorage('add'))
-			console.log(getStorage('add'));
-			h_24();
-		}else{
-			h_24();
-
-		}
+	if( rn  && food ){
+		var address = "http://mealoop.com/mobileapp/api/search?address="+rn+"";
+		h_23(food,address);
 	}
-
-
+	else if( !food ){
+		onsenAlert(getTrans('Food is required','foot_is_required'));
+	}	
+	else if( !rn){
+		onsenAlert(getTrans('Address is required','address_is_required'));
+	}
+	len = 0;
 }
 
-function h_24(){
+function kUz(){
+	dziuk = [];
 
-	dziuk=[];
+
+	if(!$.trim($('#s').val())) {
+		removeStorage("dziuk");
+		removeStorage("jsonText");
+		menu.setMainPage('browseRestaurant.html',{ closeMenu:true });
+	}else{
+		var rn =  $('#s').val();
+		var address = "http://mealoop.com/mobileapp/api/search?address="+rn+"";
+		$.ajax({
+			url: address, 
+			type: 'post',                  
+			async: false,
+			dataType: 'jsonp',
+			success: function (data) {
+				if(data.details.data){
+					$.each(data.details.data, function(key, val){
+						dziuk.push(val.merchant_id)
+					})
+					setStorage("dziuk", dziuk );
+					setStorage("jsonText", dziuk );
+					removeStorage("dziukLength");
+					setStorage("dziukLength", dziuk.length);
+					searchMerchant()
+				}else{
+					removeStorage("dziukLength");
+					setStorage("dziukLength", 0);
+					searchMerchant()
+
+				}
+			}
+		})
+	}
+}
+
+function h_23(food,address){
 
 	$.ajax({
-		url: "http://mealoop.com/mobileapp/api/browseRestaurant", 
+		url: address, 
 		type: 'post',                  
 		async: false,
 		dataType: 'jsonp',
 		success: function (data) {
-			removeStorage('total');
-			setStorage('total',data.details.total);
+			console.log(data);
+			if(data.details.data){
+				$.each(data.details.data , function( key, val ){
+					h_24(val.merchant_id);
+				})
+			}else{
+				setStorage("dziuk", 1000000000000000000000000000000000);
+				setStorage("jsonText", 1000000000000000000000000000000);
+				removeStorage("dziukLength");
+				setStorage("dziukLength", 0);
+				searchMerchant()
+
+			}
 		}
 	})
-	var obj = {}; //
-	obj.requests = getStorage('total'); //количество запросов
-	obj.counter = 0;   //счетчик запросов
-	obj.text = '';     //строка для вывода результатов 
-	send();
-	function send(){
-		/*var flickerAPI = "http://mealoop.com/mobileapp/api/MenuCategory?merchant_id="+obj.counter+"";*/
 
-		ajax_request = $.ajax({
-			url: "http://mealoop.com/mobileapp/api/MenuCategory?merchant_id="+(obj.counter+1)+"", 
-			data: "&lang_id=&api_key=fed7b441b349bae8f146711fbd215e90",
-			type: 'post',                  
-			async: false,
-			dataType: 'jsonp',
-
-			crossDomain: true,
-			beforeSend: function() {
-				if(ajax_request != null) {			 	
-					/*abort ajax*/
-					hideAllModal();	
-					ajax_request.abort();
-				} 
-			},
-			complete: function(data) {					
-				ajax_request=null;   	     				
-				hideAllModal();		
-			},
-			success: function (data) {
-				obj.counter++;
-				if(obj.counter > obj.requests){
-					bulki();
-				}
-				else {
-					send()     //выполняем рекурсивный запрос
-				}
-				if(data.details.menu_category){
-					$.each( data.details.menu_category, function( key, val ) {
-						var _cat_id=val.cat_id;
-
-
-						h_25(_cat_id,obj.counter);
-
-
-					})
-				}
-			}})
-
-	}
 
 }
+
+
+
+function h_24(mrct_id){
+
+	var	ajax_request = $.ajax({
+		url: "http://mealoop.com/mobileapp/api/MenuCategory?merchant_id="+mrct_id+"", 
+		type: 'post',                  
+		async: false,
+		dataType: 'jsonp',
+		crossDomain: true,
+		success: function (data) {
+			if(data.details.menu_category){
+
+				$.each( data.details.menu_category, function( key, val ) {
+					var _cat_id=val.cat_id;
+
+
+					h_25(_cat_id,mrct_id)
+
+
+				})
+
+			}
+		}
+	})
+
+	}
 function h_25(cat,_m_id){
-
-
-
-
 
 	var _men=$.trim($('#men').val()).substr(0,1).toUpperCase()+$.trim($('#men').val()).substr(1);
 	console.log(_men)
-	setStorage("_men",_men); 
 
 	var  ajax_request = $.ajax({
 		url: "http://mealoop.com/mobileapp/api/getItemByCategory?cat_id="+cat+"&merchant_id="+_m_id+"", 
@@ -6641,109 +6676,46 @@ function h_25(cat,_m_id){
 		dataType: 'jsonp',
 		timeout: 6000,
 		crossDomain: true,
-		beforeSend: function() {
 
-		},
-		complete: function(data) {					
-			loaderSearch.show();	
-		},
 		success: function (dataa) {
 
 			if(dataa.details.item){
 
 				$.each( dataa.details.item, function( key, val ) {
-					/*var str = "Visit W3Schools!"; 
-    var n = str.search("v");*/
-							if(!getStorage('add')){
-								$('#s').val('Saint Lucia');
-								
-						}
-					if(val.item_name.search(_men)>0){
-						/*		
-			 }    
-                if(val.item_name==_men){*/
+					++len
 
+					var basName = val.item_name.toLowerCase();
+					L_men = _men.toLowerCase();
 
-
+					if(basName.search(L_men)!=-1){ 			
 						var json_text = JSON.stringify(dataa.details.merchant_info, null, 2);
 						var merch_id=dataa.details.merchant_info.merchant_id;
-					
-						console.log(val.item_name)
+
+
 						if(jQuery.inArray(dataa.details.merchant_info.merchant_id, dziuk)== -1)
 						{       
 							dziuk.push(dataa.details.merchant_info.merchant_id);
 						}
 
-						console.log(merch_id);
-						console.log(dziuk);
-						removeStorage("jsonText")   
-						setStorage("merch_id", merch_id );
-						setStorage("jsonText", json_text );
 
-					}else {
-					 			removeStorage('merch_id');
+						setStorage("dziuk", dziuk );
+						setStorage("jsonText", dziuk );
+						removeStorage("dziukLength");
+						setStorage("dziukLength", dziuk.length);
 
-							setStorage("merch_id", -1 );
-					}
+					} 
 
 				})
+				if( dataa.details.item.length==len){
+					removeStorage("dziukLength");
+					setStorage("dziukLength", dziuk.length);
+					console.log(dziuk.length)
+					searchMerchant()
+				}
 
 			}
-			removeStorage('merchant_id');
-			removeStorage('shipping_address');  
-			removeStorage('merchant_id');
-			removeStorage('transaction_type');
-			removeStorage('merchant_logo');
-			removeStorage('order_total');
-			removeStorage('merchant_name');
-			removeStorage('total_w_tax');
-			removeStorage('currency_code');
-			removeStorage('paymet_desc');
-			removeStorage('order_id');   
-			removeStorage('order_total_raw');   
-			removeStorage('cart_currency_symbol');     
-			removeStorage('paypal_card_fee');   
-			removeStorage('cart_sub_total');
-			removeStorage('cart_delivery_charges');
-			removeStorage('cart_packaging');
-			removeStorage('cart_tax');
-			removeStorage('map_address_result_formatted_address');
-			removeStorage("customer_contact_number");
-
-
 		}})
-	}
-function bulkis(){
 
-
-	if(getStorage('add')){
-		$('#s').val(getStorage('add'));
-		removeStorage('jsonText');
-
-		searchMerchant()
-
-	}else{
-		removeStorage('jsonText');
-		removeStorage("search_address");
-		$('#s').val(' ');
-
-		menu.setMainPage('browseRestaurant.html', {closeMenu: true});
-	} 
-}
-function bulki(){
-
-	if(getStorage('jsonText')!=null){
-
-		removeStorage("search_address");
-		console.log(getStorage('jsonText'));
-		if(getStorage('add')){
-			$('#s').val(getStorage('add'));
-		}
-		searchMerchant();
 
 	}
-}
-
-
-
 
