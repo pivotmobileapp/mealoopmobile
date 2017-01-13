@@ -1787,11 +1787,16 @@ function displayRestaurantResults(data , target_id)
             data = arrDat;
         } 
     */
-
-
+var search_ob=	getStorage('search_ob');
+var	search_obj =  JSON.parse(search_ob);
+	console.log(search_obj)
+	console.log(data)
+	if(search_obj!=null){
+		data=search_obj.details.data;
+	}
 	$.each( data, function( key, val ) {
 		/*console.log(dziuk[i])*/
-
+console.log(val)
 		if(json_text){
 			for(i=0;i<dziuk.length;i++){
 				if(val.merchant_id==dziuk[i]){
@@ -6579,7 +6584,7 @@ function kUz(){
 	if(!$.trim($('#s').val())) {
 		removeStorage("dziuk");
 		removeStorage("jsonText");
-		menu.setMainPage('browseRestaurant.html',{ closeMenu:true });
+		  menu.setMainPage('home.html',{ closeMenu:true });
 	}else{
 		var rn =  $('#s').val();
 		var address = "http://mealoop.com/mobileapp/api/search?address="+rn+"";
@@ -6590,6 +6595,9 @@ function kUz(){
 			dataType: 'jsonp',
 			success: function (data) {
 				if(data.details.data){
+			var search_ob = JSON.stringify(data, null, 2);
+		removeStorage('search_ob');
+		setStorage('search_ob',search_ob);
 					$.each(data.details.data, function(key, val){
 						dziuk.push(val.merchant_id)
 					})
@@ -6599,8 +6607,11 @@ function kUz(){
 					setStorage("dziukLength", dziuk.length);
 					searchMerchant()
 				}else{
+					removeStorage('search_ob');
 					removeStorage("dziukLength");
 					setStorage("dziukLength", 0);
+					setStorage("dziuk", 1000000000000000000000000000000000);
+				setStorage("jsonText", 1000000000000000000000000000000);
 					searchMerchant()
 
 				}
@@ -6617,8 +6628,12 @@ function h_23(food,address){
 		async: false,
 		dataType: 'jsonp',
 		success: function (data) {
-			console.log(data);
+	
 			if(data.details.data){
+			var search_ob = JSON.stringify(data, null, 2);
+		removeStorage('search_ob');
+		setStorage('search_ob',search_ob);
+			console.log(data);
 				$.each(data.details.data , function( key, val ){
 					h_24(val.merchant_id);
 				})
@@ -6626,6 +6641,7 @@ function h_23(food,address){
 				setStorage("dziuk", 1000000000000000000000000000000000);
 				setStorage("jsonText", 1000000000000000000000000000000);
 				removeStorage("dziukLength");
+				removeStorage('search_ob');
 				setStorage("dziukLength", 0);
 				searchMerchant()
 
