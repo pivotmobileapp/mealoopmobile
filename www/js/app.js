@@ -13,13 +13,6 @@ var ajax_request;
 var cart=[];
 var networkState;
 var dziuk=[];
-var _dziuk=[];
-var _photo=[];
-var _name=[];
-var _price=[];
-var _merch_=[];
-var _cut_=[];
-var _item_id=[];
 var easy_category_list='';
 var map;
 var map_search;
@@ -677,6 +670,7 @@ function callAjax(action,params)
 						else{
 							r_l=data.details.total;
 						}
+						//$(".result-msg").text(data.details.total+" Restaurant found");
 						$(".result-msg").text(r_l+" "+getTrans("Restaurant found",'restaurant_found') );
 
 						break;
@@ -1100,7 +1094,9 @@ function callAjax(action,params)
 
 
 					case "browseRestaurant":
+						//						removeStorage('jsonText');
 						displayRestaurantResults( data.details.data ,'browse-results');
+						//$(".result-msg").text(data.details.total+" Restaurant found");
 						if(getStorage("dziukLength")){
 							$(".result-msg").text(getStorage("dziukLength")+" "+ getTrans("Restaurant found",'restaurant_found')  );
 						}else{
@@ -1648,6 +1644,7 @@ function callAjax(action,params)
 				{					
 
 					case "search":
+						//$(".result-msg").text("No Restaurant found");
 						$(".result-msg").text(data.msg);
 						createElement('restaurant-results','');
 						break;
@@ -1777,96 +1774,38 @@ function displayRestaurantResults(data , target_id)
 {	  
 
 	var json_text = getStorage('jsonText')
+	/*var merch = getStorage('merch_id');
+	var Jsons =  JSON.parse(json_text);
+	console.log(json_text);*/
 	dump(data);
 	var htm='';	
+	/*var arrDat = Array();
+        if(Jsons!=null) {
+            Jsons.service = "";
+            Jsons.is_open = "open"; 
+            arrDat.push(Jsons);
+            data = arrDat;
+        } 
+    */
 var search_ob=	getStorage('search_ob');
 var	search_obj =  JSON.parse(search_ob);
+	console.log(search_obj)
+	console.log(data)
 	if(search_obj!=null){
 		data=search_obj.details.data;
 	}
 	$.each( data, function( key, val ) {
+		/*console.log(dziuk[i])*/
+console.log(val)
 		if(json_text){
 			for(i=0;i<dziuk.length;i++){
-		            if(val.merchant_id==dziuk[i]){
-						if(getStorage("br_rest")){
-								htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadRestaurantCategory('+val.merchant_id+');" >';
-			htm+='<ons-row class="row">';    	 
-			htm+='<ons-col class="col-image border" width="35%">';
-			htm+='<div class="logo-wrap2" >';
-			htm+='<div class="img_loaded" >';
-			htm+='<img src="'+val.logo+'" />';
-			htm+='</div>';
-
-			htm+='</div>';
-
-			dump(val.service);
-
-			if(!empty(val.service)){
-				$.each( val.services, function( key_service, val_services ) { 
-					htm+='<p class="center">'+val_services+' <i class="green-color ion-android-checkmark-circle"></i></p>';
-				});
-				htm+='<p class="center">'+val.payment_options.cod+'</p>';
-			}
-
-			htm+='</ons-col>';
-
-			htm+='<ons-col class="col-description border" width="65%">';
-			htm+='<div>';
-			htm+='<div class="rating-stars" data-score="'+val.ratings.ratings+'"></div>';
-			htm+='<p class="restauran-title concat-text">'+val.restaurant_name+'</p>';
-			htm+='<p class="concat-textx">'+val.cuisine+'</p>';
-
-			if(!empty(val.distance)){
-				htm+='<p>'+val.distance+'</p>';
-			}
-
-			if(val.service!=3){
-				if(!empty(val.delivery_estimation)){
-					htm+='<p>'+val.delivery_estimation+'</p>';	    	           	   
-				}
-				if(!empty(val.delivery_distance)){
-					htm+='<p>'+val.delivery_distance+'</p>';
-				}
-			}
-
-			if ( val.offers.length>0){
-				$.each( val.offers, function( key_offer, val_offer ) { 
-					htm+='<p class="top10">'+val_offer+'</p>';
-				});
-			}
-
-			htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
-			htm+='</div>';
-
-			htm+='<ons-row>';
-			htm+='<ons-col width="60%">';
-			if(val.service!=3){
-				htm+='<p class="p-small trn" data-trn-key="delivery">Delivery</p>';
-				if(!empty(val.delivery_fee)){
-					htm+='<price>'+val.delivery_fee+'</price>';
-				}
-			}
-			htm+='</ons-col>';
-
-			htm+='<ons-col class="border-left">';
-			htm+='<p class="p-small trn" data-trn-key="min_order">Min. Order</p>';
-			htm+='<price>'+val.minimum_order+'</price>';
-			htm+='</ons-col>';
-
-			htm+='</ons-row>';
-
-			htm+='</ons-col>';
-
-			htm+='</ons-row>';
-			htm+='</ons-list-item>';
-						}
-						else{
-					htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadItemDetails('+_item_id[i]+','+_merch_[i]+','+_cut_[i]+');" >';
+				if(val.merchant_id==dziuk[i]){
+					htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadRestaurantCategory('+dziuk[i]+');" >';
 					htm+='<ons-row class="row">';    	 
 					htm+='<ons-col class="col-image border" width="35%">';
 					htm+='<div class="logo-wrap2" >';
 					htm+='<div class="img_loaded" >';
-					htm+='<img src="'+_photo[i]+'" />';
+					htm+='<img src="'+val.logo+'" />';
 					htm+='</div>';
 
 					htm+='</div>';
@@ -1885,7 +1824,6 @@ var	search_obj =  JSON.parse(search_ob);
 					htm+='<ons-col class="col-description border" width="65%">';
 					htm+='<div>';
 					htm+='<div class="rating-stars" data-score="'+val.ratings.ratings+'"></div>';
-					htm+='<h3>'+_name[i]+'</h3>';
 					htm+='<p class="restauran-title concat-text">'+val.restaurant_name+'</p>';
 					htm+='<p class="concat-textx">'+val.cuisine+'</p>';
 
@@ -1922,8 +1860,8 @@ var	search_obj =  JSON.parse(search_ob);
 					htm+='</ons-col>';
 
 					htm+='<ons-col class="border-left">';
-					//htm+='<p class="p-small trn" data-trn-key="min_order">Min. Order</p>';
-					htm+='<price>'+_price[i]+'$'+'</price>';
+					htm+='<p class="p-small trn" data-trn-key="min_order">Min. Order</p>';
+					htm+='<price>'+val.minimum_order+'</price>';
 					htm+='</ons-col>';
 
 					htm+='</ons-row>';
@@ -1932,7 +1870,6 @@ var	search_obj =  JSON.parse(search_ob);
 
 					htm+='</ons-row>';
 					htm+='</ons-list-item>';
-				}
 				}
 			}
 		}
@@ -5282,7 +5219,7 @@ function limitText(field, maxChar){
 		val = ref.val();
 	if ( val.length >= maxChar ){
 		ref.val(function() {
-		
+			//console.log(val.substr(0, maxChar))
 			return val.substr(0, maxChar);       
 		});
 	}
@@ -6623,15 +6560,7 @@ var _arrr=[];
 var len = 0;
 
 function Localtion(){
-	removeStorage('br_rest');
 	dziuk = [];
-	 _dziuk=[];
-     _photo=[];
-     _name=[];
-     _price=[];
-     _merch_=[];
-     _cut_=[];
-     _item_id=[];
 	var rn = $.trim($('#s').val());
 	var food = $.trim($('#men').val());
 
@@ -6649,15 +6578,8 @@ function Localtion(){
 }
 
 function kUz(){
-	  dziuk = [];
-	 _dziuk=[];
-     _photo=[];
-     _name=[];
-     _price=[];
-     _merch_=[];
-     _cut_=[];
-     _item_id=[];
-setStorage("br_rest", 'br_restt' );
+	dziuk = [];
+
 
 	if(!$.trim($('#s').val())) {
 		removeStorage("dziuk");
@@ -6689,7 +6611,7 @@ setStorage("br_rest", 'br_restt' );
 					removeStorage("dziukLength");
 					setStorage("dziukLength", 0);
 					setStorage("dziuk", 1000000000000000000000000000000000);
-				    setStorage("jsonText", 1000000000000000000000000000000);
+				setStorage("jsonText", 1000000000000000000000000000000);
 					searchMerchant()
 
 				}
@@ -6711,6 +6633,7 @@ function h_23(food,address){
 			var search_ob = JSON.stringify(data, null, 2);
 		removeStorage('search_ob');
 		setStorage('search_ob',search_ob);
+			console.log(data);
 				$.each(data.details.data , function( key, val ){
 					h_24(val.merchant_id);
 				})
@@ -6759,7 +6682,7 @@ function h_24(mrct_id){
 function h_25(cat,_m_id){
 
 	var _men=$.trim($('#men').val()).substr(0,1).toUpperCase()+$.trim($('#men').val()).substr(1);
-	
+	console.log(_men)
 
 	var  ajax_request = $.ajax({
 		url: "http://mealoop.com/mobileapp/api/getItemByCategory?cat_id="+cat+"&merchant_id="+_m_id+"", 
@@ -6782,24 +6705,19 @@ function h_25(cat,_m_id){
 
 					if(basName.search(L_men)!=-1){ 			
 						var json_text = JSON.stringify(dataa.details.merchant_info, null, 2);
-						var merch_id=dataa.details.merchant_info.merchant_id;  
-     dziuk.push(dataa.details.merchant_info.merchant_id);                   
-     _photo.push(val.photo);                   
-     _name.push(val.item_name);                   
-     _price.push(val.prices[0].price);                   
-     _merch_.push(_m_id);                   
-     _cut_.push(cat);                   
-     _item_id.push(val.item_id);                   
-						if(jQuery.inArray(dataa.details.merchant_info.merchant_id, _dziuk)== -1)
-						{      
-							_dziuk.push(dataa.details.merchant_info.merchant_id);
+						var merch_id=dataa.details.merchant_info.merchant_id;
+
+
+						if(jQuery.inArray(dataa.details.merchant_info.merchant_id, dziuk)== -1)
+						{       
+							dziuk.push(dataa.details.merchant_info.merchant_id);
 						}
 
 
 						setStorage("dziuk", dziuk );
 						setStorage("jsonText", dziuk );
 						removeStorage("dziukLength");
-						setStorage("dziukLength", _dziuk.length);
+						setStorage("dziukLength", dziuk.length);
 
 					} 
 
@@ -6807,6 +6725,7 @@ function h_25(cat,_m_id){
 				if( dataa.details.item.length==len){
 					removeStorage("dziukLength");
 					setStorage("dziukLength", dziuk.length);
+					console.log(dziuk.length)
 					searchMerchant()
 				}
 
