@@ -5691,7 +5691,7 @@ function initIntelInputs()
 			autoPlaceholder: false,		      
 			defaultCountry: mobile_country_code,  
 			autoHideDialCode:true,    
-			nationalMode:true,
+			nationalMode:false,
 			autoFormat:false,
 			utilsScript: "lib/intel/lib/libphonenumber/build/utils.js"
 		});
@@ -5699,7 +5699,7 @@ function initIntelInputs()
 		$(".mobile_inputs").intlTelInput({      
 			autoPlaceholder: false,		        
 			autoHideDialCode:true,    
-			nationalMode:true,
+			nationalMode:false,
 			autoFormat:false,
 			utilsScript: "lib/intel/lib/libphonenumber/build/utils.js"
 		});
