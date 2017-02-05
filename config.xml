@@ -3,8 +3,13 @@
     xmlns:gap = "http://phonegap.com/ns/1.0"
     xmlns:android = "http://schemas.android.com/apk/res/android"
     id        = "com.mealoop"
+<<<<<<< HEAD
     versionCode = "10.7"
     version   = "1.0.7">
+=======
+    versionCode = "10.3"
+    version   = "1.0.6">
+>>>>>>> origin/master
     <name>Mealoop</name>
     <description>
         Mealoop
@@ -82,7 +87,11 @@
                
 	<preference name="orientation" value="portrait" />
 	<preference name="android-build-tool" value="gradle" />	
+<<<<<<< HEAD
 	<preference name="phonegap-version" value="cli-6.4.0" />
+=======
+<!--	<preference name="phonegap-version" value="cli-6.4.0" />-->
+>>>>>>> origin/master
 		
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <gap:plugin name="phonegap-plugin-push" source="npm" spec="1.5.3" />
@@ -103,8 +112,13 @@
 	<gap:plugin name="cordova-plugin-media" source="npm" />	
 	<gap:plugin name="cordova.plugins.diagnostic" source="npm" />	
 	
+<<<<<<< HEAD
    <gap:plugin name="cordova-plugin-googlemaps"  source="npm" spec="1.3.9" >
 <!--   <gap:plugin name="cordova-plugin-googlemaps"  source="npm" >-->
+=======
+<!--   <gap:plugin name="cordova-plugin-googlemaps"  source="npm" spec="1.3.9" >-->
+   <gap:plugin name="cordova-plugin-googlemaps"  source="npm" >
+>>>>>>> origin/master
 	   <param name="API_KEY_FOR_ANDROID" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
 	   <param name="API_KEY_FOR_IOS" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
 	</gap:plugin>
@@ -123,5 +137,16 @@
         <application android:theme="@android:style/Theme.NoTitleBar" >            
         </application>        
     </gap:config-file>    
+    
+    <platform name="ios">
+    <plugin name="cordova-custom-config" version="*"/>
+    <config-file platform="ios" target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+        <string>Mealoop needs to your location.</string>
+    </config-file>
+    <config-file platform="ios" target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+        <string>Mealoop needs to your location.</string>
+    </config-file>
+	</platform>
+   
     
 </widget>
