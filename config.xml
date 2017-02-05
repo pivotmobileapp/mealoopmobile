@@ -124,7 +124,7 @@
         </application>        
     </gap:config-file>    
     
-    <platform name="ios">
+<!--    <platform name="ios">
     <plugin name="cordova-custom-config" version="*"/>
     <config-file platform="ios" target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
         <string>Mealoop needs to your location.</string>
@@ -132,7 +132,7 @@
     <config-file platform="ios" target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
         <string>Mealoop needs to your location.</string>
     </config-file>
-	</platform>
+	</platform>-->
    
     
 </widget>
