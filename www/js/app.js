@@ -6819,4 +6819,12 @@ function h_25(cat,_m_id){
 
 
 	}
-
+function showSupport()
+{
+	if (isLogin()){
+		menu.setMainPage('Support.html', {closeMenu: true});
+	} else {
+		menu.setMainPage('Support.html', {closeMenu: true})
+	}
+	phpLiveChat.fullscreenOn();
+}
