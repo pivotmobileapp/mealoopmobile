@@ -1084,3 +1084,19 @@ position:relative;
 max-width:220px;
 white-space: inherit;
 }
+@media screen and (max-width: 600px) {
+.taza .logo-wrap img, .logo-wrap2 img {
+     width: 80px!important;
+    margin: auto;
+    display: block;
+   height: 80px!important;
+}
+.taza .restaurant-list .logo-wrap, .restaurant-list .logo-wrap2, .logo-wrap {
+    height: 80px!important;
+    width: 80px!important;
+    display: block;
+    margin: auto;
+    background: #fff;
+}
+ 
+}
