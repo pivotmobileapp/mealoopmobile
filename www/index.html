@@ -17,6 +17,8 @@
 <link href="lib/mobiscroll/css/mobiscroll.scroller.ios-classic.css" rel="stylesheet" type="text/css" />
 <link href="lib/mobiscroll/css/mobiscroll.scroller.ios.css" rel="stylesheet" type="text/css" />
 <link href="lib/mobiscroll/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="load/skin_allsizes_white.css"/>
+<script type="text/javascript" src="java/FWDSimple3DCoverflow.js"></script>
 
 <script src="lib/angular/angular.js"></script>
 <script src="lib/onsen/js/onsenui.js"></script>
@@ -56,6 +58,148 @@
 <script src="js/tpl.js?ver=1.0"></script>
 <script src="js/countries.js?ver=1.0"></script>
 <script src="js/app.js?ver=1.0"></script>
+<script type="text/javascript">
+			FWDRLS3DUtils.onReady(function(){
+				var coverflow = new FWDSimple3DCoverflow({
+					
+					//required settings
+					coverflowHolderDivId:"myDiv",
+					coverflowDataListDivId:"coverflowData",
+					displayType:"fluidwidth",
+					autoScale:"yes",
+					coverflowWidth:500,
+					coverflowHeight:538,
+					mainFolderPath:"load",
+					skinPath:"skin_white",
+												
+					//main settings
+					backgroundColor:"#FFFFFF",
+					backgroundImagePath:"",
+					backgroundRepeat:"repeat-x",
+					showDisplay2DAlways:"no",
+					coverflowStartPosition:"center",
+					coverflowTopology:"dualsided",
+					coverflowXRotation:0,
+					coverflowYRotation:0,
+					numberOfThumbnailsToDisplayLeftAndRight:"all",
+					infiniteLoop:"yes",
+					rightClickContextMenu:"developer",
+					useDragAndSwipe:"yes",
+					fluidWidthZIndex:500,
+					
+					//thumbnails settings
+					thumbnailWidth:400,
+					thumbnailHeight:266,
+					thumbnailXOffset3D:86,
+					thumbnailXSpace3D:78,
+					thumbnailZOffset3D:200,
+					thumbnailZSpace3D:93,
+					thumbnailYAngle3D:2,
+					thumbnailXOffset2D:20,
+					thumbnailXSpace2D:30,
+					thumbnailHoverOffset:100,
+					thumbnailBorderSize:0,
+					thumbnailBackgroundColor:"#999999",
+					thumbnailBorderColor1:"#FFFFFF",
+					thumbnailBorderColor2:"#FFFFFF",
+					transparentImages:"no",
+					thumbnailsAlignment:"bottom",
+					maxNumberOfThumbnailsOnMobile:13,
+					showThumbnailsGradient:"no",
+					thumbnailGradientColor1:"rgba(255, 255, 255, 0)",
+					thumbnailGradientColor2:"rgba(255, 255, 255, 1)",
+					showText:"no",
+					textOffset:10,
+					showThumbnailBoxShadow:"yes",
+					thumbnailBoxShadowCss:"0px 2px 2px #BBBBBB",
+					showTooltip:"no",
+					dynamicTooltip:"no",
+					showReflection:"yes",
+					reflectionHeight:60,
+					reflectionDistance:0,
+					reflectionOpacity:.2,
+
+										
+					//controls settings
+					slideshowDelay:5000,
+					autoplay:"no",
+					disableNextAndPrevButtonsOnMobile:"no",
+					controlsMaxWidth:650,
+					controlsPosition:"bottom",
+					controlsOffset:10,
+					showLargeNextAndPrevCoverflowButtons:"no",
+					largeNextAndPrevButtonsOffest:20,
+					showNextAndPrevCoverflowButtons:"no",
+					showSlideshowButton:"yes",
+					showScrollbar:"no",
+					showBulletsNavigation:"no",
+					bulletsNormalColor:"#999999",
+					bulletsSelectedColor:"#000000",
+					bulletsNormalRadius:5,
+					bulletsSelectedRadius:8,
+					spaceBetweenBullets:10,
+					bulletsOffset:18,
+					disableScrollbarOnMobile:"yes",
+					enableMouseWheelScroll:"no",
+					scrollbarHandlerWidth:200,
+					scrollbarTextColorNormal:"#000000",
+					scrollbarTextColorSelected:"#FFFFFF",
+					addKeyboardSupport:"yes",
+												
+					//categories settings
+					showCategoriesMenu:"no",
+					startAtCategory:1,
+					categoriesMenuMaxWidth:700,
+					categoriesMenuOffset:25,
+					categoryColorNormal:"#999999",
+					categoryColorSelected:"#000000",
+												
+					//lightbox settings
+					buttonsAlignment:"in",
+					itemBoxShadow:"none",
+					descriptionWindowAnimationType:"opacity",
+					descriptionWindowPosition:"bottom",
+					slideShowAutoPlay:"no",
+					addKeyboardSupport:"yes",
+					showCloseButton:"yes",
+					showShareButton:"yes",
+					showZoomButton:"yes",
+					showSlideShowButton:"yes",
+					showSlideShowAnimation:"yes",
+					showNextAndPrevButtons:"yes",
+					showNextAndPrevButtonsOnMobile:"yes",
+					showDescriptionButton:"yes",
+					showDescriptionByDefault:"no",
+					videoShowFullScreenButton:"yes",
+					videoAutoPlay:"no",
+					nextVideoOrAudioAutoPlay:"no",
+					videoLoop:"no",
+					audioAutoPlay:"no",
+					audioLoop:"no",
+					backgroundOpacity:.9,
+					descriptionWindowBackgroundOpacity:.95,
+					buttonsHideDelay:3,
+					slideShowDelay:4,
+					defaultItemWidth:640,
+					defaultItemHeight:480,
+					itemOffsetHeight:50,
+					spaceBetweenButtons:1,
+					buttonsOffsetIn:2,
+					buttonsOffsetOut:5,
+					itemBorderSize:0,
+					itemBorderRadius:0,
+					itemBackgroundColor:"#333333",
+					itemBorderColor:"#333333",
+					lightBoxBackgroundColor:"#000000",
+					descriptionWindowBackgroundColor:"#FFFFFF",
+					videoPosterBackgroundColor:"#0099FF",
+					videoControllerBackgroundColor:"#FFFFFF",
+					audioControllerBackgroundColor:"#FFFFFF",
+					timeColor:"#000000"
+					
+				});
+			});
+		</script>
 </head>
 <body>
 
@@ -98,14 +242,16 @@
       <span class="trn" data-trn-key="browse_resto">Nearby Restaurants</span>
     </ons-list-item>
     
-    <ons-list-item onclick="showProfile();" class="bottom-menu-item">
-      <ons-icon icon="ion-android-contact"></ons-icon> 
-      <span class="trn" data-trn-key="profile">Profile</span>
-    </ons-list-item>    
+   
+	
+	<ons-list-item onclick="showCart();" class="bottom-menu-item">
+      <ons-icon icon="fa-shopping-cart"></ons-icon> 
+	  <span class="trn" data-trn-key="support">Cart</span>
+    </ons-list-item>  
     
     <ons-list-item onclick="showOrders();" class="bottom-menu-item">
       <ons-icon icon="ion-android-restaurant"></ons-icon> 
-      <span class="trn" data-trn-key="orders">Orders</span>
+      <span class="trn" data-trn-key="orders">My Orders</span>
     </ons-list-item>      
     
     <ons-list-item onclick="showAddressBook();" class="bottom-menu-item">
@@ -113,25 +259,36 @@
       <span class="trn" data-trn-key="address_book">Address Book</span>
     </ons-list-item>    
     
+	<ons-list-item onclick="showSupport();" class="bottom-menu-item">
+      <ons-icon icon="ion-settings"></ons-icon> 
+      <span class="trn" data-trn-key="support">Live Support</span>
+    </ons-list-item>  
+	
     <ons-list-item onclick="menu.setMainPage('pts.html', {closeMenu: true})" class="menu-pts bottom-menu-item">
       <ons-icon icon="ion-connection-bars"></ons-icon> 
       <span class="trn" data-trn-key="my_points">My Points</span>
     </ons-list-item>    
     
+	    <ons-list-item onclick="showProfile();" class="bottom-menu-item">
+      <ons-icon icon="ion-android-contact"></ons-icon> 
+      <span class="trn" data-trn-key="profile">Profile</span>
+    </ons-list-item> 
+	
     <ons-list-item onclick="menu.setMainPage('settings.html', {closeMenu: true})" class="bottom-menu-item">
       <ons-icon icon="ion-gear-a"></ons-icon> 
       <span class="trn" data-trn-key="settings">Settings</span>
     </ons-list-item>    
-    
-    <ons-list-item onclick="logout();" class="bottom-menu-item logout-menu">
-      <ons-icon icon="ion-log-out"></ons-icon> 
-      <span class="trn" data-trn-key="logout">Logout</span>
-    </ons-list-item>    
-            
+                      
 	<ons-list-item onclick="showSupport();" class="bottom-menu-item">
       <ons-icon icon="ion-settings"></ons-icon> 
       <span class="trn" data-trn-key="support">Live Support</span>
     </ons-list-item>  
+	
+	<ons-list-item onclick="logout();" class="bottom-menu-item logout-menu">
+      <ons-icon icon="ion-log-out"></ons-icon> 
+      <span class="trn" data-trn-key="logout">Logout</span>
+    </ons-list-item>  
+	
 			
   </ons-list>
   </ons-page> 
@@ -156,6 +313,9 @@
 	  </div>
 
     </ons-toolbar>
+
+
+		
 
     <div class="home-header">
          <img src="css/images/banner.png" alt="" title="">
@@ -191,9 +351,65 @@
 	  	   
 	   	  
     </div>  
-	<div class="bottombanner">
-	   	                
-       </div>
+	
+	<div id="myDiv"></div>
+
+		<!-- coverflow data -->
+		<ul id="coverflowData" style="display: none;">
+			
+			<!-- category -->
+			<ul data-cat="Specials">
+			
+				<ul>
+					<li data-url="http://smarturl.it/featuredimage1"></li>
+					<li data-thumbnail-path="http://smarturl.it/featuredimage1" data-thumbnail-width="500" data-thumbnail-height="325"></li>
+					
+				</ul>
+				
+				
+			
+				<ul>
+					<li data-url="http://smarturl.it/featuredimage2"></li></li>
+					<li data-thumbnail-path="http://smarturl.it/featuredimage2" data-thumbnail-width="500" data-thumbnail-height="325"></li>
+			
+				</ul>
+				
+				<ul>
+					<li data-url="link:http://smarturl.it/featuredimage3"</li>
+					
+					<li data-thumbnail-path="http://smarturl.it/featuredimage3" data-thumbnail-width="500" data-thumbnail-height="325"></li>
+				
+				</ul>
+				
+				<ul>
+					<li data-url="http://smarturl.it/featuredimage4"></li>
+					<li data-thumbnail-path="http://smarturl.it/featuredimage4" data-thumbnail-width="500" data-thumbnail-height="325"></li>
+				
+				</ul>
+				
+				
+				
+
+				<ul>
+					<li data-url="http://smarturl.it/featuredimage5" data-width="600" data-height="650"></li>
+					<li data-thumbnail-path="http://smarturl.it/featuredimage5" data-thumbnail-width="500" data-thumbnail-height="325"></li>
+			
+				</ul>
+							
+				
+				
+				<ul>
+					<li data-url="http://smarturl.it/featuredimage6" data-width="600" data-height="650"></li>
+					<li data-thumbnail-path="http://smarturl.it/featuredimage6" data-thumbnail-width="500" data-thumbnail-height="325"></li>
+			
+				</ul>
+				
+				
+			
+			</ul>
+			<!-- end  -->
+		</ul>
+	
 
     <div class="wrapper no-connection">
       <ons-icon icon="ion-wifi" id="ion-wifi"></ons-icon>
@@ -252,7 +468,7 @@
 				</div>
 			</ons-toolbar>
 			
-			<iframe src="http://smarturl.it/livehelp" width="100%" height="100%"></iframe>
+			<iframe src="http://smarturl.it/livehelp" width="100%" height="80%"></iframe>
 		</ons-page>
 	</ons-navigator>
 </script>
