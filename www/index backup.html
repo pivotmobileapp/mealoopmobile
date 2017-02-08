@@ -66,7 +66,7 @@
 					coverflowHolderDivId:"myDiv",
 					coverflowDataListDivId:"coverflowData",
 					displayType:"fluidwidth",
-					autoScale:"yes",
+					autoScale:"no",
 					coverflowWidth:500,
 					coverflowHeight:538,
 					mainFolderPath:"load",
@@ -318,9 +318,9 @@
        <h4 class="trn" data-trn-key="enter_your_location">What are you craving?</h4>
        
        <section class="field-section">
-           <input id="men" value="" type="text" class="text-input text-input--underbar trn" placeholder="Enter Food Name"
+           <input id="men" value="" type="text" class="text-input text-input--underbar trn" placeholder="Enter Food Name or Restaurant"
          style="display: block; width: 100%">
-		 <input id="s" value="" type="text" class="text-input text-input--underbar trn" ng-model="text" placeholder="Street Address,City" data-trn-key="home_search_placeholder" 
+		 <input id="s" value="" type="text" class="text-input text-input--underbar trn" ng-model="text" placeholder="Street Address,City,Country" data-trn-key="home_search_placeholder" 
          style=" width: 100%">
 		 
        </section>
@@ -344,107 +344,11 @@
 	  	   
 	   	  
     </div>  
+	<div class="bottombanner">
 	
-	<div id="myDiv"></div>
 
-		<!-- coverflow data -->
-		<ul id="coverflowData" style="display: none;">
-			
-			<!-- category -->
-			<ul data-cat="Specials">
-			
-				<ul>
-					<li data-url="load/media/thumbnails/image3.jpg"></li>
-					<li data-thumbnail-path="load/media/thumbnails/image3.jpg" data-thumbnail-width="400" data-thumbnail-height="225"></li>
-					<li data-thumbnail-text="">
-						<p class="largeLabel">Table Booking</p>
-						<p class="smallLabel">Book your Favorite table in advance</p>
-					</li>
-					<li data-info="">
-						<p class="mediaDescriptionHeader">Table Booking</p>
-						<p class="mediaDescriptionText">Book your Favorite table in advance.</p>
-					</li>
-				</ul>
-				
-				
-			
-				<ul>
-					<li data-url="load/media/thumbnails/image6.jpg"></li></li>
-					<li data-thumbnail-path="load/media/thumbnails/image6.jpeg" data-thumbnail-width="169" data-thumbnail-height="300"></li>
-					<li data-thumbnail-text="">
-						<p class="largeLabel">FOOD MENU</p>
-						<p class="smallLabel">Easy to Read Menu</p>
-					</li>
-					<li data-info="">
-						<p class="mediaDescriptionHeader">FOOD MENU</p>
-						<p class="mediaDescriptionText">Easy to ready menu</p>
-					</li>
-				</ul>
-				
-				<ul>
-					<li data-url="link:http://smarturl.it/mealoop"data-target="_blank"></li>
-					
-					<li data-thumbnail-path="load/media/thumbnails/image5.jpg" data-thumbnail-width="400" data-thumbnail-height="325"></li>
-					<li data-thumbnail-text="">
-						<p class="largeLabel">Compatible on all devices</p>
-						<p class="smallLabel">Iphone and Android</p>
-					</li>
-					<li data-info="">
-						<p class="mediaDescriptionHeader">Compatible on all devices</p>
-						<p class="mediaDescriptionText">Iphone and Android</p>
-					</li>
-				</ul>
-				
-				<ul>
-					<li data-url="showAddressBook();"></li>
-					<li data-thumbnail-path="load/media/thumbnails/image2.jpg" data-thumbnail-width="400" data-thumbnail-height="225"></li>
-					<li data-thumbnail-text="">
-						<p class="largeLabel">Re-Order</p>
-						<p class="smallLabel">With just one touch you can re-order food you previously purchased</p>
-					</li>
-					<li data-info="">
-						<p class="mediaDescriptionHeader">Re-Order</p>
-						<p class="mediaDescriptionText">With just one touch you can re-order food you previously purchased.</p>
-					</li>
-				</ul>
-				
-				
-				
-
-				<ul>
-					<li data-url="https://www.youtube.com/watch?v=06FaYNkvP8E" data-width="1000" data-height="650"></li>
-					<li data-thumbnail-path="load/media/thumbnails/image4.jpg" data-thumbnail-width="400" data-thumbnail-height="225"></li>
-					<li data-thumbnail-text="">
-						<p class="largeLabel">Compatable on all Device</p>
-						<p class="smallLabel">Revolution lightbox can load and play videos from Youtube, Vimeo or HTML5.</p>
-					</li>
-					<li data-info="">
-						<p class="mediaDescriptionHeader">VIMEO, YOUTUBE, HTML5 VIDEO!</p>
-						<p class="mediaDescriptionText">All you have to do is to include the link from YouTube, Vimeo or mp4 video that you want to display and the lightbox will display and play your video. The size (width and height) of each video can be set easily.</p>
-					</li>
-				</ul>
-							
-				
-				
-				<ul>
-					<li data-url="http://smarturl.it/mealoop" data-width="900" data-height="650"></li>
-					<li data-thumbnail-path="load/media/thumbnails/image1.jpg" data-thumbnail-width="400" data-thumbnail-height="225"></li>
-					<li data-thumbnail-text="">
-						<p class="largeLabel">DOWLOAD NOW!</p>
-						<p class="smallLabel">Available Now.</p>
-					</li>
-					<li data-info="">
-						<p class="mediaDescriptionHeader">DOWLOAD NOW!</p>
-						<p class="mediaDescriptionText">Available Now.</p>
-					</li>
-				</ul>
-				
-				
-			
-			</ul>
-			<!-- end  -->
-		</ul>
-
+	   	                
+       </div>
 
     <div class="wrapper no-connection">
       <ons-icon icon="ion-wifi" id="ion-wifi"></ons-icon>
