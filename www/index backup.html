@@ -17,8 +17,6 @@
 <link href="lib/mobiscroll/css/mobiscroll.scroller.ios-classic.css" rel="stylesheet" type="text/css" />
 <link href="lib/mobiscroll/css/mobiscroll.scroller.ios.css" rel="stylesheet" type="text/css" />
 <link href="lib/mobiscroll/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="load/skin_allsizes_white.css"/>
-<script type="text/javascript" src="java/FWDSimple3DCoverflow.js"></script>
 
 <script src="lib/angular/angular.js"></script>
 <script src="lib/onsen/js/onsenui.js"></script>
@@ -58,7 +56,12 @@
 <script src="js/tpl.js?ver=1.0"></script>
 <script src="js/countries.js?ver=1.0"></script>
 <script src="js/app.js?ver=1.0"></script>
-<script type="text/javascript">
+<!-- slide -->
+<link rel="stylesheet" type="text/css" href="load/skin_allsizes_white.css"/>
+		<script type="text/javascript" src="java/FWDSimple3DCoverflow.js"></script>
+		
+		<!-- Setup the coverflow (all settings are explained in detail in the documentation files) -->
+		<script type="text/javascript">
 			FWDRLS3DUtils.onReady(function(){
 				var coverflow = new FWDSimple3DCoverflow({
 					
@@ -66,7 +69,7 @@
 					coverflowHolderDivId:"myDiv",
 					coverflowDataListDivId:"coverflowData",
 					displayType:"fluidwidth",
-					autoScale:"no",
+					autoScale:"yes",
 					coverflowWidth:500,
 					coverflowHeight:538,
 					mainFolderPath:"load",
@@ -112,8 +115,8 @@
 					textOffset:10,
 					showThumbnailBoxShadow:"yes",
 					thumbnailBoxShadowCss:"0px 2px 2px #BBBBBB",
-					showTooltip:"no",
-					dynamicTooltip:"no",
+					showTooltip:"yes",
+					dynamicTooltip:"yes",
 					showReflection:"yes",
 					reflectionHeight:60,
 					reflectionDistance:0,
@@ -129,9 +132,9 @@
 					controlsOffset:10,
 					showLargeNextAndPrevCoverflowButtons:"no",
 					largeNextAndPrevButtonsOffest:20,
-					showNextAndPrevCoverflowButtons:"no",
+					showNextAndPrevCoverflowButtons:"yes",
 					showSlideshowButton:"yes",
-					showScrollbar:"no",
+					showScrollbar:"yes",
 					showBulletsNavigation:"no",
 					bulletsNormalColor:"#999999",
 					bulletsSelectedColor:"#000000",
@@ -147,7 +150,7 @@
 					addKeyboardSupport:"yes",
 												
 					//categories settings
-					showCategoriesMenu:"no",
+					showCategoriesMenu:"yes",
 					startAtCategory:1,
 					categoriesMenuMaxWidth:700,
 					categoriesMenuOffset:25,
@@ -171,8 +174,8 @@
 					showDescriptionButton:"yes",
 					showDescriptionByDefault:"no",
 					videoShowFullScreenButton:"yes",
-					videoAutoPlay:"no",
-					nextVideoOrAudioAutoPlay:"no",
+					videoAutoPlay:"yes",
+					nextVideoOrAudioAutoPlay:"yes",
 					videoLoop:"no",
 					audioAutoPlay:"no",
 					audioLoop:"no",
@@ -200,6 +203,9 @@
 				});
 			});
 		</script>
+
+
+
 </head>
 <body>
 
@@ -246,15 +252,10 @@
       <ons-icon icon="ion-android-contact"></ons-icon> 
       <span class="trn" data-trn-key="profile">Profile</span>
     </ons-list-item>    
-	
-	<ons-list-item onclick="showCart();" class="bottom-menu-item">
-      <ons-icon icon="fa-shopping-cart"></ons-icon> 
-	  <span class="trn" data-trn-key="support">Cart</span>
-    </ons-list-item>  
     
     <ons-list-item onclick="showOrders();" class="bottom-menu-item">
       <ons-icon icon="ion-android-restaurant"></ons-icon> 
-      <span class="trn" data-trn-key="orders">My Orders</span>
+      <span class="trn" data-trn-key="orders">Orders</span>
     </ons-list-item>      
     
     <ons-list-item onclick="showAddressBook();" class="bottom-menu-item">
@@ -271,18 +272,12 @@
       <ons-icon icon="ion-gear-a"></ons-icon> 
       <span class="trn" data-trn-key="settings">Settings</span>
     </ons-list-item>    
-                      
-	<ons-list-item onclick="showSupport();" class="bottom-menu-item">
-      <ons-icon icon="ion-settings"></ons-icon> 
-      <span class="trn" data-trn-key="support">Live Support</span>
-    </ons-list-item>  
-	
-	<ons-list-item onclick="logout();" class="bottom-menu-item logout-menu">
+    
+    <ons-list-item onclick="logout();" class="bottom-menu-item logout-menu">
       <ons-icon icon="ion-log-out"></ons-icon> 
       <span class="trn" data-trn-key="logout">Logout</span>
-    </ons-list-item>  
-	
-			
+    </ons-list-item>    
+            
   </ons-list>
   </ons-page> 
 </script>
@@ -307,9 +302,6 @@
 
     </ons-toolbar>
 
-
-		
-
     <div class="home-header">
          <img src="css/images/banner.png" alt="" title="">
     </div> 
@@ -318,9 +310,9 @@
        <h4 class="trn" data-trn-key="enter_your_location">What are you craving?</h4>
        
        <section class="field-section">
-           <input id="men" value="" type="text" class="text-input text-input--underbar trn" placeholder="Enter Food Name or Restaurant"
+           <input id="men" value="" type="text" class="text-input text-input--underbar trn" placeholder="Enter Food Name"
          style="display: block; width: 100%">
-		 <input id="s" value="" type="text" class="text-input text-input--underbar trn" ng-model="text" placeholder="Street Address,City,Country" data-trn-key="home_search_placeholder" 
+		 <input id="s" value="" type="text" class="text-input text-input--underbar trn" ng-model="text" placeholder="Street Address,City" data-trn-key="home_search_placeholder" 
          style=" width: 100%">
 		 
        </section>
@@ -344,9 +336,276 @@
 	  	   
 	   	  
     </div>  
-	<div class="bottombanner">
-	
+	<div id="myDiv"></div>
 
+		<!-- coverflow data -->
+		<ul id="coverflowData" style="display: none;">
+			
+			<!-- category -->
+			<ul data-cat="+ Category one">
+			
+				<ul>
+					<li data-url="link:http://www.google.com" data-target="_blank"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/8.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">CUSTOM THUMBNAIL ACTION</p>
+						<p class="smallLabel">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">CUSTOM PRESS THUMBNAIL ACTION.</p>
+						<p class="mediaDescriptionText">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="load/media/images2/1.jpg"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/1.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">RESPONSIVE LAYOUT</p>
+						<p class="smallLabel">The coverflow has RESPONSIVE LAYOUT</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">RESPONSIVE LAYOUT</p>
+						<p class="mediaDescriptionText">The coverflow has responsive layout, basically it has an adaptable layout which makes it the perfect candidate for any type of project.</p>
+					</li>
+				</ul>
+			
+				<ul>
+					<li data-url="load/media/videos/video-desktop.mp4,load/media/videos/video-mobile.mp4" data-poster-path="load/media/posters/video-desktop.jpg" data-width="900" data-height="506"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/12.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">REVOLUTION LIGHTBOX INCLUDED</p>
+						<p class="smallLabel">Full blown multimedia responsive lightbox included.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">REVOLUTION LIGHTBOX INCLUDED.</p>
+						<p class="mediaDescriptionText">Full blown multimedia responsive lightbox included, it runs on all major browsers and mobile devices like iPhone, iPad, iOS, Android and Windows desktop or mobile. It has support for image (jpg, jpeg, png, video (mp4), audio (mp3), Vimeo, YouTube, iFrame, Google maps and flash.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="load/media/audio/audio.mp3"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/3.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">OUTSTANDING PERFORMANCE</p>
+						<p class="smallLabel">High performance using OOP and the latest CSS techniques.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">OUTSTANDING PERFORMANCE.</p>
+						<p class="mediaDescriptionText">High performance using OOP code and the latest CSS techniques, ready for mobile with swipe and pinch support, very flexible, easy to setup and extremely customizable.</p>
+					</li>
+				</ul>
+
+				<ul>
+					<li data-url="https://www.youtube.com/watch?v=9bZkp7q19f0" data-width="1000" data-height="550"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/7.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">VIMEO, YOUTUBE, HTML5 VIDEO!</p>
+						<p class="smallLabel">Revolution lightbox can load and play videos from Youtube, Vimeo or HTML5.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">VIMEO, YOUTUBE, HTML5 VIDEO!</p>
+						<p class="mediaDescriptionText">All you have to do is to include the link from YouTube, Vimeo or mp4 video that you want to display and the lightbox will display and play your video. The size (width and height) of each video can be set easily.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="http://vimeo.com/50747914" data-width="900" data-height="550"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/6.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">CUSTOMIZABLE SKIN AND COLOR</p>
+						<p class="smallLabel">The entire color theme can be modified.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">CUSTOMIZABLE SKIN AND COLOR.</p>
+						<p class="mediaDescriptionText">The entire color theme can be modified, and also the skin can be replaced with your own.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-type="media" data-url="load/media/images2/5.jpg"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/5.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">TEXT FORMATTED WITH CSS</p>
+						<p class="smallLabel">Full css support, the thumbnails text can be formatted  with CSS.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">CUSTOM TEXT FORMATTED WITH CSS</p>
+						<p class="mediaDescriptionText">Full css support, the text which appear over the thumbnail can be formatted  with CSS.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="http://www.webdesign-flash.ro/iframe.html" data-width="900" data-height="650"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/9.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">IFRAME SUPPORT!</p>
+						<p class="smallLabel">The lightbox can load a HTML page and display it with ease.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">IFRAME SUPPORT!</p>
+						<p class="mediaDescriptionText">The lightbox can load a HTML page and display it with ease. All you have to do is to include the link of the HTML page and the lightbox will display it. The HTML page size (width and height) can be easily set.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="load/media/flash/fwd.swf" data-width="800" data-height="500"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/1.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">CUSTOM THUMBNAIL ACTION</p>
+						<p class="smallLabel">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">CUSTOM PRESS THUMBNAIL ACTION.</p>
+						<p class="mediaDescriptionText">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+				</ul>
+			
+				<ul>
+					<li data-url="https://www.google.com/maps/embed/v1/place?q=castelul%20hunedoara&key=..." data-width="1100" data-height="650"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/2.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">THUMBNAILS DESCRIPTION</p>
+						<p class="smallLabel">Each thumbnail can have optional short description.</p>
+					</li>
+				</ul>
+			
+			</ul>
+			<!-- end  -->
+			
+			<!-- category -->
+			<ul data-cat="+ Category two">
+			
+				<ul>
+					<li data-url="link:http://www.google.com" data-target="_blank"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/8.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">CUSTOM THUMBNAIL ACTION</p>
+						<p class="smallLabel">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">CUSTOM PRESS THUMBNAIL ACTION.</p>
+						<p class="mediaDescriptionText">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="load/media/videos/video-desktop.mp4,load/media/videos/video-mobile.mp4" data-poster-path="load/media/posters/video-desktop.jpg" data-width="900" data-height="506"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/11.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">REVOLUTION LIGHTBOX INCLUDED</p>
+						<p class="smallLabel">Full blown multimedia responsive lightbox included.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">REVOLUTION LIGHTBOX INCLUDED.</p>
+						<p class="mediaDescriptionText">Full blown multimedia responsive lightbox included, it runs on all major browsers and mobile devices like iPhone, iPad, iOS, Android and Windows desktop or mobile. It has support for image (jpg, jpeg, png, video (mp4), audio (mp3), Vimeo, YouTube, iFrame, Google maps and flash.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="load/media/images2/1.jpg"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/1.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">RESPONSIVE LAYOUT</p>
+						<p class="smallLabel">The coverflow has RESPONSIVE LAYOUT</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">RESPONSIVE LAYOUT</p>
+						<p class="mediaDescriptionText">The coverflow has responsive layout, basically it has an adaptable layout which makes it the perfect candidate for any type of project.</p>
+					</li>
+				</ul>
+			
+				<ul>
+					<li data-url="load/media/videos/video-desktop.mp4,load/media/videos/video-mobile.mp4" data-poster-path="load/media/posters/video-desktop.jpg" data-width="900" data-height="506"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/12.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">REVOLUTION LIGHTBOX INCLUDED</p>
+						<p class="smallLabel">Full blown multimedia responsive lightbox included.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">REVOLUTION LIGHTBOX INCLUDED.</p>
+						<p class="mediaDescriptionText">Full blown multimedia responsive lightbox included, it runs on all major browsers and mobile devices like iPhone, iPad, iOS, Android and Windows desktop or mobile. It has support for image (jpg, jpeg, png, video (mp4), audio (mp3), Vimeo, YouTube, iFrame, Google maps and flash.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="load/media/audio/audio.mp3"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/3.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">OUTSTANDING PERFORMANCE</p>
+						<p class="smallLabel">High performance using OOP and the latest CSS techniques.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">OUTSTANDING PERFORMANCE.</p>
+						<p class="mediaDescriptionText">High performance using OOP code and the latest CSS techniques, ready for mobile with swipe and pinch support, very flexible, easy to setup and extremely customizable.</p>
+					</li>
+				</ul>
+
+				<ul>
+					<li data-url="https://www.youtube.com/watch?v=9bZkp7q19f0" data-width="1000" data-height="550"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/7.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">VIMEO, YOUTUBE, HTML5 VIDEO!</p>
+						<p class="smallLabel">Revolution lightbox can load and play videos from Youtube, Vimeo or HTML5.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">VIMEO, YOUTUBE, HTML5 VIDEO!</p>
+						<p class="mediaDescriptionText">All you have to do is to include the link from YouTube, Vimeo or mp4 video that you want to display and the lightbox will display and play your video. The size (width and height) of each video can be set easily.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="https://www.google.com/maps/embed/v1/place?q=castelul%20hunedoara&key=..." data-width="1100" data-height="650"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/2.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">THUMBNAILS DESCRIPTION</p>
+						<p class="smallLabel">Each thumbnail can have optional short description.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="link:http://www.google.com" data-target="_blank"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/10.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">CUSTOM THUMBNAIL ACTION</p>
+						<p class="smallLabel">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">CUSTOM PRESS THUMBNAIL ACTION.</p>
+						<p class="mediaDescriptionText">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+				</ul>
+				
+				<ul>
+					<li data-url="http://www.webdesign-flash.ro/iframe.html" data-width="900" data-height="650"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/9.jpg" data-thumbnail-width="380" data-thumbnail-height="280"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">IFRAME SUPPORT!</p>
+						<p class="smallLabel">The lightbox can load a HTML page and display it with ease.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">IFRAME SUPPORT!</p>
+						<p class="mediaDescriptionText">The lightbox can load a HTML page and display it with ease. All you have to do is to include the link of the HTML page and the lightbox will display it. The HTML page size (width and height) can be easily set.</p>
+					</li>
+				</ul>
+			
+				
+				<ul>
+					<li data-url="load/media/flash/fwd.swf" data-width="800" data-height="500"></li>
+					<li data-thumbnail-path="load/media/thumbnails2/1.jpg" data-thumbnail-width="280" data-thumbnail-height="380"></li>
+					<li data-thumbnail-text="">
+						<p class="largeLabel">CUSTOM THUMBNAIL ACTION</p>
+						<p class="smallLabel">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+					<li data-info="">
+						<p class="mediaDescriptionHeader">CUSTOM PRESS THUMBNAIL ACTION.</p>
+						<p class="mediaDescriptionText">When a thumbnail is pressed the coverflow can open a browser window or the lightbox.</p>
+					</li>
+				</ul>	
+			
+			</ul>
+			<!-- end  -->
+		</ul>
 	   	                
        </div>
 
@@ -391,28 +650,6 @@
 </ons-page>
 </ons-navigator> 
 </script>
-
-<script type="text/ons-template" id="Support.html">
-	<ons-navigator title="Navigator" var=sNavigator">
-		<ons-page id="page-support" on-device-backbutton="backToHome()">
-			<ons-toolbar>
-				<div class="left">
-					<ons-toolbar-button onclick="setHome();">
-						<ons-icon icon="fa-chevron-left"></ons-icon>
-					</ons-toolbar-button>
-				</div>
-					
-				<div class="center white">
-					<span id="search-text" class="trn" data-trn-key="browse_resto">Live Support</span>
-				</div>
-			</ons-toolbar>
-			
-			<iframe src="http://smarturl.it/livehelp" width="100%" height="80%"></iframe>
-		</ons-page>
-	</ons-navigator>
-</script>
-
-
 
 
 <script type="text/ons-template" id="filterOptons.html">    
@@ -1274,10 +1511,7 @@
     <div class="center white"><span id="search-text" class="trn" data-trn-key="browse_resto">Browse Restaurant</span></div>           
     
     <div class="right">
-      <ons-toolbar-button onclick="showCart();" >         
-           <div class="notification cart-num" >0</div>
-           <ons-icon icon="fa-shopping-cart" class="cart">
-         </ons-toolbar-button>
+      <ons-toolbar-button><ons-icon icon="fa-search" onclick="showFilterResto();"></ons-toolbar-button>
     </div>
         
    </ons-toolbar>
