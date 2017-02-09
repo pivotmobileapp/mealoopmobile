@@ -12,7 +12,8 @@
     <author email="jupiter@pivotmobileapp.com" href="http://mealoop.com">
         mealoop.com
     </author>
-    
+        <allow-navigation href="*" />
+    <allow-intent href="*" />
     <icon src="icon.png" />       
     <icon src="Icon-App-60x60@3x.png" platform="ios" width="180" height="180" />
     <icon src="ldpi.png" platform="android" qualifier="ldpi" />
