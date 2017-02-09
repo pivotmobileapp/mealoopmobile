@@ -46,19 +46,20 @@ max-width:70%;
 }
 
 #navlinks{
-	text-align:right;
+	text-align:left;
 }
 #navlinks > ul{
-	list-style-type:none;
+	list-style-type: inherit;
 	margin-top:0;
 }
 #navlinks > ul > li{
+	max-width:100%;
 	display:inline;
 	padding:5px;
 }
 #navlinks > ul > li > a{
 	display:inline-block;
-	text-align: right;
+	text-align: left;
 	text-decoration:none;
 	color:inherit;
 }
@@ -1082,4 +1083,20 @@ position:relative;
 {
 max-width:220px;
 white-space: inherit;
+}
+@media screen and (max-width: 600px) {
+.taza .logo-wrap img, .logo-wrap2 img {
+     width: 80px!important;
+    margin: auto;
+    display: block;
+   height: 80px!important;
+}
+.taza .restaurant-list .logo-wrap, .restaurant-list .logo-wrap2, .logo-wrap {
+    height: 80px!important;
+    width: 80px!important;
+    display: block;
+    margin: auto;
+    background: #fff;
+}
+ 
 }
