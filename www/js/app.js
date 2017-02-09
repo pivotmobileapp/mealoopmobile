@@ -14,7 +14,7 @@ var cart=[];
 var networkState;
 var dziuk=[];
 var access=[];
-var _not_available = [];
+_not_available = [];
 var _dziuk=[];
 var _photo=[];
 var _name=[];
@@ -242,7 +242,8 @@ function searchMerchant()
 {			
 
 	var s =$('#s').val(); 
- 	/*`console.log(merch_inf)`*/	
+	console.log(s);
+	/*`console.log(merch_inf)`*/	
 	/*clear all storage*/
 	setStorage("search_address",s);   
 	removeStorage('merchant_id');
@@ -1781,191 +1782,179 @@ function setHomeCallback()
 function displayRestaurantResults(data , target_id)
 {	  
 
-
-
+	
+	
 	console.log('data',data)
 	var json_text = getStorage('jsonText')
 	dump(data);
 	var htm='';	
-	var search_ob=	getStorage('search_ob');
-	var	search_obj =  JSON.parse(search_ob);
-
+var search_ob=	getStorage('search_ob');
+var	search_obj =  JSON.parse(search_ob);
+	
 	if(search_obj!=null){
 		data=search_obj.details.data;
 	}
 	$.each( data, function( key, val ) {
 		if(json_text){
 			for(i=0;i<dziuk.length;i++){
-				if(val.merchant_id==dziuk[i]){
-					
-					if(getStorage("br_rest")){
-						if(val.is_open=='closed'){
-							htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="itemNotAvailable(3)" >';		
-						}else{
-						htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadRestaurantCategory('+val.merchant_id+');" >';
-						}
-						htm+='<ons-row class="row">';    	 
-						htm+='<ons-col class="col-image border" width="35%">';
-						htm+='<div class="logo-wrap2" >';
-						htm+='<div class="img_loaded" >';
-						htm+='<img src="'+val.logo+'" />';
-						htm+='</div>';
+		            if(val.merchant_id==dziuk[i]){
+						if(getStorage("br_rest")){
+								htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadRestaurantCategory('+val.merchant_id+');" >';
+			htm+='<ons-row class="row">';    	 
+			htm+='<ons-col class="col-image border" width="35%">';
+			htm+='<div class="logo-wrap2" >';
+			htm+='<div class="img_loaded" >';
+			htm+='<img src="'+val.logo+'" />';
+			htm+='</div>';
 
-						htm+='</div>';
+			htm+='</div>';
 
-						dump(val.service);
+			dump(val.service);
 
-						if(!empty(val.service)){
-							$.each( val.services, function( key_service, val_services ) { 
-								htm+='<p class="center">'+val_services+' <i class="green-color ion-android-checkmark-circle"></i></p>';
-							});
-							htm+='<p class="center">'+val.payment_options.cod+'</p>';
-						}
+			if(!empty(val.service)){
+				$.each( val.services, function( key_service, val_services ) { 
+					htm+='<p class="center">'+val_services+' <i class="green-color ion-android-checkmark-circle"></i></p>';
+				});
+				htm+='<p class="center">'+val.payment_options.cod+'</p>';
+			}
 
-						htm+='</ons-col>';
+			htm+='</ons-col>';
 
-						htm+='<ons-col class="col-description border" width="65%">';
-						htm+='<div>';
-						htm+='<div class="rating-stars" data-score="'+val.ratings.ratings+'"></div>';
-						htm+='<p class="restauran-title concat-text">'+val.restaurant_name+'</p>';
-						htm+='<p class="concat-textx">'+val.cuisine+'</p>';
+			htm+='<ons-col class="col-description border" width="65%">';
+			htm+='<div>';
+			htm+='<div class="rating-stars" data-score="'+val.ratings.ratings+'"></div>';
+			htm+='<p class="restauran-title concat-text">'+val.restaurant_name+'</p>';
+			htm+='<p class="concat-textx">'+val.cuisine+'</p>';
 
-						if(!empty(val.distance)){
-							htm+='<p>'+val.distance+'</p>';
-						}
+			if(!empty(val.distance)){
+				htm+='<p>'+val.distance+'</p>';
+			}
 
-						if(val.service!=3){
-							if(!empty(val.delivery_estimation)){
-								htm+='<p>'+val.delivery_estimation+'</p>';	    	           	   
-							}
-							if(!empty(val.delivery_distance)){
-								htm+='<p>'+val.delivery_distance+'</p>';
-							}
-						}
+			if(val.service!=3){
+				if(!empty(val.delivery_estimation)){
+					htm+='<p>'+val.delivery_estimation+'</p>';	    	           	   
+				}
+				if(!empty(val.delivery_distance)){
+					htm+='<p>'+val.delivery_distance+'</p>';
+				}
+			}
 
-						if ( val.offers.length>0){
-							$.each( val.offers, function( key_offer, val_offer ) { 
-								htm+='<p class="top10">'+val_offer+'</p>';
-							});
-						}
-						console.log()
-						htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
-						htm+='</div>';
+			if ( val.offers.length>0){
+				$.each( val.offers, function( key_offer, val_offer ) { 
+					htm+='<p class="top10">'+val_offer+'</p>';
+				});
+			}
 
-						htm+='<ons-row>';
-						htm+='<ons-col width="60%">';
-						if(val.service!=3){
-							htm+='<p class="p-small trn" data-trn-key="delivery">Delivery</p>';
-							if(!empty(val.delivery_fee)){
-								htm+='<price>'+val.delivery_fee+'</price>';
-							}
-						}
-						htm+='</ons-col>';
+			htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
+			htm+='</div>';
 
-						htm+='<ons-col class="border-left">';
-						htm+='<p class="p-small trn" data-trn-key="min_order">Min. Order</p>';
-						htm+='<price>'+val.minimum_order+'</price>';
-						htm+='</ons-col>';
+			htm+='<ons-row>';
+			htm+='<ons-col width="60%">';
+			if(val.service!=3){
+				htm+='<p class="p-small trn" data-trn-key="delivery">Delivery</p>';
+				if(!empty(val.delivery_fee)){
+					htm+='<price>'+val.delivery_fee+'</price>';
+				}
+			}
+			htm+='</ons-col>';
 
-						htm+='</ons-row>';
+			htm+='<ons-col class="border-left">';
+			htm+='<p class="p-small trn" data-trn-key="min_order">Min. Order</p>';
+			htm+='<price>'+val.minimum_order+'</price>';
+			htm+='</ons-col>';
 
-						htm+='</ons-col>';
+			htm+='</ons-row>';
 
-						htm+='</ons-row>';
-						htm+='</ons-list-item>';
-					}
-					else{
-						if(val.is_open=='closed'){
-							htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="itemNotAvailable(3)" >';		
+			htm+='</ons-col>';
+
+			htm+='</ons-row>';
+			htm+='</ons-list-item>';
 						}
 						else{
+							
+		if (access[i]==2){
+			htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="itemNotAvailable(2)" >';		
+		} else {
+			if (_not_available[i]==2){
+				html+='<ons-list-item modifier="tappable" class="list-item-container" onclick="itemNotAvailable(1)" >';	
+			} else {
+       htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadItemDetails('+_item_id[i]+','+_merch_[i]+','+_cut_[i]+','+true+');"  id="page">';
+			}
+		}
+      htm+='<ons-row class="row">';      
+      htm+='<ons-col class="col-image border taza" width="35%" >';
+      htm+='<div class="logo-wrap2" style="height: inherit; width: 200px;>';
+      htm+='<div class="img_loaded" >';
+      htm+='<img src="'+_photo[i]+'" style="max-width:150px;max-height:none"/>';
+      htm+='</div>';
+      htm+='</div>';
 
-							if (access[i]==2){
-								htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="itemNotAvailable(2)" >';		
-							} else {
-								if (_not_available[i]==2){
-									html+='<ons-list-item modifier="tappable" class="list-item-container" onclick="itemNotAvailable(1)" >';	
-								} 
+      dump(val.service);
 
-								else {
-									htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadItemDetails('+_item_id[i]+','+_merch_[i]+','+_cut_[i]+','+true+');"  id="page">';
-								}
-							}
-						}
-						htm+='<ons-row class="row">';      
-						htm+='<ons-col class="col-image border taza" width="35%" >';
-						htm+='<div class="logo-wrap2" style="height: inherit; width: 200px;>';
-						htm+='<div class="img_loaded" >';
-						htm+='<img src="'+_photo[i]+'" style="max-width:150px;max-height:none"/>';
-						htm+='</div>';
-						htm+='</div>';
+      if(!empty(val.service)){
+       $.each( val.services, function( key_service, val_services ) { 
+        htm+='<p class="center">'+val_services+' <i class="green-color ion-android-checkmark-circle"></i></p>';
+       });
+       htm+='<p class="center">'+val.payment_options.cod+'</p>';
+      }
 
-						dump(val.service);
+      htm+='</ons-col>';
 
-						if(!empty(val.service)){
-							$.each( val.services, function( key_service, val_services ) { 
-								htm+='<p class="center">'+val_services+' <i class="green-color ion-android-checkmark-circle"></i></p>';
-							});
-							htm+='<p class="center">'+val.payment_options.cod+'</p>';
-						}
+      htm+='<ons-col class="col-description taza2 border" width="65%">';
 
-						htm+='</ons-col>';
+      htm+='<div style="position: relative" >';
+            
 
-						htm+='<ons-col class="col-description taza2 border" width="65%">';
+      htm+='<div class="rating-stars" data-score="'+val.ratings.ratings+'"></div>';
 
-						htm+='<div style="position: relative" >';
+      htm+='<div><p style="font-size:18px;     font-weight: 600; float:left; color:black; width:62%; padding-bottom: 21px;">'+_name[i]+'</p><price style="float:left;    padding-top: 10px; font-size:28px">'+'$'+_price[i]+'</price></div>';
+      htm+='<p class="restauran-title concat-text">'+val.restaurant_name+'</p>';
+      htm+='<p class="concat-textx">'+val.cuisine+'</p>';
 
+      if(!empty(val.distance)){
+       htm+='<p>'+val.distance+'</p>';
+      }
 
-						htm+='<div class="rating-stars" data-score="'+val.ratings.ratings+'"></div>';
+      if(val.service!=3){
+       if(!empty(val.delivery_estimation)){
+        htm+='<p>'+val.delivery_estimation+'</p>';                     
+       }
+       if(!empty(val.delivery_distance)){
+        htm+='<p>'+val.delivery_distance+'</p>';
+       }
+      }
 
-						htm+='<div><p style="font-size:18px;     font-weight: 600; float:left; color:black; width:62%; padding-bottom: 21px;">'+_name[i]+'</p><price style="float:left;    padding-top: 10px; font-size:28px">'+'$'+_price[i]+'</price></div>';
-						htm+='<p class="restauran-title concat-text">'+val.restaurant_name+'</p>';
-						htm+='<p class="concat-textx">'+val.cuisine+'</p>';
+      if ( val.offers.length>0){
+       $.each( val.offers, function( key_offer, val_offer ) { 
+        htm+='<p class="top10">'+val_offer+'</p>';
+       });
+      }
 
-						if(!empty(val.distance)){
-							htm+='<p>'+val.distance+'</p>';
-						}
+      htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
+      htm+='</div>';
 
-						if(val.service!=3){
-							if(!empty(val.delivery_estimation)){
-								htm+='<p>'+val.delivery_estimation+'</p>';                     
-							}
-							if(!empty(val.delivery_distance)){
-								htm+='<p>'+val.delivery_distance+'</p>';
-							}
-						}
+      htm+='<ons-row>';
+      htm+='<ons-col width="60%">';
+      if(val.service!=3){
+       htm+='<p class="p-small trn" data-trn-key="delivery">Delivery</p>';
+       if(!empty(val.delivery_fee)){
+        htm+='<price>'+val.delivery_fee+'</price>';
+       }
+      }
+      htm+='</ons-col>';
 
-						if ( val.offers.length>0){
-							$.each( val.offers, function( key_offer, val_offer ) { 
-								htm+='<p class="top10">'+val_offer+'</p>';
-							});
-						}
-						
-						htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
-						htm+='</div>';
+      htm+='<ons-col class="border-left">';
+      //htm+='<p class="p-small trn" data-trn-key="min_order">Min. Order</p>';
+      htm+='<img src="'+val.logo+'" style="max-width:78px;max-height:80px"/>';
+      htm+='</ons-col>';
 
-						htm+='<ons-row>';
-						htm+='<ons-col width="60%">';
-						if(val.service!=3){
-							htm+='<p class="p-small trn" data-trn-key="delivery">Delivery</p>';
-							if(!empty(val.delivery_fee)){
-								htm+='<price>'+val.delivery_fee+'</price>';
-							}
-						}
-						htm+='</ons-col>';
+      htm+='</ons-row>';
 
-						htm+='<ons-col class="border-left">';
-						//htm+='<p class="p-small trn" data-trn-key="min_order">Min. Order</p>';
-						htm+='<img src="'+val.logo+'" style="max-width:78px;max-height:80px"/>';
-						htm+='</ons-col>';
+      htm+='</ons-col>';
 
-						htm+='</ons-row>';
-
-						htm+='</ons-col>';
-
-						htm+='</ons-row>';
-						htm+='</ons-list-item>';
-					}
+      htm+='</ons-row>';
+      htm+='</ons-list-item>';
+				}
 				}
 			}
 		}
@@ -2015,6 +2004,7 @@ function displayRestaurantResults(data , target_id)
 					htm+='<p class="top10">'+val_offer+'</p>';
 				});
 			}
+
 			htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
 			htm+='</div>';
 
@@ -2343,8 +2333,8 @@ function empty(data)
 
 function loadItemDetails(item_id,mtid,cat_id,bool=false)
 {		
-	removeStorage('menu_tit');
-	setStorage('menu_tit',mtid);
+removeStorage('menu_tit');
+setStorage('menu_tit',mtid);
 	if(bool!=false){
 		setStorage('bool',bool);
 	}
@@ -2496,7 +2486,7 @@ function displayItem(data)
 		});	
 	}
 	htm+=cartFooter(data.currency_code);
-	htm+='<button class="button green-btn button--large trn" data-trn-key="add_to_cart" onclick="addToCart();">Add to Cart<div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div></button>';
+	   htm+='<button class="button green-btn button--large trn" data-trn-key="add_to_cart" onclick="addToCart();">Add to Cart<div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div></button>';
 	if(getStorage('bool')){
 		htm+='<button style="margin-top:7px" id="new_buttt" class="button green-btn button--large trn" data-trn-key="add_to_cart" onclick="back_to_title();">More from this Restaurant<div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div></button>'
 		htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadItemDetails(389,19,96,true)"  id="page">'
@@ -4660,9 +4650,6 @@ function itemNotAvailable(options)
 		case 2:
 			toastMsg( getTrans("Ordering is disabled",'ordering_disabled') );
 			return;
-		case 3:
-			toastMsg( getTrans("Restaurant is close",'restaurant_is_closed') );
-			return;
 
 			break;
 	}	
@@ -5314,9 +5301,7 @@ function imageLoaded(div_id)
 		console.log( 'image is ' + result + ' for ' + image.img.src );	    
 	});
 }
-$( document ).on( "click", ".make0", function() {
- _cl_count=0;
-});
+
 $( document ).on( "keyup", ".limit_char", function() {
 	var limit=$(this).data("maxl");
 	limit=parseInt(limit);	  
@@ -5328,7 +5313,7 @@ function limitText(field, maxChar){
 		val = ref.val();
 	if ( val.length >= maxChar ){
 		ref.val(function() {
-
+		
 			return val.substr(0, maxChar);       
 		});
 	}
@@ -6670,17 +6655,17 @@ var len = 0;
 
 function Localtion(){
 	removeStorage('br_rest');
-
+ 
 	dziuk = [];
 	_not_available = [];
-	_dziuk=[];
-	_photo=[];
-	_name=[];
-	_price=[];
-	_merch_=[];
-	_cut_=[];
-	_item_id=[];
-	access=[];
+	 _dziuk=[];
+     _photo=[];
+     _name=[];
+     _price=[];
+     _merch_=[];
+     _cut_=[];
+     _item_id=[];
+     access=[];
 	var rn = $.trim($('#s').val());
 	var food = $.trim($('#men').val());
 
@@ -6698,58 +6683,58 @@ function Localtion(){
 }
 
 function kUz(){
-	dziuk = [];
-	_dziuk=[];
-	_photo=[];
-	_name=[];
-	_price=[];
-	_merch_=[];
-	_cut_=[];
-	_item_id=[];
+	  dziuk = [];
+	 _dziuk=[];
+     _photo=[];
+     _name=[];
+     _price=[];
+     _merch_=[];
+     _cut_=[];
+     _item_id=[];
 	_cl_count++;
 	if(_cl_count==1){
 		setStorage("br_rest", 'br_restt' );
 		removeStorage("bool");
 
-		if(!$.trim($('#s').val())) {
-			removeStorage("dziuk");
-			removeStorage("jsonText");
-			menu.setMainPage('home.html',{ closeMenu:true });
-		}else{
-			var rn =  $('#s').val();
-			var address = "http://mealoop.com/mobileapp/api/search?address="+rn+"";
-			$.ajax({
-				url: address, 
-				type: 'post',                  
-				async: false,
-				dataType: 'jsonp',
-				success: function (data) {
-					if(data.details.data){
-						var search_ob = JSON.stringify(data, null, 2);
-						removeStorage('search_ob');
-						setStorage('search_ob',search_ob);
-						$.each(data.details.data, function(key, val){
-							dziuk.push(val.merchant_id)
-						})
-						setStorage("dziuk", dziuk );
-						setStorage("jsonText", dziuk );
-						removeStorage("dziukLength");
-						setStorage("dziukLength", dziuk.length);
-						searchMerchant()
-					}else{
-						removeStorage('search_ob');
-						removeStorage("dziukLength");
-						setStorage("dziukLength", 0);
-						setStorage("dziuk", 1000000000000000000000000000000000);
-						setStorage("jsonText", 1000000000000000000000000000000);
-						searchMerchant()
+	if(!$.trim($('#s').val())) {
+		removeStorage("dziuk");
+		removeStorage("jsonText");
+		  menu.setMainPage('home.html',{ closeMenu:true });
+	}else{
+		var rn =  $('#s').val();
+		var address = "http://mealoop.com/mobileapp/api/search?address="+rn+"";
+		$.ajax({
+			url: address, 
+			type: 'post',                  
+			async: false,
+			dataType: 'jsonp',
+			success: function (data) {
+				if(data.details.data){
+			var search_ob = JSON.stringify(data, null, 2);
+		removeStorage('search_ob');
+		setStorage('search_ob',search_ob);
+					$.each(data.details.data, function(key, val){
+						dziuk.push(val.merchant_id)
+					})
+					setStorage("dziuk", dziuk );
+					setStorage("jsonText", dziuk );
+					removeStorage("dziukLength");
+					setStorage("dziukLength", dziuk.length);
+					searchMerchant()
+				}else{
+					removeStorage('search_ob');
+					removeStorage("dziukLength");
+					setStorage("dziukLength", 0);
+					setStorage("dziuk", 1000000000000000000000000000000000);
+				    setStorage("jsonText", 1000000000000000000000000000000);
+					searchMerchant()
 
-					}
 				}
-			})
-		}
+			}
+		})
 	}
-
+	}
+	
 
 }
 
@@ -6761,11 +6746,11 @@ function h_23(food,address){
 		async: false,
 		dataType: 'jsonp',
 		success: function (data) {
-
+	
 			if(data.details.data){
-				var search_ob = JSON.stringify(data, null, 2);
-				removeStorage('search_ob');
-				setStorage('search_ob',search_ob);
+			var search_ob = JSON.stringify(data, null, 2);
+		removeStorage('search_ob');
+		setStorage('search_ob',search_ob);
 				$.each(data.details.data , function( key, val ){
 					h_24(val.merchant_id);
 				})
@@ -6779,7 +6764,7 @@ function h_23(food,address){
 
 			}
 		}
-	})
+     })
 
 
 }
@@ -6811,34 +6796,10 @@ function h_24(mrct_id){
 	})
 
 	}
-
-function back_to_title(){
-	var mtid=getStorage('menu_tit');
- 	cart = [] ; /*clear cart variable*/
-	removeStorage("tips_percentage");  
-	removeStorage("cc_id");  
-
-	dump('clear cart');
-	var options = {
-		animation: 'slide',
-		onTransitionEnd: function() { 
-			callAjax("MenuCategory","merchant_id="+mtid + "&device_id=" + getStorage("device_id")  );	
-		} 
-	};
-	removeStorage("bool");
-	setStorage("merchant_id",mtid);
-	sNavigator.popPage({cancelIfRunning: true});
-	sNavigator.pushPage("menucategory.html", options);
-}
-
-
-
-
-
 function h_25(cat,_m_id){
 
 	var _men=$.trim($('#men').val()).substr(0,1).toUpperCase()+$.trim($('#men').val()).substr(1);
-
+	
 
 	var  ajax_request = $.ajax({
 		url: "http://mealoop.com/mobileapp/api/getItemByCategory?cat_id="+cat+"&merchant_id="+_m_id+"", 
@@ -6850,7 +6811,8 @@ function h_25(cat,_m_id){
 		crossDomain: true,
 
 		success: function (dataa) {
- 			if(dataa.details.item){
+
+			if(dataa.details.item){
 
 				$.each( dataa.details.item, function( key, val ) {
 					++len
@@ -6861,24 +6823,25 @@ function h_25(cat,_m_id){
 					if(basName.search(L_men)!=-1){ 			
 						var json_text = JSON.stringify(dataa.details.merchant_info, null, 2);
 						var merch_id=dataa.details.merchant_info.merchant_id;  
-						if(val.prices){
-							_not_available.push(val.not_available);                   
-							access.push(dataa.details.disabled_ordering);                   
-							dziuk.push(dataa.details.merchant_info.merchant_id);                   
-							_photo.push(val.photo);                   
-							_name.push(val.item_name);    
- 							_price.push(val.prices[0].price);                   
-							_merch_.push(_m_id);                   
-							_cut_.push(cat);                   
-							_item_id.push(val.item_id);       
-						}
+						 if(val.prices){
+       _not_available.push(val.not_available);                   
+     access.push(dataa.details.disabled_ordering);                   
+     dziuk.push(dataa.details.merchant_info.merchant_id);                   
+     _photo.push(val.photo);                   
+     _name.push(val.item_name);    
+				console.log(val.prices);		
+     _price.push(val.prices[0].price);                   
+     _merch_.push(_m_id);                   
+     _cut_.push(cat);                   
+     _item_id.push(val.item_id);       
+						 }
 						if(jQuery.inArray(dataa.details.merchant_info.merchant_id, _dziuk)== -1)
 						{      
 							_dziuk.push(dataa.details.merchant_info.merchant_id);
 						}
 
 
-						setStorage("dziuk", dziuk );
+ 						setStorage("dziuk", dziuk );
 						setStorage("jsonText", dziuk );
 						removeStorage("dziukLength");
 						setStorage("dziukLength", _dziuk.length);
@@ -6895,11 +6858,34 @@ function h_25(cat,_m_id){
 			}
 		}})
 
-	
 
 	}
 
+function back_to_title(){
+	var mtid=getStorage('menu_tit');
+	console.log(mtid)
+	cart = [] ; /*clear cart variable*/
+	removeStorage("tips_percentage");  
+	removeStorage("cc_id");  
 
+	dump('clear cart');
+	var options = {
+		animation: 'slide',
+		onTransitionEnd: function() { 
+			callAjax("MenuCategory","merchant_id="+mtid + "&device_id=" + getStorage("device_id")  );	
+		} 
+	};
+	removeStorage("bool");
+	setStorage("merchant_id",mtid);
+	sNavigator.popPage({cancelIfRunning: true});
+	sNavigator.pushPage("menucategory.html", options);
+}
+  
 
-
-
+ 
+ function posts(){
+ window.location = 'a/index.html';
+} 
+function About_Us(){
+ window.location = 'a/index.html#/app/contact';
+}
