@@ -12,6 +12,7 @@
     <author email="jupiter@pivotmobileapp.com" href="http://mealoop.com">
         mealoop.com
     </author>
+    
     <icon src="icon.png" />       
     <icon src="Icon-App-60x60@3x.png" platform="ios" width="180" height="180" />
     <icon src="ldpi.png" platform="android" qualifier="ldpi" />
@@ -83,6 +84,16 @@
 	<preference name="orientation" value="portrait" />
 	<preference name="android-build-tool" value="gradle" />	
 <!--<preference name="phonegap-version" value="cli-6.4.0" />-->	
+
+<!-- this is inoic difference-->
+	<preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="none" />
+        <preference name="SplashScreenDelay" value="3000" />
+    <feature name="StatusBar">
+        <param name="ios-package" onload="true" value="CDVStatusBar" />
+    </feature>
 
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <gap:plugin name="phonegap-plugin-push" source="npm" spec="1.5.3" />
