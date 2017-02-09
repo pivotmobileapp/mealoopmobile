@@ -3851,6 +3851,36 @@ function submitFilterBrowse()
 	});
 }
 
+function cancelOrder()
+{
+	if (isLogin()){
+		menu.setMainPage('RequestCancelOrder.html', {closeMenu: true});
+	} else {
+		menu.setMainPage('RequestCancelOrder.html', {closeMenu: true})
+	}
+}
+
+
+function showSupport()
+{
+	if (isLogin()){
+		menu.setMainPage('Support.html', {closeMenu: true});
+	} else {
+		menu.setMainPage('Support.html', {closeMenu: true})
+	}
+}
+
+function showNews()
+{
+	if (isLogin()){
+		menu.setMainPage('News.html', {closeMenu: true});
+	} else {
+		menu.setMainPage('News.html', {closeMenu: true})
+	}
+}
+
+
+
 function showProfile()
 {
 	if (isLogin()){
@@ -6894,11 +6924,3 @@ function back_to_title(){
 
 
 
-function showSupport()
-{
-	if (isLogin()){
-		menu.setMainPage('Support.html', {closeMenu: true});
-	} else {
-		menu.setMainPage('Support.html', {closeMenu: true})
-	}
-}

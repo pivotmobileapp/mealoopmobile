@@ -97,6 +97,10 @@ background:#80CC1D;
 background:#3B5998;
 }
 
+.button.pink-btn{
+background:#B1347C;
+}
+
 .pad20{
 padding:20px;
 }
@@ -106,10 +110,14 @@ padding:25px;
 }
 
 .padtop25{
-padding-top:25px;
-padding-bottom:25px;
+padding-top:20px;
+padding-bottom:20px;
 }
 
+.padtop10{
+padding-top:10px;
+padding-bottom:10px;
+}
 
 
 .tab-bar{
@@ -799,6 +807,10 @@ display:none;
 
 .green-color{
 color:#80CC1D;
+}
+
+.pink-color{
+color:#B1347C;
 }
 
 .top10,
