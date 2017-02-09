@@ -66,19 +66,6 @@ module.exports = [
         "id": "cordova-plugin-device.DeviceProxy",
         "pluginId": "cordova-plugin-device",
         "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-x-toast/www/Toast.js",
-        "id": "cordova-plugin-x-toast.Toast",
-        "pluginId": "cordova-plugin-x-toast",
-        "clobbers": [
-            "window.plugins.toast"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-x-toast/test/tests.js",
-        "id": "cordova-plugin-x-toast.tests",
-        "pluginId": "cordova-plugin-x-toast"
     }
 ];
 module.exports.metadata = 
@@ -91,8 +78,7 @@ module.exports.metadata =
     "phonegap-plugin-push": "1.9.2",
     "cordova-plugin-network-information": "1.3.1",
     "cordova-plugin-device": "1.1.4",
-    "cordova-plugin-request-location-accuracy": "2.2.0",
-    "cordova-plugin-x-toast": "2.5.2"
+    "cordova-plugin-request-location-accuracy": "2.2.0"
 }
 // BOTTOM OF METADATA
 });
