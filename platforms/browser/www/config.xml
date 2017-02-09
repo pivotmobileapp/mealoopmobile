@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mealoop" version="1.0.7" versionCode="10.7" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.mealoop" version="1.0.1" versionCode="10.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
@@ -57,7 +57,7 @@
     <gap:plugin source="git" spec="https://github.com/razorpay/razorpay-cordova.git" />
     <gap:plugin name="cordova-plugin-media" source="npm" />
     <gap:plugin name="cordova.plugins.diagnostic" source="npm" />
-    <gap:plugin name="cordova-plugin-googlemaps" source="npm" spec="1.3.9">
+    <gap:plugin name="cordova-plugin-googlemaps" source="npm">
         <param name="API_KEY_FOR_ANDROID" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
         <param name="API_KEY_FOR_IOS" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
     </gap:plugin>
@@ -71,7 +71,6 @@
     </gap:config-file>
     <preference name="orientation" value="portrait" />
     <preference name="android-build-tool" value="gradle" />
-    <preference name="phonegap-version" value="cli-6.4.0" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="SplashScreenDelay" value="10000" />
     <preference name="fullscreen" value="false" />

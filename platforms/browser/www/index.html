@@ -56,8 +56,7 @@
 	<script src="js/tpl.js?ver=1.0"></script>
 	<script src="js/countries.js?ver=1.0"></script>
 	<script src="js/app.js?ver=1.0"></script>
-	
-</head>
+ </head>
 <body>
 
 
@@ -97,6 +96,16 @@
 			<ons-list-item onclick="kUz()" class="bottom-menu-item">
 				<ons-icon icon="ion-android-menu"></ons-icon>
 				<span class="trn" data-trn-key="browse_resto">Nearby Restaurants</span>
+			</ons-list-item>
+
+			<ons-list-item onclick="posts()" class="bottom-menu-item">
+				<ons-icon icon="clipboard"></ons-icon>
+				<span class="trn" data-trn-key="browse_resto">Posts</span>
+			</ons-list-item>
+
+			<ons-list-item onclick="About_Us()" class="bottom-menu-item">
+				<ons-icon icon="building"></ons-icon>
+				<span class="trn" data-trn-key="browse_resto">About</span>
 			</ons-list-item>
 
 			<ons-list-item onclick="showProfile();" class="bottom-menu-item">
@@ -392,6 +401,7 @@
 			</ons-list>
 		</form>
 
+	 
 	</ons-page>
 </script>
 
