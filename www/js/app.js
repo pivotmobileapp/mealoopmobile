@@ -6811,6 +6811,30 @@ function h_24(mrct_id){
 	})
 
 	}
+
+function back_to_title(){
+	var mtid=getStorage('menu_tit');
+ 	cart = [] ; /*clear cart variable*/
+	removeStorage("tips_percentage");  
+	removeStorage("cc_id");  
+
+	dump('clear cart');
+	var options = {
+		animation: 'slide',
+		onTransitionEnd: function() { 
+			callAjax("MenuCategory","merchant_id="+mtid + "&device_id=" + getStorage("device_id")  );	
+		} 
+	};
+	removeStorage("bool");
+	setStorage("merchant_id",mtid);
+	sNavigator.popPage({cancelIfRunning: true});
+	sNavigator.pushPage("menucategory.html", options);
+}
+
+
+
+
+
 function h_25(cat,_m_id){
 
 	var _men=$.trim($('#men').val()).substr(0,1).toUpperCase()+$.trim($('#men').val()).substr(1);
@@ -6871,27 +6895,10 @@ function h_25(cat,_m_id){
 			}
 		}})
 
+	
 
 	}
 
-function back_to_title(){
-	var mtid=getStorage('menu_tit');
- 	cart = [] ; /*clear cart variable*/
-	removeStorage("tips_percentage");  
-	removeStorage("cc_id");  
-
-	dump('clear cart');
-	var options = {
-		animation: 'slide',
-		onTransitionEnd: function() { 
-			callAjax("MenuCategory","merchant_id="+mtid + "&device_id=" + getStorage("device_id")  );	
-		} 
-	};
-	removeStorage("bool");
-	setStorage("merchant_id",mtid);
-	sNavigator.popPage({cancelIfRunning: true});
-	sNavigator.pushPage("menucategory.html", options);
-}
 
 
 
