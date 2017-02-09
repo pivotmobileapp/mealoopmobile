@@ -6893,14 +6893,4 @@ function back_to_title(){
 	sNavigator.pushPage("menucategory.html", options);
 }
 
-
-
-
-function showSupport()
-{
-	if (isLogin()){
-		menu.setMainPage('Support.html', {closeMenu: true});
-	} else {
-		menu.setMainPage('Support.html', {closeMenu: true});
-	}
-}
+//and  from html pls ok but  this fuction in right place ?yes you sure? ok 
