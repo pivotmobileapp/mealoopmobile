@@ -6901,6 +6901,6 @@ function showSupport()
 	if (isLogin()){
 		menu.setMainPage('Support.html', {closeMenu: true});
 	} else {
-		menu.setMainPage('Support.html', {closeMenu: true})
+		menu.setMainPage('Support.html', {closeMenu: true});
 	}
 }
