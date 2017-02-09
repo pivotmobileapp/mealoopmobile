@@ -12,6 +12,19 @@
     <author email="jupiter@pivotmobileapp.com" href="http://mealoop.com">
         mealoop.com
     </author>
+    
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="none" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
+    <feature name="StatusBar">
+        <param name="ios-package" onload="true" value="CDVStatusBar" />
+    </feature>
+    
+    
+    
     <icon src="icon.png" />       
     <icon src="Icon-App-60x60@3x.png" platform="ios" width="180" height="180" />
     <icon src="ldpi.png" platform="android" qualifier="ldpi" />

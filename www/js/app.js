@@ -6892,7 +6892,12 @@ function back_to_title(){
 }
 
 
-
+function posts(){
+    window.location = 'a/index.html';
+}
+function About_Us(){
+    window.location = 'a/index.html#/app/contact';
+}
 
 function showSupport()
 {
