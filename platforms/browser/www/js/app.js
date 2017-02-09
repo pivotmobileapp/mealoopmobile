@@ -158,14 +158,14 @@ function urlencode(data)
 $( document ).on( "keyup", ".numeric_only", function() {
 	this.value = this.value.replace(/[^0-9\.]/g,'');
 });
+$( document ).on( "click", ".make0", function() {
+	_cl_count=0;
+});
 
 ons.bootstrap();  
 ons.ready(function() {
 	dump('ready');
 
-$( document ).on( "click", ".make0", function() {
-	_cl_count=0;
-});
 
 	//navigator.splashscreen.hide()	
 	$("#s").val( getStorage("search_address") );
@@ -1940,7 +1940,8 @@ function displayRestaurantResults(data , target_id)
 								htm+='<p class="top10">'+val_offer+'</p>';
 							});
 						}
- 						htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
+						console.warn(val)
+						htm+='<span class="notification '+val.tag_raw+' ">'+val.is_open+'</span>';
 						htm+='</div>';
 
 						htm+='<ons-row>';
@@ -2340,12 +2341,11 @@ function empty(data)
 	return false;
 }
 
-function loadItemDetails(item_id,mtid,cat_id,bool)
-{
-
+function loadItemDetails(item_id,mtid,cat_id,bool=false)
+{		
 	removeStorage('menu_tit');
 	setStorage('menu_tit',mtid);
-	if(bool==true){
+	if(bool!=false){
 		setStorage('bool',bool);
 	}
 	if ( $("#close_store").val()==2 || $("#merchant_open").val()==1 ){
@@ -2775,7 +2775,7 @@ function setCartValue()
 
 	$('#page-itemdisplay .sub_item:radio:checked').each(function(){        		
 
-		var addo_price=explode("|",$(this).val());
+		var addo_price=explode("|",$(this).val());       
 
 		dump(addo_price);
 		dump(addo_price[1]);
@@ -2833,7 +2833,7 @@ function addToCart()
 
 					$(".require_addon_"+required_addon_id).after( 
 						"<span class=\"small-red-text\">"+err_msg 
-						+'</span>');
+						+'</span');
 					onsenAlert(err_msg);
 				}
 			}
@@ -5314,7 +5314,9 @@ function imageLoaded(div_id)
 		console.log( 'image is ' + result + ' for ' + image.img.src );	    
 	});
 }
- 
+$( document ).on( "click", ".make0", function() {
+ _cl_count=0;
+});
 $( document ).on( "keyup", ".limit_char", function() {
 	var limit=$(this).data("maxl");
 	limit=parseInt(limit);	  
@@ -6892,12 +6894,7 @@ function back_to_title(){
 }
 
 
-function posts(){
-    window.location = 'a/index.html';
-}
-function About_Us(){
-    window.location = 'a/index.html#/app/contact';
-}
+
 
 function showSupport()
 {
