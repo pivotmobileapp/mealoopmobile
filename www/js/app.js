@@ -14,7 +14,7 @@ var cart=[];
 var networkState;
 var dziuk=[];
 var access=[];
-_not_available = [];
+var _not_available = [];
 var _dziuk=[];
 var _photo=[];
 var _name=[];
