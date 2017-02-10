@@ -66,20 +66,16 @@
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		// instantiate the accordion
-		$('#example-json').accordionSlider({
-			JSONSource: 'http://mealoop.com/accordion.json',
-			width: 860, 
+		$('#example-xml').accordionSlider({
+			XMLSource: 'http://mealoop.com/accordion.xml',
+			width: 660, 
 			height: 400,
-			responsiveMode: 'custom',
-			autoplay: false,
-			mouseWheel:false,
-			breakpoints: {
-				700: {visiblePanels: 6},
-				500: {visiblePanels: 4}
-			}
+			visiblePanels: 5,
+			closePanelsOnMouseOut: false,
+			autoplay: false
 		});
 	});
-	</script>
+</script>
 
 
 </head>
@@ -232,7 +228,7 @@
 
     </div>  
 	
-	<div id="example-json" class="accordion-slider"></div>
+	<div id="example-xml" class="accordion-slider"></div>
 	
 	   
 <!--	<div class="bottombanner">
