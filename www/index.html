@@ -159,9 +159,9 @@
 	  
 	   <div id="navlinks" class="center white">
 		<ul>
-			<a onclick="kUz();">Nearby Kitchen </a>
-			<a > | </a>
-			<a onclick="showOrders();">My Orders</a>
+			<a onclick="showNews();">News &nbsp; &nbsp;&nbsp; &nbsp;</a>
+			<a > | &nbsp; &nbsp; </a>
+			<a onclick="showOrders();">&nbsp; &nbsp; My Orders</a>
 		
 		</ul>
 	  </div>
@@ -191,28 +191,23 @@
        </button>       
        </div>
        
+  <button class="firstbutton" onclick="Localtion();"> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  Search Food  &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</button>
+  <button class="secondbutton" data-trn-key="search_restaurant" onclick="kUz();"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Nearby Restaurant &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</button>
+   
     
-  		<button class="button green-btn button--large" onclick="searchMerchant();" style="display:none">
-	      <span class="trn" data-trn-key="search_restaurant">Search Restaurant</span>    	      
-	      <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
-	   </button>
+    	
+	 
 	   
-	   
-	   <button class="button green-btn button--large" onclick="Localtion();">
-	      <span class="trn" data-trn-key="search_restaurant">Search Food</span>    	      
-	      <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
-	   </button>
+	 <div class="padtop10">
+
+  
+	 </div> 
 	   
 
     </div>  
 	
-	<div class="padtop10">
-	   	<button class="button pink-btn button--large" onclick="kUz();"> 
-	      <span class="trn" data-trn-key="search_restaurant">Nearby Kitchen</span>    	      
-	      <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
-	   </button>
-  
-	 </div>  
+	
+	
 	   
 	<div class="bottombanner">
 	   	                
@@ -241,7 +236,7 @@
 					<ons-icon icon="fa-chevron-left"></ons-icon>
 				 </ons-toolbar-button>        
 			</div> 
-			<div class="center white"><span id="search-text" class="trn" data-trn-key="browse_resto">Entertainment</span></div>
+			<div class="center white"><span id="search-text" class="trn" data-trn-key="browse_resto">Request Cancel Order</span></div>
 		</ons-toolbar>
 		
 		<iframe src="http://smarturl.it/RequestCancelOrder" width="100%" height="100%"></iframe>
@@ -265,7 +260,7 @@
 				</div>
 			</ons-toolbar>
 
-			<iframe src="http://smarturl.it/livhelp" width="100%" height="100%"></iframe>
+			<iframe src="http://smarturl.it/livehelp" width="100%" height="100%"></iframe>
 			
 		</ons-page>
 	</ons-navigator>
@@ -282,7 +277,7 @@
 				</div>
 					
 				<div class="center white">
-					<span id="search-text" class="trn" data-trn-key="browse_resto">Support</span>
+					<span id="search-text" class="trn" data-trn-key="browse_resto">News and Promotions</span>
 				</div>
 			</ons-toolbar>
 

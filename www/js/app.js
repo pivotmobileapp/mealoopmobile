@@ -6717,7 +6717,7 @@ function Localtion(){
 		h_23(food,address);
 	}
 	else if( !food ){
-		onsenAlert(getTrans('Food is required','foot_is_required'));
+		onsenAlert(getTrans('Please Enter Food Name','foot_is_required'));
 	}	
 	else if( !rn){
 		onsenAlert(getTrans('Address is required','address_is_required'));
