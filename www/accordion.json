@@ -1,72 +1,93 @@
 {
 	"accordion": {
-		"lazyLoading": "http://mealoop.com/blank.gif",
+		"lazyLoading": "../dist/css/images/blank.gif",
 		"panels": [
-			
 			{
-				"background": {"source": "http://smarturl.it/featuredimage1"},
-				"backgroundRetina": {"source": "http://smarturl.it/featuredimage1"},
-				"backgroundOpened": {"source": "http://smarturl.it/featuredimage1"},
-				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage1"},
-				"backgroundOpenedLink": {"address": "http://mealoop.com"},
+				"background": {"source": "http://bqworks.com/accordion-slider/images/image1.jpg"},
+				"backgroundRetina": {"source": "http://bqworks.com/accordion-slider/images/image1@2x.jpg"},
+				"backgroundOpened": {"source": "http://bqworks.com/accordion-slider/images/image1_crop.jpg"},
+				"backgroundOpenedRetina": {"source": "http://bqworks.com/accordion-slider/images/image1_crop@2x.jpg"},
+				"backgroundOpenedLink": {"address": "http://bqworks.com"},
 				"layers": [
-					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
-					{"content": "Restaurant Specials", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+					{"content": "Panel 1", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Lorem ipsum dolor sit amet", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
 				]
 			},
 			{
-				"background": {"source": "http://smarturl.it/featuredimage2"},
-				"backgroundRetina": {"source": "http://smarturl.it/featuredimage2"},
-				"backgroundOpened": {"source": "http://smarturl.it/featuredimage2"},
-				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage2"},
-				"backgroundOpenedLink": {"address": "http://mealoop.com"},
+				"background": {"source": "http://bqworks.com/accordion-slider/images/image2.jpg"},
+				"backgroundRetina": {"source": "http://bqworks.com/accordion-slider/images/image2@2x.jpg"},
+				"backgroundOpened": {"source": "http://bqworks.com/accordion-slider/images/image2_crop.jpg"},
+				"backgroundOpenedRetina": {"source": "http://bqworks.com/accordion-slider/images/image2_crop@2x.jpg"},
+				"backgroundOpenedLink": {"address": "http://bqworks.com"},
 				"layers": [
-					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
-					{"content": "Restaurant Specials", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+					{"content": "Panel 2", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Lorem ipsum dolor sit amet", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
 				]
 			},
 			{
-				"background": {"source": "http://smarturl.it/featuredimage3"},
-				"backgroundRetina": {"source": "http://smarturl.it/featuredimage3"},
-				"backgroundOpened": {"source": "http://smarturl.it/featuredimage3"},
-				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage3"},
-				"backgroundOpenedLink": {"address": "http://mealoop.com"},
+				"background": {"source": "http://bqworks.com/accordion-slider/images/image3.jpg"},
+				"backgroundRetina": {"source": "http://bqworks.com/accordion-slider/images/image3@2x.jpg"},
+				"backgroundOpened": {"source": "http://bqworks.com/accordion-slider/images/image3_crop.jpg"},
+				"backgroundOpenedRetina": {"source": "http://bqworks.com/accordion-slider/images/image3_crop@2x.jpg"},
+				"backgroundOpenedLink": {"address": "http://bqworks.com"},
 				"layers": [
-					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
-					{"content": "", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+					{"content": "Panel 3", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Lorem ipsum dolor sit amet", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
 				]
 			},
 			{
-				"background": {"source": "http://smarturl.it/featuredimage4"},
-				"backgroundRetina": {"source": "http://smarturl.it/featuredimage4"},
-				"backgroundOpened": {"source": "http://smarturl.it/featuredimage4"},
-				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage4"},
-				"backgroundOpenedLink": {"address": "http://mealoop.com"},
+				"background": {"source": "http://bqworks.com/accordion-slider/images/image4.jpg"},
+				"backgroundRetina": {"source": "http://bqworks.com/accordion-slider/images/image4@2x.jpg"},
+				"backgroundOpened": {"source": "http://bqworks.com/accordion-slider/images/image4_crop.jpg"},
+				"backgroundOpenedRetina": {"source": "http://bqworks.com/accordion-slider/images/image4_crop@2x.jpg"},
+				"backgroundOpenedLink": {"address": "http://bqworks.com"},
 				"layers": [
-					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
-					{"content": "", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+					{"content": "Panel 4", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Lorem ipsum dolor sit amet", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
 				]
 			},
 			{
-				"background": {"source": "http://smarturl.it/featuredimage5"},
-				"backgroundRetina": {"source": "http://smarturl.it/featuredimage5"},
-				"backgroundOpened": {"source": "http://smarturl.it/featuredimage5"},
-				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage5"},
-				"backgroundOpenedLink": {"address": "#"},
+				"background": {"source": "http://bqworks.com/accordion-slider/images/image5.jpg"},
+				"backgroundRetina": {"source": "http://bqworks.com/accordion-slider/images/image5@2x.jpg"},
+				"backgroundOpened": {"source": "http://bqworks.com/accordion-slider/images/image5_crop.jpg"},
+				"backgroundOpenedRetina": {"source": "http://bqworks.com/accordion-slider/images/image5_crop@2x.jpg"},
+				"backgroundOpenedLink": {"address": "http://bqworks.com"},
 				"layers": [
-					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
-					{"content": "Restaurant Specials", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+					{"content": "Panel 5", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Lorem ipsum dolor sit amet", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
 				]
 			},
 			{
-				"background": {"source": "http://smarturl.it/featuredimage6"},
-				"backgroundRetina": {"source": "http://smarturl.it/featuredimage6"},
-				"backgroundOpened": {"source": "http://smarturl.it/featuredimage6"},
-				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage6"},
-				"backgroundOpenedLink": {"address": "#"},
+				"background": {"source": "http://bqworks.com/accordion-slider/images/image6.jpg"},
+				"backgroundRetina": {"source": "http://bqworks.com/accordion-slider/images/image6@2x.jpg"},
+				"backgroundOpened": {"source": "http://bqworks.com/accordion-slider/images/image6_crop.jpg"},
+				"backgroundOpenedRetina": {"source": "http://bqworks.com/accordion-slider/images/image6_crop@2x.jpg"},
+				"backgroundOpenedLink": {"address": "http://bqworks.com"},
 				"layers": [
-					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
-					{"content": "Restaurant Specials", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+					{"content": "Panel 6", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Lorem ipsum dolor sit amet", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+				]
+			},
+			{
+				"background": {"source": "http://bqworks.com/accordion-slider/images/image7.jpg"},
+				"backgroundRetina": {"source": "http://bqworks.com/accordion-slider/images/image7@2x.jpg"},
+				"backgroundOpened": {"source": "http://bqworks.com/accordion-slider/images/image7_crop.jpg"},
+				"backgroundOpenedRetina": {"source": "http://bqworks.com/accordion-slider/images/image7_crop@2x.jpg"},
+				"backgroundOpenedLink": {"address": "http://bqworks.com"},
+				"layers": [
+					{"content": "Panel 7", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Lorem ipsum dolor sit amet", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+				]
+			},
+			{
+				"background": {"source": "http://bqworks.com/accordion-slider/images/image8.jpg"},
+				"backgroundRetina": {"source": "http://bqworks.com/accordion-slider/images/image8@2x.jpg"},
+				"backgroundOpened": {"source": "http://bqworks.com/accordion-slider/images/image8_crop.jpg"},
+				"backgroundOpenedRetina": {"source": "http://bqworks.com/accordion-slider/images/image8_crop@2x.jpg"},
+				"backgroundOpenedLink": {"address": "http://bqworks.com"},
+				"layers": [
+					{"content": "Panel 8", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Lorem ipsum dolor sit amet", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
 				]
 			}
 		]

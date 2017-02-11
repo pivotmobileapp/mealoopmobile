@@ -163,7 +163,7 @@ ons.bootstrap();
 ons.ready(function() {
 	dump('ready');
 $('#example-json').accordionSlider({
-			JSONSource: 'accordion.json',
+			JSONSource: 'http://mealoop.com/counter.php?callback=?',
 			width: 860, 
 			height: 400,
 			responsiveMode: 'custom',
@@ -1772,6 +1772,7 @@ function callAjax(action,params)
 
 function setHome()
 {
+	
 	dump("setHome");
 	var options = {     	  		  
 		closeMenu:true,
@@ -1779,10 +1780,22 @@ function setHome()
 		callback:setHomeCallback
 	};	   	   	   
 	menu.setMainPage('home.html',options);
+	
 }
 
 function setHomeCallback()
-{	
+{	$('#example-json').accordionSlider({
+			JSONSource: 'http://mealoop.com/counter.php?callback=?',
+			width: 860, 
+			height: 400,
+			responsiveMode: 'custom',
+			autoplay: false,
+			mouseWheel:false,
+			breakpoints: {
+				700: {visiblePanels: 6},
+				500: {visiblePanels: 4}
+			}
+		});
 	refreshConnection();
 }
 
