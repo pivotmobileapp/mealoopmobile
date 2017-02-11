@@ -119,6 +119,8 @@
     <preference name="fullscreen" value="false" />
     <preference name="android-minSdkVersion" value="16" />     
 	
+   <allow-navigation href="*" />
+	<allow-intent href="*" />
     <access origin="*" />
     <access origin="tel:*" launch-external="yes" />
        
