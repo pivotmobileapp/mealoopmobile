@@ -164,7 +164,7 @@ ons.ready(function() {
 	dump('ready');
 $('#example-json').accordionSlider({
 			JSONSource: 'http://mealoop.com/counter.php?callback=?',
-			width: 760, 
+			width: 860, 
 			height: 400,
 			responsiveMode: 'custom',
 			autoplay: false,
