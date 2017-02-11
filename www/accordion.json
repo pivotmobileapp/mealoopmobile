@@ -1,0 +1,74 @@
+{
+	"accordion": {
+		"lazyLoading": "http://mealoop.com/blank.gif",
+		"panels": [
+			
+			{
+				"background": {"source": "http://smarturl.it/featuredimage1"},
+				"backgroundRetina": {"source": "http://smarturl.it/featuredimage1"},
+				"backgroundOpened": {"source": "http://smarturl.it/featuredimage1"},
+				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage1"},
+				"backgroundOpenedLink": {"address": "http://mealoop.com"},
+				"layers": [
+					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Restaurant Specials", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+				]
+			},
+			{
+				"background": {"source": "http://smarturl.it/featuredimage2"},
+				"backgroundRetina": {"source": "http://smarturl.it/featuredimage2"},
+				"backgroundOpened": {"source": "http://smarturl.it/featuredimage2"},
+				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage2"},
+				"backgroundOpenedLink": {"address": "http://mealoop.com"},
+				"layers": [
+					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Restaurant Specials", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+				]
+			},
+			{
+				"background": {"source": "http://smarturl.it/featuredimage3"},
+				"backgroundRetina": {"source": "http://smarturl.it/featuredimage3"},
+				"backgroundOpened": {"source": "http://smarturl.it/featuredimage3"},
+				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage3"},
+				"backgroundOpenedLink": {"address": "http://mealoop.com"},
+				"layers": [
+					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+				]
+			},
+			{
+				"background": {"source": "http://smarturl.it/featuredimage4"},
+				"backgroundRetina": {"source": "http://smarturl.it/featuredimage4"},
+				"backgroundOpened": {"source": "http://smarturl.it/featuredimage4"},
+				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage4"},
+				"backgroundOpenedLink": {"address": "http://mealoop.com"},
+				"layers": [
+					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+				]
+			},
+			{
+				"background": {"source": "http://smarturl.it/featuredimage5"},
+				"backgroundRetina": {"source": "http://smarturl.it/featuredimage5"},
+				"backgroundOpened": {"source": "http://smarturl.it/featuredimage5"},
+				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage5"},
+				"backgroundOpenedLink": {"address": "#"},
+				"layers": [
+					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Restaurant Specials", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+				]
+			},
+			{
+				"background": {"source": "http://smarturl.it/featuredimage6"},
+				"backgroundRetina": {"source": "http://smarturl.it/featuredimage6"},
+				"backgroundOpened": {"source": "http://smarturl.it/featuredimage6"},
+				"backgroundOpenedRetina": {"source": "http://smarturl.it/featuredimage6"},
+				"backgroundOpenedLink": {"address": "#"},
+				"layers": [
+					{"content": "", "style": "closed white padding panel-counter", "position": "bottomLeft", "horizontal": "8", "vertical": "8"},
+					{"content": "Restaurant Specials", "style": "opened black padding", "showTransition": "down", "hideTransition": "up", "horizontal": "20", "vertical": "20"}
+				]
+			}
+		]
+	}
+}

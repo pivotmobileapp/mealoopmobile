@@ -162,11 +162,18 @@ $( document ).on( "keyup", ".numeric_only", function() {
 ons.bootstrap();  
 ons.ready(function() {
 	dump('ready');
-
-$( document ).on( "click", ".make0", function() {
-	_cl_count=0;
-});
-
+$('#example-json').accordionSlider({
+			JSONSource: 'accordion.json',
+			width: 860, 
+			height: 400,
+			responsiveMode: 'custom',
+			autoplay: false,
+			mouseWheel:false,
+			breakpoints: {
+				700: {visiblePanels: 6},
+				500: {visiblePanels: 4}
+			}
+		});
 	//navigator.splashscreen.hide()	
 	$("#s").val( getStorage("search_address") );
 
@@ -273,6 +280,7 @@ function searchMerchant()
 			animation: 'slide'	      
 		};	
 		var addd = options.address;
+		_cl_count=0;
 		menu.setMainPage('browseRestaurant.html',options);
 
 	} else{
@@ -6920,7 +6928,10 @@ function back_to_title(){
 	sNavigator.popPage({cancelIfRunning: true});
 	sNavigator.pushPage("menucategory.html", options);
 }
-
+jQuery(document).ready(function($) {
+		// instantiate the accordion
+		
+	});
 
 
 
