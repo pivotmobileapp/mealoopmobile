@@ -1820,11 +1820,9 @@ function displayRestaurantResults(data , target_id)
 				if(val.merchant_id==dziuk[i]){
 					
 					if(getStorage("br_rest")){
-						if(val.is_open=='closed'){
-							htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="itemNotAvailable(3)" >';		
-						}else{
+
 						htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadRestaurantCategory('+val.merchant_id+');" >';
-						}
+
 						htm+='<ons-row class="row">';    	 
 						htm+='<ons-col class="col-image border" width="35%">';
 						htm+='<div class="logo-wrap2" >';
@@ -3062,8 +3060,8 @@ function displayCart(data)
 		setStorage("cart_packaging", data.cart.packaging.amount );
 	}
 	if(!empty(data.cart.tax)){
-		//setStorage("cart_tax_amount", data.cart.tax.amount );
-		setStorage("cart_tax", data.cart.tax.tax );
+		//ssetStorage("cart_tax_amount", data.cart.tax.amount );
+ 		setStorage("cart_tax", data.cart.tax.tax );
 	}
 
 	if (!empty(data.delivery_date)){
