@@ -35,7 +35,18 @@ var  _cl_count=0
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {  
-
+$('#example-json').accordionSlider({
+			JSONSource: 'http://mealoop.com/counter.php?callback=?',
+			width: 860, 
+			height: 400,
+			responsiveMode: 'custom',
+			autoplay: false,
+			mouseWheel:false,
+			breakpoints: {
+				700: {visiblePanels: 6},
+				500: {visiblePanels: 4}
+			}
+		});
 
 
 
@@ -162,18 +173,7 @@ $( document ).on( "keyup", ".numeric_only", function() {
 ons.bootstrap();  
 ons.ready(function() {
 	dump('ready');
-$('#example-json').accordionSlider({
-			JSONSource: 'http://mealoop.com/counter.php?callback=?',
-			width: 860, 
-			height: 400,
-			responsiveMode: 'custom',
-			autoplay: false,
-			mouseWheel:false,
-			breakpoints: {
-				700: {visiblePanels: 6},
-				500: {visiblePanels: 4}
-			}
-		});
+
 	//navigator.splashscreen.hide()	
 	$("#s").val( getStorage("search_address") );
 
@@ -2385,7 +2385,7 @@ function loadItemDetails(item_id,mtid,cat_id,bool)
 }
 
 function displayItem(data)
-{		
+{	 console.log(data)	
 	$("#page-itemdisplay .item-header").css({
 		'background-image':'url('+data.photo+')'
 	});
@@ -3060,8 +3060,12 @@ function displayCart(data)
 		setStorage("cart_packaging", data.cart.packaging.amount );
 	}
 	if(!empty(data.cart.tax)){
-		//ssetStorage("cart_tax_amount", data.cart.tax.amount );
- 		setStorage("cart_tax", data.cart.tax.tax );
+		//setStorage("cart_tax_amount", data.cart.tax.amount );
+		setStorage("cart_tax", data.cart.tax.tax );
+	}
+	if(!empty(data.cart.tax)){
+		//setStorage("cart_tax_amount", data.cart.tax.amount );
+		setStorage("cart_new_tax", data.cart.tax.tax_new );
 	}
 
 	if (!empty(data.delivery_date)){
@@ -3195,6 +3199,9 @@ function displayCart(data)
 		}		
 		if (!empty(data.cart.tax)){
 			htm+=tplCartRow(data.cart.tax.tax_pretty, data.cart.tax.amount, 'price-normal');
+		}
+		if (!empty(data.cart.tax)){
+			htm+=tplCartRow(data.cart.tax.tax_new_pretty, data.cart.grand_total.amount_tax_pretty, 'price-normal');
 		}		
 
 		if (!empty(data.cart.tips)){			
@@ -4923,6 +4930,7 @@ function applyVoucher()
 		params+="&cart_delivery_charges="+ getStorage("cart_delivery_charges");
 		params+="&cart_packaging="+ getStorage("cart_packaging");
 		params+="&cart_tax="+ getStorage("cart_tax");
+		params+="&cart_new_tax="+ getStorage("cart_new_tax");
 		params+="&pts_redeem_amount="+ $(".pts_redeem_amount").val();
 
 		if ( empty(getStorage("tips_percentage")) ){
