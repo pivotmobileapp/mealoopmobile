@@ -32,7 +32,7 @@ var track_order_map_interval;
 var drag_marker_bounce=1;
 var  _cl_count=0
 
-document.addEventListener("deviceready", onDeviceReady, 
+document.addEventListener("deviceready", onDeviceReady, 'deviceready',
 						  function () {
   // Enable to debug issues.
   // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
