@@ -32,14 +32,26 @@ var track_order_map_interval;
 var drag_marker_bounce=1;
 var  _cl_count=0
 
-document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("deviceready", onDeviceReady, 'deviceready',
+						  function () {
+  // Enable to debug issues.
+  // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+  
+  var notificationOpenedCallback = function(jsonData) {
+    console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+  };
+
+  window.plugins.OneSignal
+    .startInit("93adf77f-4d3e-4b2a-aea9-3772189f3819")
+    .handleNotificationOpened(notificationOpenedCallback)
+    .endInit();
+  
+  // Call syncHashedEmail anywhere in your app if you have the user's email.
+  // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
+  // window.plugins.OneSignal.syncHashedEmail(userEmail);
+},false);
 
 function onDeviceReady() {  
-
-
-
-
-
 
 	getCurrentLocation();
 
@@ -162,11 +174,18 @@ $( document ).on( "keyup", ".numeric_only", function() {
 ons.bootstrap();  
 ons.ready(function() {
 	dump('ready');
-
-$( document ).on( "click", ".make0", function() {
-	_cl_count=0;
-});
-
+$('#example-json').accordionSlider({
+			JSONSource: 'http://mealoop.com/counter.php?callback=?',
+			width: 860, 
+			height: 400,
+			responsiveMode: 'custom',
+			autoplay: false,
+			mouseWheel:false,
+			breakpoints: {
+				700: {visiblePanels: 6},
+				500: {visiblePanels: 4}
+			}
+		});
 	//navigator.splashscreen.hide()	
 	$("#s").val( getStorage("search_address") );
 
@@ -273,6 +292,7 @@ function searchMerchant()
 			animation: 'slide'	      
 		};	
 		var addd = options.address;
+		_cl_count=0;
 		menu.setMainPage('browseRestaurant.html',options);
 
 	} else{
@@ -1764,6 +1784,7 @@ function callAjax(action,params)
 
 function setHome()
 {
+	
 	dump("setHome");
 	var options = {     	  		  
 		closeMenu:true,
@@ -1771,10 +1792,22 @@ function setHome()
 		callback:setHomeCallback
 	};	   	   	   
 	menu.setMainPage('home.html',options);
+	
 }
 
 function setHomeCallback()
-{	
+{	$('#example-json').accordionSlider({
+			JSONSource: 'http://mealoop.com/counter.php?callback=?',
+			width: 860, 
+			height: 400,
+			responsiveMode: 'custom',
+			autoplay: false,
+			mouseWheel:false,
+			breakpoints: {
+				700: {visiblePanels: 6},
+				500: {visiblePanels: 4}
+			}
+		});
 	refreshConnection();
 }
 
@@ -1799,11 +1832,9 @@ function displayRestaurantResults(data , target_id)
 				if(val.merchant_id==dziuk[i]){
 					
 					if(getStorage("br_rest")){
-						if(val.is_open=='closed'){
-							htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="itemNotAvailable(3)" >';		
-						}else{
+
 						htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="loadRestaurantCategory('+val.merchant_id+');" >';
-						}
+
 						htm+='<ons-row class="row">';    	 
 						htm+='<ons-col class="col-image border" width="35%">';
 						htm+='<div class="logo-wrap2" >';
@@ -6920,7 +6951,10 @@ function back_to_title(){
 	sNavigator.popPage({cancelIfRunning: true});
 	sNavigator.pushPage("menucategory.html", options);
 }
-
+jQuery(document).ready(function($) {
+		// instantiate the accordion
+		
+	});
 
 
 

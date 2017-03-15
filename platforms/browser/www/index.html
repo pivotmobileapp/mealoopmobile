@@ -69,9 +69,7 @@
 
 <script type="text/javascript" src="dist/js/jquery.accordionSlider.js"></script>
 
-<script type="text/javascript">
-
-</script>
+<script type="text/javascript"> </script>
 
 
 </head>
@@ -151,16 +149,17 @@
       <span class="trn" data-trn-key="settings">Settings</span>
     </ons-list-item>    
     
-    <ons-list-item onclick="logout();" class="bottom-menu-item logout-menu">
-      <ons-icon icon="ion-log-out"></ons-icon> 
-      <span class="trn" data-trn-key="logout">Logout</span>
-    </ons-list-item>    
-     
+ 
 	
 	<ons-list-item onclick="showSupport();" class="bottom-menu-item">
       <ons-icon icon="ion-settings"></ons-icon> 
-      <span class="trn" data-trn-key="support">Live Support</span>
+      <span class="trn" data-trn-key="support">Support</span>
     </ons-list-item>  
+	
+	    <ons-list-item onclick="logout();" class="bottom-menu-item logout-menu">
+      <ons-icon icon="ion-log-out"></ons-icon> 
+      <span class="trn" data-trn-key="logout">Logout</span>
+    </ons-list-item>   
 	
   </ons-list>
   </ons-page> 
@@ -177,9 +176,9 @@
 	  
 	   <div id="navlinks" class="center white">
 		<ul>
-			<a onclick="showNews();">News &nbsp; &nbsp;&nbsp; &nbsp;</a>
-			<a > | &nbsp; &nbsp; </a>
-			<a onclick="showOrders();">&nbsp; &nbsp; My Orders</a>
+			<a onclick="showNews();">News &nbsp; </a>
+			<a > | &nbsp;  </a>
+			<a onclick="showOrders();"> My Orders</a>
 		
 		</ul>
 	  </div>
@@ -209,23 +208,19 @@
        </button>       
        </div>
        
-  <button class="firstbutton" onclick="Localtion();"> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  Search Food  &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</button>
-  <button class="secondbutton" data-trn-key="search_restaurant" onclick="kUz();"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Nearby Restaurant &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</button>
+  <button class="firstbutton" onclick="Localtion();">  &nbsp;&nbsp;  Search Food  &nbsp;&nbsp;<ons-icon icon="fa-chevron-right"></ons-icon></button>
+  <button class="secondbutton" data-trn-key="search_restaurant" onclick="kUz();"> &nbsp; Nearby Kitchen &nbsp;  <ons-icon icon="fa-chevron-right"></ons-icon> </button>
    
     
     	
-	 
-	   
-	 <div class="padtop10">
-
-  
-	 </div> 
+	  
+	
 	   
 
     </div>  
 	
-	<div id="example-json" class="accordion-slider"></div>
 	
+<div id="example-json" class="accordion-slider"></div>	
 	   
 <!--	<div class="bottombanner">
 	   	                
