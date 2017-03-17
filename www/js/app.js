@@ -31,7 +31,7 @@ var track_order_interval;
 var track_order_map_interval;
 var drag_marker_bounce = 1;
 var _cl_count = 0;
-var _limit=0;
+var _limit = 0;
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -246,10 +246,10 @@ function createElement(elementId, elementvalue) {
 function searchMerchant() {
 
     var s = $('#s').val();
-    if(s){
-       setStorage("search_address", s); 
+    if (s) {
+        setStorage("search_address", s);
     }
-    
+
     removeStorage('merchant_id');
     removeStorage('shipping_address');
     removeStorage('merchant_id');
@@ -1105,7 +1105,13 @@ function callAjax(action, params) {
                     case "browseRestaurant":
                         displayRestaurantResults(data.details.data, 'browse-results');
                         if (getStorage("dziukLength")) {
-                            $(".result-msg").text(getStorage("dziukLength") + " " + getTrans("Restaurant found", 'restaurant_found'));
+                                 if(getStorage("fn")){
+                                    $(".result-msg").text(getStorage("dziukLength") + " " + getTrans(getStorage("fn"), 'restaurant_found')); 
+                                 }
+                            else{
+                                $(".result-msg").text(getStorage("dziukLength") + " " + getTrans("Restaurant found", 'restaurant_found')); 
+                            }
+                            
                         } else {
                             $(".result-msg").text(data.details.total + " " + getTrans("Restaurant found", 'restaurant_found'));
                         }
@@ -1878,7 +1884,7 @@ function displayRestaurantResults(data, target_id) {
                                 htm += '<p class="top10">' + val_offer + '</p>';
                             });
                         }
-                      
+
                         htm += '<span class="notification ' + val.tag_raw + ' ">' + val.is_open + '</span>';
                         htm += '</div>';
 
@@ -2071,9 +2077,9 @@ function displayRestaurantResults(data, target_id) {
     initRating();
 
     imageLoaded('.img_loaded');
-  if(getStorage('enable')){
-  A()
- }
+    if (getStorage('enable')) {
+        A()
+    }
 }
 
 function initRating() {
@@ -6639,6 +6645,7 @@ var _arrr = [];
 var len = 0;
 
 function kUz() {
+    removeStorage("fn");
     dziuk = [];
     _dziuk = [];
     _photo = [];
@@ -6697,7 +6704,9 @@ function kUz() {
 }
 
 function Localtion() {
-     _limit=0;
+    removeStorage("fn");
+    setStorage("fn","fn");
+    _limit = 0;
     removeStorage('enable');
     removeStorage('br_rest');
     removeStorage("forlimitsess");
@@ -6717,15 +6726,15 @@ function Localtion() {
     var food = $.trim($('#men').val());
 
     if (rn && food) {
-setStorage("food",food);
-    setStorage("addresss",rn);
+        setStorage("food", food);
+        setStorage("addresss", rn);
         h_23(food, rn);
     } else if (!food) {
         onsenAlert(getTrans('Please Enter Food Name', 'foot_is_required'));
     } else if (!rn) {
         onsenAlert(getTrans('Address is required', 'address_is_required'));
     }
-  
+
 }
 
 function h_23(food, address) {
@@ -6741,8 +6750,8 @@ function h_23(food, address) {
                 var search_ob = JSON.stringify(data, null, 2);
                 removeStorage('search_ob');
                 setStorage('search_ob', search_ob);
-               
-                h_24(food, address,0);
+
+                h_24(food, address, 0);
 
             } else {
                 setStorage("dziuk", 1000000000000000000000000000000000);
@@ -6759,9 +6768,11 @@ function h_23(food, address) {
 
 }
 
-function h_24(food, address,x) {
+function h_24(food, address, x) {
     removeStorage("dziukLength");
-    removeStorage('search_ob'); 
+    removeStorage('search_ob');
+    removeStorage("fn");
+    setStorage("fn","+ Food found");
     dziuk = [];
     _not_available = [];
     _dziuk = [];
@@ -6777,74 +6788,70 @@ function h_24(food, address,x) {
     var newprice;
     var newpriceelement;
     var sutiobj;
-    
+
     var ajax_request = $.ajax({
-        url: "http://mealoop.com/mobileapp/api/searchss?address=" + address + "&sea=" + food + "&x="+x+"",
+        url: "http://mealoop.com/mobileapp/api/searchss?address=" + address + "&sea=" + food + "&x=" + x + "",
         data: "&lang_id=&api_key=fed7b441b349bae8f146711fbd215e90",
         type: 'post',
         dataType: 'jsonp',
         crossDomain: true,
         success: function (dataa) {
-               removeStorage('datastr');
+            removeStorage('datastr');
 
-   if (dataa.details.data) {
-    var datastr = JSON.stringify(dataa.details.data, null, 2);
+            if (dataa.details.data) {
+                var datastr = JSON.stringify(dataa.details.data, null, 2);
 
-    setStorage("datastr", datastr);             
+                setStorage("datastr", datastr);
                 $.each(dataa.details.data, function (key, val) {
                     var json_text = JSON.stringify(dataa.details.data, null, 2);
                     var merch_id = dataa.details.data.merchant_id;
-                      
+
                     if (val.price) {
                         _not_available.push(val.not_available);
                         /*access.push(dataa.details.disabled_ordering);*/
                         dziuk.push(val.merchant_id);
-                        if(val.photo){
-                             _photo.push("http://mealoop.com/upload/"+val.photo);
-                        }
-                       
-                        else{
-                             _photo.push("http://mealoop.com/upload/icon android.png");
-                            
+                        if (val.photo) {
+                            _photo.push("http://mealoop.com/upload/" + val.photo);
+                        } else {
+                            _photo.push("http://mealoop.com/upload/icon android.png");
+
                         }
                         _name.push(val.item_name);
-                       
-                          newpriceelement=val.price.substr(0, 1);;
-                        if(newpriceelement=='['){
-                newprice =val.price.slice(2, val.price.length-2);
-                              _price.push(newprice);
+                        if (val.price) {
+                            newpriceelement = val.price.substr(0, 1);;
+                            if (newpriceelement == '[') {
+                                newprice = val.price.slice(2, val.price.length - 2);
+                                _price.push(newprice);
+                            }
+                            if (newpriceelement == '{') {
+                                sutiobj = JSON.parse(val.price)
+                                _price.push(sutiobj[Object.keys(sutiobj)[Object.keys(sutiobj).length - 1]]);
+                            }
                         }
-                        if(newpriceelement=='{'){
-                      sutiobj =  JSON.parse(val.price)
-                      Object.values(sutiobj);
-                             _price.push(  Object.values(sutiobj));
-                        }
-                       
                         _merch_.push(val.merchant_id);
-                        newcat =val.category.slice(2, val.category.length-2);                        
-                            
+                        newcat = val.category.slice(2, val.category.length - 2);
+
                         _cut_.push(newcat);
                         _item_id.push(val.item_id);
                     }
-                         if (jQuery.inArray(val.merchant_id, _dziuk) == -1) {
+                    if (jQuery.inArray(val.merchant_id, _dziuk) == -1) {
                         _dziuk.push(val.merchant_id);
                     }
-                  
+
                     setStorage("dziuk", dziuk);
                     setStorage("jsonText", dziuk);
                     removeStorage("dziukLength");
                     setStorage("dziukLength", _dziuk.length);
-  
+
                 })
                 removeStorage("dziukLength");
                 setStorage("dziukLength", dziuk.length);
                 searchMerchant()
 
+            } else {
+                removeStorage('datastr');
+                _limit = _limit + 0;
             }
-            else{
-    removeStorage('datastr');
-    _limit=_limit+0;
-   }
         }
     })
 
@@ -6870,34 +6877,35 @@ function back_to_title() {
         cancelIfRunning: true
     });
     sNavigator.pushPage("menucategory.html", options);
-}   
-function A(){ 
- var index = 0;
+}
 
- var $ = document.querySelector.bind(document);
- ons.ready(function(){
-  var toolbar = $('ons-toolbar');
-  $('.ons-scroller__content').addEventListener('scroll', function(){
-   var s = this.scrollTop;
-  
-   var h =  $('#browse-results').offsetHeight;
-   var hs =  $('.ons-scroller').offsetHeight;
-   var address = getStorage('address');
-   var food =  getStorage('food');
+function A() {
+    var index = 0;
 
-   if (s + hs == h ) {
-    
+    var $ = document.querySelector.bind(document);
+    ons.ready(function () {
+        var toolbar = $('ons-toolbar');
+        $('.ons-scroller__content').addEventListener('scroll', function () {
+            var s = this.scrollTop;
 
-    if(getStorage('datastr')){
-     _limit=_limit+10;
-    }
-    h_24(food,address,_limit);
-   }
+            var h = $('#browse-results').offsetHeight;
+            var hs = $('.ons-scroller').offsetHeight;
+            var address = getStorage('search_address'); 
+            var food = getStorage('food');
 
-   if(s==0 && _limit!=0){
-    _limit=_limit-10;
-    var r = h_24(food,address,_limit);
-   }
-  });
- });
+            if (s + hs == h) {
+
+
+                if (getStorage('datastr')) {
+                    _limit = _limit + 10;
+                }
+                h_24(food, address, _limit);
+            }
+
+            if (s == 0 && _limit != 0) {
+                _limit = _limit - 10;
+                var r = h_24(food, address, _limit);
+            }
+        });
+    });
 }
