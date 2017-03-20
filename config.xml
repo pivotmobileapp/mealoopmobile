@@ -3,8 +3,8 @@
     xmlns:gap = "http://phonegap.com/ns/1.0"
     xmlns:android = "http://schemas.android.com/apk/res/android"
     id        = "com.mealoop"
-    versionCode = "20.1"
-    version   = "2.0.1">
+    versionCode = "30.0"
+    version   = "3.0.1">
     <name>Mealoop</name>
     <description>
         Mealoop
@@ -110,8 +110,8 @@
 	
    <gap:plugin name="cordova-plugin-googlemaps"  source="npm" spec="1.3.9" >
 <!--   <gap:plugin name="cordova-plugin-googlemaps"  source="npm" >-->
-	   <param name="API_KEY_FOR_ANDROID" value="AIzaSyAcCglMQFBbbxYym4AsHwzsYNtYcS9YUfM" />
-	   <param name="API_KEY_FOR_IOS" value="AIzaSyAcCglMQFBbbxYym4AsHwzsYNtYcS9YUfM" />
+	   <param name="API_KEY_FOR_ANDROID" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
+	   <param name="API_KEY_FOR_IOS" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
 	</gap:plugin>
 	
 	<gap:splash src="splash.png" />
