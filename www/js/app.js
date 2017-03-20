@@ -35,76 +35,39 @@ var _limit = 0;
 
 function myFunction() {
 
-     setInterval(function(){ 
-    time_smpt();
-     }, 3000);
+    _update_location();
+
 
 
 }
 
-function _update_location(id, time, lat, long, country) {
-    console.log(id);
-    console.log(time);
-    console.log(lat);
-    console.log(long);
-    console.log(country);
-    var address_for_update = "http://mealoop.com/mobileapp/api/MobilesRregistering?id=" + id + "&time="+time+"&lat="+lat+"&long="+long+"&country="+country+"";
-
-    $.ajax({
-        url: address_for_update,
-        type: 'post',
-         dataType: 'jsonp',
-        async: false,
-        success: function (data) {
-            console.log(data);
-        }
-    })
+function _update_location() {
+    var _lat = getStorage("_lat"),
+        _long = getStorage("_long"),
+        _address = getStorage("_new_address"),
+        _date = new Date(),
+        _time = _date.getTime(),
+        device_id = getStorage("device_id");
+    
+    if (_lat && _long && _address && device_id) {
+     
+        var address_for_update = "http://mealoop.com/mobileapp/api/MobilesRregistering?id=" + device_id + "&time=" + _time + "&lat=" + _lat + "&long=" + _long + "&country=" + _address + "";
+        $.ajax({
+            url: address_for_update,
+            type: 'post',
+            dataType: 'jsonp',
+            success: function (data) {
+                
+            }
+        })
+    }
 }
 
-function time_smpt() {
-    var _date = new Date();
-    var _time = _date.getTime();
-    var device_id = getStorage("device_id");
-    var address_full = "http://mealoop.com/mobileapp/api/mobilesRregister?id=" + device_id + "";
-
-    $.ajax({
-        url: address_full,
-        type: 'post',
-        async: false,
-        dataType: 'jsonp',
-        success: function (data) {
-        
-   
-            var _lat =getStorage("_lat"),
-                _long =  getStorage("_long"),
-                _address= getStorage("_new_address");
-            if (data.details.data[0].gps_time_update!="") {
-                if (_time - data.details.data[0].gps_time_update > 3600000) {
-                   getCurrentLocationNew(); 
-      if (_lat && _long && _address) {
-                    _update_location(device_id, _time, _lat, _long,_address);
-                }
-                }
-            }
-           else {
-           getCurrentLocationNew();
-           if (_lat && _long && _address) {
-           
-               _update_location(device_id, _time, _lat, _long,_address);
-            }
-            }
-            }
-           
-        
-    })
-}
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-    myFunction();
-/* getCurrentLocationNew();*/
-
     getCurrentLocation();
+    myFunction();
 
     navigator.splashscreen.hide();
 
@@ -618,7 +581,7 @@ document.addEventListener("pageinit", function (e) {
 }, false);
 
 function searchResultCallBack(address) {
-  
+
     search_address = address;
 }
 
@@ -4561,60 +4524,6 @@ function getCurrentLocation() {
 
 }
 
-function getCurrentLocationNew() {
-    /*alert( device.platform );	
-    alert( device.version );*/
-    if (device.platform == "browser") {
-        navigator.geolocation.getCurrentPosition(geolocationSuccessNew, geolocationError, {
-            timeout: 10000,
-            enableHighAccuracy: getLocationAccuracy()
-        });
-    } else if (device.platform == "Android") {
-        navigator.geolocation.getCurrentPosition(geolocationSuccessNew, geolocationError, {
-            timeout: 10000,
-            enableHighAccuracy: getLocationAccuracy()
-        });
-    } else if (isDebug()) {
-        onRequestSuccess();
-        return;
-    } else if (device.platform == "iOS") {
-        getCurrentLocationOldd();
-    } else {
-
-        var can_request = true;
-        cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
-            if (!canRequest) {
-                can_request = false;
-                var _message = getTrans('Your device has no access to location Would you like to switch to the Location Settings page and do this manually?', 'location_off')
-                ons.notification.confirm({
-                    message: _message,
-                    title: dialog_title_default,
-                    buttonLabels: ['Yes', 'No'],
-                    animation: 'none',
-                    primaryButtonIndex: 1,
-                    cancelable: true,
-                    callback: function (index) {
-                        if (index == 0 || index == "0") {
-                            cordova.plugins.diagnostic.switchToLocationSettings();
-                        }
-                    }
-                });
-            }
-        });
-
-        if (!can_request) {
-            return;
-        }
-
-        cordova.plugins.locationAccuracy.request(
-            onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-    }
-
-}
-
-
-
-
 
 function onRequestSuccess() {
     loader.show();
@@ -4638,41 +4547,7 @@ function onRequestFailure(error) {
         toastMsg(error.message);
     }
 }
-function getCurrentLocationOldd() {
-    CheckGPS.check(function win() {
-            //GPS is enabled! 
-            loader.show();
-            navigator.geolocation.getCurrentPosition(geolocationSuccessNew, geolocationError, {
-                timeout: 10000,
-                enableHighAccuracy: getLocationAccuracy()
-            });
-        },
-        function fail() {
-            //GPS is disabled!
-            var m_1 = getTrans('Your GPS is disabled, this app needs to be enabled to work.', 'your_gps');
-            var m_2 = getTrans('Use GPS for location.', 'use_gps_for_location');
-            var m_3 = getTrans('Improve location accuracy', 'improve_location_accuracy');
-            var b_1 = getTrans('Cancel', 'cancel');
-            var b_2 = getTrans('Later', 'later');
-            var b_3 = getTrans('Go', 'go');
 
-            cordova.dialogGPS(m_1, //message
-                m_2, //description
-                function (buttonIndex) { //callback
-                    switch (buttonIndex) {
-                        case 0:
-                            break; //cancel
-                        case 1:
-                            break; //neutro option
-                        case 2:
-                            break; //user go to configuration
-                    }
-                },
-                m_3 + "?", //title
-						  [b_1, b_2, b_3]
-            ); //buttons
-        });
-}
 function getCurrentLocationOld() {
     CheckGPS.check(function win() {
             //GPS is enabled! 
@@ -4715,12 +4590,7 @@ function geolocationSuccess(position) {
     var params = "lat=" + position.coords.latitude;
     params += "&lng=" + position.coords.longitude;
     callAjax("reverseGeoCoding", params);
-}
-
-function geolocationSuccessNew(position) {
-    var params = "lat=" + position.coords.latitude;
-    params += "&lng=" + position.coords.longitude;
-     var address_full = "http://mealoop.com/mobileapp/api/reverseGeoCoding?" + params + "";
+    var address_full = "http://mealoop.com/mobileapp/api/reverseGeoCoding?" + params + "";
 
     $.ajax({
         url: address_full,
@@ -4728,18 +4598,18 @@ function geolocationSuccessNew(position) {
         async: false,
         dataType: 'jsonp',
         success: function (data) {
-        console.log(data)
-       removeStorage("_new_address");
-       setStorage("_new_address",data.details);
-       
-    }})
+            console.log(data)
+            removeStorage("_new_address");
+            setStorage("_new_address", data.details);
+
+        }
+    })
     removeStorage("_lat");
     removeStorage("_long");
     setStorage("_lat", position.coords.latitude);
     setStorage("_long", position.coords.longitude);
-
-
 }
+
 
 function geolocationError(error) {
     hideAllModal();

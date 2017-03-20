@@ -110,8 +110,8 @@
 	
    <gap:plugin name="cordova-plugin-googlemaps"  source="npm" spec="1.3.9" >
 <!--   <gap:plugin name="cordova-plugin-googlemaps"  source="npm" >-->
-	   <param name="API_KEY_FOR_ANDROID" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
-	   <param name="API_KEY_FOR_IOS" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
+	   <param name="API_KEY_FOR_ANDROID" value="AIzaSyAcCglMQFBbbxYym4AsHwzsYNtYcS9YUfM" />
+	   <param name="API_KEY_FOR_IOS" value="AIzaSyAcCglMQFBbbxYym4AsHwzsYNtYcS9YUfM" />
 	</gap:plugin>
 	
 	<gap:splash src="splash.png" />

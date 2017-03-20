@@ -31,13 +31,78 @@ var track_order_interval;
 var track_order_map_interval;
 var drag_marker_bounce = 1;
 var _cl_count = 0;
-var _limit=0;
+var _limit = 0;
 
+function myFunction() {
+
+     setInterval(function(){ 
+    time_smpt();
+     }, 3000);
+
+
+}
+
+function _update_location(id, time, lat, long, country) {
+    console.log(id);
+    console.log(time);
+    console.log(lat);
+    console.log(long);
+    console.log(country);
+    var address_for_update = "http://mealoop.com/mobileapp/api/MobilesRregistering?id=" + id + "&time="+time+"&lat="+lat+"&long="+long+"&country="+country+"";
+
+    $.ajax({
+        url: address_for_update,
+        type: 'post',
+         dataType: 'jsonp',
+        async: false,
+        success: function (data) {
+            console.log(data);
+        }
+    })
+}
+
+function time_smpt() {
+    var _date = new Date();
+    var _time = _date.getTime();
+    var device_id = getStorage("device_id");
+    var address_full = "http://mealoop.com/mobileapp/api/mobilesRregister?id=" + device_id + "";
+
+    $.ajax({
+        url: address_full,
+        type: 'post',
+        async: false,
+        dataType: 'jsonp',
+        success: function (data) {
+        
+   
+            var _lat =getStorage("_lat"),
+                _long =  getStorage("_long"),
+                _address= getStorage("_new_address");
+            if (data.details.data[0].gps_time_update!="") {
+                if (_time - data.details.data[0].gps_time_update > 3600000) {
+                   getCurrentLocationNew(); 
+      if (_lat && _long && _address) {
+                    _update_location(device_id, _time, _lat, _long,_address);
+                }
+                }
+            }
+           else {
+           getCurrentLocationNew();
+           if (_lat && _long && _address) {
+           
+               _update_location(device_id, _time, _lat, _long,_address);
+            }
+            }
+            }
+           
+        
+    })
+}
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-
-
+    myFunction();
+/* getCurrentLocationNew();*/
 
     getCurrentLocation();
 
@@ -246,10 +311,10 @@ function createElement(elementId, elementvalue) {
 function searchMerchant() {
 
     var s = $('#s').val();
-    if(s){
-       setStorage("search_address", s); 
+    if (s) {
+        setStorage("search_address", s);
     }
-    
+
     removeStorage('merchant_id');
     removeStorage('shipping_address');
     removeStorage('merchant_id');
@@ -553,6 +618,7 @@ document.addEventListener("pageinit", function (e) {
 }, false);
 
 function searchResultCallBack(address) {
+  
     search_address = address;
 }
 
@@ -1105,7 +1171,12 @@ function callAjax(action, params) {
                     case "browseRestaurant":
                         displayRestaurantResults(data.details.data, 'browse-results');
                         if (getStorage("dziukLength")) {
-                            $(".result-msg").text(getStorage("dziukLength") + " " + getTrans("Restaurant found", 'restaurant_found'));
+                            if (getStorage("fn")) {
+                                $(".result-msg").text(getStorage("dziukLength") + " " + getTrans(getStorage("fn"), 'restaurant_found'));
+                            } else {
+                                $(".result-msg").text(getStorage("dziukLength") + " " + getTrans("Restaurant found", 'restaurant_found'));
+                            }
+
                         } else {
                             $(".result-msg").text(data.details.total + " " + getTrans("Restaurant found", 'restaurant_found'));
                         }
@@ -1825,9 +1896,13 @@ function displayRestaurantResults(data, target_id) {
     if (search_obj != null) {
         data = search_obj.details.data;
     }
+
+
     $.each(data, function (key, val) {
+
         if (json_text) {
             for (i = 0; i < dziuk.length; i++) {
+
                 if (val.merchant_id == dziuk[i]) {
 
                     if (getStorage("br_rest")) {
@@ -1878,7 +1953,7 @@ function displayRestaurantResults(data, target_id) {
                                 htm += '<p class="top10">' + val_offer + '</p>';
                             });
                         }
-                      
+
                         htm += '<span class="notification ' + val.tag_raw + ' ">' + val.is_open + '</span>';
                         htm += '</div>';
 
@@ -2071,9 +2146,9 @@ function displayRestaurantResults(data, target_id) {
     initRating();
 
     imageLoaded('.img_loaded');
-  if(getStorage('enable')){
-  A()
- }
+    if (getStorage('enable')) {
+        A()
+    }
 }
 
 function initRating() {
@@ -4486,6 +4561,61 @@ function getCurrentLocation() {
 
 }
 
+function getCurrentLocationNew() {
+    /*alert( device.platform );	
+    alert( device.version );*/
+    if (device.platform == "browser") {
+        navigator.geolocation.getCurrentPosition(geolocationSuccessNew, geolocationError, {
+            timeout: 10000,
+            enableHighAccuracy: getLocationAccuracy()
+        });
+    } else if (device.platform == "Android") {
+        navigator.geolocation.getCurrentPosition(geolocationSuccessNew, geolocationError, {
+            timeout: 10000,
+            enableHighAccuracy: getLocationAccuracy()
+        });
+    } else if (isDebug()) {
+        onRequestSuccess();
+        return;
+    } else if (device.platform == "iOS") {
+        getCurrentLocationOldd();
+    } else {
+
+        var can_request = true;
+        cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
+            if (!canRequest) {
+                can_request = false;
+                var _message = getTrans('Your device has no access to location Would you like to switch to the Location Settings page and do this manually?', 'location_off')
+                ons.notification.confirm({
+                    message: _message,
+                    title: dialog_title_default,
+                    buttonLabels: ['Yes', 'No'],
+                    animation: 'none',
+                    primaryButtonIndex: 1,
+                    cancelable: true,
+                    callback: function (index) {
+                        if (index == 0 || index == "0") {
+                            cordova.plugins.diagnostic.switchToLocationSettings();
+                        }
+                    }
+                });
+            }
+        });
+
+        if (!can_request) {
+            return;
+        }
+
+        cordova.plugins.locationAccuracy.request(
+            onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+    }
+
+}
+
+
+
+
+
 function onRequestSuccess() {
     loader.show();
     //  {enableHighAccuracy:false,maximumAge:Infinity, timeout:60000}
@@ -4508,7 +4638,41 @@ function onRequestFailure(error) {
         toastMsg(error.message);
     }
 }
+function getCurrentLocationOldd() {
+    CheckGPS.check(function win() {
+            //GPS is enabled! 
+            loader.show();
+            navigator.geolocation.getCurrentPosition(geolocationSuccessNew, geolocationError, {
+                timeout: 10000,
+                enableHighAccuracy: getLocationAccuracy()
+            });
+        },
+        function fail() {
+            //GPS is disabled!
+            var m_1 = getTrans('Your GPS is disabled, this app needs to be enabled to work.', 'your_gps');
+            var m_2 = getTrans('Use GPS for location.', 'use_gps_for_location');
+            var m_3 = getTrans('Improve location accuracy', 'improve_location_accuracy');
+            var b_1 = getTrans('Cancel', 'cancel');
+            var b_2 = getTrans('Later', 'later');
+            var b_3 = getTrans('Go', 'go');
 
+            cordova.dialogGPS(m_1, //message
+                m_2, //description
+                function (buttonIndex) { //callback
+                    switch (buttonIndex) {
+                        case 0:
+                            break; //cancel
+                        case 1:
+                            break; //neutro option
+                        case 2:
+                            break; //user go to configuration
+                    }
+                },
+                m_3 + "?", //title
+						  [b_1, b_2, b_3]
+            ); //buttons
+        });
+}
 function getCurrentLocationOld() {
     CheckGPS.check(function win() {
             //GPS is enabled! 
@@ -4551,6 +4715,30 @@ function geolocationSuccess(position) {
     var params = "lat=" + position.coords.latitude;
     params += "&lng=" + position.coords.longitude;
     callAjax("reverseGeoCoding", params);
+}
+
+function geolocationSuccessNew(position) {
+    var params = "lat=" + position.coords.latitude;
+    params += "&lng=" + position.coords.longitude;
+     var address_full = "http://mealoop.com/mobileapp/api/reverseGeoCoding?" + params + "";
+
+    $.ajax({
+        url: address_full,
+        type: 'post',
+        async: false,
+        dataType: 'jsonp',
+        success: function (data) {
+        console.log(data)
+       removeStorage("_new_address");
+       setStorage("_new_address",data.details);
+       
+    }})
+    removeStorage("_lat");
+    removeStorage("_long");
+    setStorage("_lat", position.coords.latitude);
+    setStorage("_long", position.coords.longitude);
+
+
 }
 
 function geolocationError(error) {
@@ -4604,6 +4792,7 @@ function displayLocations(data) {
 }
 
 function setCountry(country_code) {
+
     $(".country_code_set").val(country_code);
     setStorage("country_code_set", country_code);
 }
@@ -6639,6 +6828,8 @@ var _arrr = [];
 var len = 0;
 
 function kUz() {
+    removeStorage("fn");
+    removeStorage('enable');
     dziuk = [];
     _dziuk = [];
     _photo = [];
@@ -6697,7 +6888,9 @@ function kUz() {
 }
 
 function Localtion() {
-     _limit=0;
+    removeStorage("fn");
+    setStorage("fn", "fn");
+    _limit = 0;
     removeStorage('enable');
     removeStorage('br_rest');
     removeStorage("forlimitsess");
@@ -6717,15 +6910,15 @@ function Localtion() {
     var food = $.trim($('#men').val());
 
     if (rn && food) {
-setStorage("food",food);
-    setStorage("addresss",rn);
+        setStorage("food", food);
+        setStorage("addresss", rn);
         h_23(food, rn);
     } else if (!food) {
         onsenAlert(getTrans('Please Enter Food Name', 'foot_is_required'));
     } else if (!rn) {
         onsenAlert(getTrans('Address is required', 'address_is_required'));
     }
-  
+
 }
 
 function h_23(food, address) {
@@ -6741,8 +6934,8 @@ function h_23(food, address) {
                 var search_ob = JSON.stringify(data, null, 2);
                 removeStorage('search_ob');
                 setStorage('search_ob', search_ob);
-               
-                h_24(food, address,0);
+
+                h_24(food, address, 0);
 
             } else {
                 setStorage("dziuk", 1000000000000000000000000000000000);
@@ -6759,9 +6952,10 @@ function h_23(food, address) {
 
 }
 
-function h_24(food, address,x) {
+function h_24(food, address, x) {
     removeStorage("dziukLength");
-    removeStorage('search_ob'); 
+    removeStorage("fn");
+    setStorage("fn", "+ Food found");
     dziuk = [];
     _not_available = [];
     _dziuk = [];
@@ -6777,74 +6971,71 @@ function h_24(food, address,x) {
     var newprice;
     var newpriceelement;
     var sutiobj;
-    
+
     var ajax_request = $.ajax({
-        url: "http://mealoop.com/mobileapp/api/searchss?address=" + address + "&sea=" + food + "&x="+x+"",
+        url: "http://mealoop.com/mobileapp/api/searchss?address=" + address + "&sea=" + food + "&x=" + x + "",
         data: "&lang_id=&api_key=fed7b441b349bae8f146711fbd215e90",
         type: 'post',
         dataType: 'jsonp',
         crossDomain: true,
         success: function (dataa) {
-               removeStorage('datastr');
 
-   if (dataa.details.data) {
-    var datastr = JSON.stringify(dataa.details.data, null, 2);
+            removeStorage('datastr');
 
-    setStorage("datastr", datastr);             
+            if (dataa.details.data) {
+                var datastr = JSON.stringify(dataa.details.data, null, 2);
+
+                setStorage("datastr", datastr);
                 $.each(dataa.details.data, function (key, val) {
                     var json_text = JSON.stringify(dataa.details.data, null, 2);
                     var merch_id = dataa.details.data.merchant_id;
-                      
+
                     if (val.price) {
                         _not_available.push(val.not_available);
                         /*access.push(dataa.details.disabled_ordering);*/
                         dziuk.push(val.merchant_id);
-                        if(val.photo){
-                             _photo.push("http://mealoop.com/upload/"+val.photo);
-                        }
-                       
-                        else{
-                             _photo.push("http://mealoop.com/upload/icon android.png");
-                            
+                        if (val.photo) {
+                            _photo.push("http://mealoop.com/upload/" + val.photo);
+                        } else {
+                            _photo.push("http://mealoop.com/upload/icon android.png");
+
                         }
                         _name.push(val.item_name);
-                       
-                          newpriceelement=val.price.substr(0, 1);;
-                        if(newpriceelement=='['){
-                newprice =val.price.slice(2, val.price.length-2);
-                              _price.push(newprice);
+                        if (val.price) {
+                            newpriceelement = val.price.substr(0, 1);;
+                            if (newpriceelement == '[') {
+                                newprice = val.price.slice(2, val.price.length - 2);
+                                _price.push(newprice);
+                            }
+                            if (newpriceelement == '{') {
+                                sutiobj = JSON.parse(val.price)
+                                _price.push(sutiobj[Object.keys(sutiobj)[Object.keys(sutiobj).length - 1]]);
+                            }
                         }
-                        if(newpriceelement=='{'){
-                      sutiobj =  JSON.parse(val.price)
-                      Object.values(sutiobj);
-                             _price.push(  Object.values(sutiobj));
-                        }
-                       
                         _merch_.push(val.merchant_id);
-                        newcat =val.category.slice(2, val.category.length-2);                        
-                            
+                        newcat = val.category.slice(2, val.category.length - 2);
+
                         _cut_.push(newcat);
                         _item_id.push(val.item_id);
                     }
-                         if (jQuery.inArray(val.merchant_id, _dziuk) == -1) {
+                    if (jQuery.inArray(val.merchant_id, _dziuk) == -1) {
                         _dziuk.push(val.merchant_id);
                     }
-                  
+
                     setStorage("dziuk", dziuk);
                     setStorage("jsonText", dziuk);
                     removeStorage("dziukLength");
                     setStorage("dziukLength", _dziuk.length);
-  
+
                 })
                 removeStorage("dziukLength");
                 setStorage("dziukLength", dziuk.length);
                 searchMerchant()
 
+            } else {
+                removeStorage('datastr');
+                _limit = _limit + 0;
             }
-            else{
-    removeStorage('datastr');
-    _limit=_limit+0;
-   }
         }
     })
 
@@ -6870,34 +7061,35 @@ function back_to_title() {
         cancelIfRunning: true
     });
     sNavigator.pushPage("menucategory.html", options);
-}   
-function A(){ 
- var index = 0;
+}
 
- var $ = document.querySelector.bind(document);
- ons.ready(function(){
-  var toolbar = $('ons-toolbar');
-  $('.ons-scroller__content').addEventListener('scroll', function(){
-   var s = this.scrollTop;
-  
-   var h =  $('#browse-results').offsetHeight;
-   var hs =  $('.ons-scroller').offsetHeight;
-   var address = getStorage('address');
-   var food =  getStorage('food');
+function A() {
+    var index = 0;
 
-   if (s + hs == h ) {
-    
+    var $ = document.querySelector.bind(document);
+    ons.ready(function () {
+        var toolbar = $('ons-toolbar');
+        $('.ons-scroller__content').addEventListener('scroll', function () {
+            var s = this.scrollTop;
 
-    if(getStorage('datastr')){
-     _limit=_limit+10;
-    }
-    h_24(food,address,_limit);
-   }
+            var h = $('#browse-results').offsetHeight;
+            var hs = $('.ons-scroller').offsetHeight;
+            var address = getStorage('search_address');
+            var food = getStorage('food');
 
-   if(s==0 && _limit!=0){
-    _limit=_limit-10;
-    var r = h_24(food,address,_limit);
-   }
-  });
- });
+            if (s + hs == h) {
+
+
+                if (getStorage('datastr')) {
+                    _limit = _limit + 5;
+                }
+                h_24(food, address, _limit);
+            }
+
+            if (s == 0 && _limit != 0) {
+                _limit = _limit - 5;
+                var r = h_24(food, address, _limit);
+            }
+        });
+    });
 }
