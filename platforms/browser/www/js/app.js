@@ -3920,6 +3920,18 @@ function showSupport() {
     }
 }
 
+function restSignup() {
+    if (isLogin()) {
+        menu.setMainPage('RestaurantSignup.html', {
+            closeMenu: true
+        });
+    } else {
+        menu.setMainPage('RestaurantSignup.html', {
+            closeMenu: true
+        })
+    }
+}
+
 function showNews() {
     if (isLogin()) {
         menu.setMainPage('News.html', {
