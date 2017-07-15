@@ -35,9 +35,10 @@ app.controller('PageController', function ($scope, $http) {
 
 	/*******************************End Select Country*********************************************************/
 	$scope.first_page = function () {
-			myNavigator.pushPage('country.html')
+		/*	myNavigator.pushPage('country.html')*/
+        myNavigator.resetToPage('country.html')
 		}
-		/*******************************Get Country Value*********************************************************/
+	/*******************************Get Country Value*********************************************************/
 
 	$scope.get_country_value = function (obj) {
 			$scope.cauntry_val = obj.target.attributes.value.nodeValue;
@@ -56,7 +57,7 @@ app.controller('PageController', function ($scope, $http) {
 			sessionStorage.setItem('cauntry_code', $scope.cauntry_code);
 			myNavigator.pushPage('tabs.html')
 		}
-		/*******************************End Get Country Value*********************************************************/
+	/*******************************End Get Country Value*********************************************************/
 	$scope.manualy = function () {
 		myNavigator.pushPage('home.html')
 
@@ -106,7 +107,7 @@ app.controller('PageController', function ($scope, $http) {
 				})
 
 		}
-		/********************Signup Form ***************************************************/
+	/********************Signup Form ***************************************************/
 	$scope.signup_valid = '';
 	$scope.signup = function () {
 		$scope.signup_valid = '';
@@ -151,8 +152,8 @@ app.controller('PageController', function ($scope, $http) {
 
 				})
 		}
-		/********************End Reset Password ***************************************************/
-		/********************Verify Password ***************************************************/
+	/********************End Reset Password ***************************************************/
+	/********************Verify Password ***************************************************/
 	$scope.ver_valid = '';
 	$scope.verify = function () {
 			$scope.ver_valid = '';
@@ -170,7 +171,7 @@ app.controller('PageController', function ($scope, $http) {
 				$scope.ver_valid = 'Please fill the fields'
 			}
 		}
-		/******************** Ons Alert ***************************************************/
+	/******************** Ons Alert ***************************************************/
 
 	$scope.alert = function (material, message) {
 			ons.notification.alert({
@@ -178,12 +179,7 @@ app.controller('PageController', function ($scope, $http) {
 				modifier: material ? 'material' : undefined
 			});
 		}
-		/******************** End Ons Alert ***************************************************/
-	$scope.mapPage = function(){
- myNavigator.pushPage('mapPage.html');
-}
-
-
+	/******************** End Ons Alert ***************************************************/
 
 $scope.rest_info = {};
 $scope.reviewsPage = function(id){
@@ -199,7 +195,6 @@ $scope.reviewsPage = function(id){
  myNavigator.pushPage('reviewsPage.html');
 }
 
-/*30.06*/
 $scope.rest_review = {};
 $scope.addReviewsPage = function(id){
 	$http.jsonp(" http://mealoop.com/mobileapp/api/merchantReviews?merchant_id="+id+"&lang_id=&api_key=fed7b441b349bae8f146711fbd215e90&_=1498737082313&callback=JSON_CALLBACK")
@@ -277,7 +272,6 @@ $scope.bookNow = function(d){
 	}
 }
 
-/*30.06 end*/
 	$scope.pr_firstname = '';
 	$scope.pr_lastname = '';
 	$scope.pr_email = '';
@@ -315,7 +309,7 @@ $scope.bookNow = function(d){
 
 			}
 		}
-		/*************************** show Address Book      *******************************************/
+	/*************************** show Address Book      *******************************************/
 	$scope.addressobj = {};
 	$scope.showAddressBook = function () {
 			if (sessionStorage.getItem('token')) {
@@ -343,7 +337,7 @@ $scope.bookNow = function(d){
             myNavigator.popPage(['page', "showAddressBook.html"]);
         }
     }
-		/*************************** End show Address Book      *******************************************/
+	/*************************** End show Address Book      *******************************************/
 	$scope.gonews = function () {
 		myNavigator.pushPage("gonews.html");
 	}
@@ -373,8 +367,8 @@ $scope.bookNow = function(d){
 			$scope.valid_location = '';
 			myNavigator.pushPage("newshowAddressBook.html")
 		}
-		/*******************************************Menu Restaurant *********************************************/
-	/*30.06*/
+	/*******************************************Menu Restaurant *********************************************/
+    $scope.gal_image=[];
 	$scope.menu_category = {};
 	$scope.content =''
 	$scope.content1=''
@@ -392,6 +386,16 @@ $scope.bookNow = function(d){
                 sessionStorage.setItem("merchant_address", response.details.address);
                 sessionStorage.setItem("merchant_latitude", response.details.coordinates.latitude);
                 sessionStorage.setItem("merchant_longtitude", response.details.coordinates.longtitude);
+         if(response.details.merchant_close_store==true){
+           response.details.open='Close Now' ;
+             $scope.co_lor={'color':'#dc5236'}
+         }
+            else{
+                response.details.open='Open Now' ;
+                 $scope.co_lor={'color':'#80CC1D'}
+            }
+            $scope.gal_image=response.details.gal_image;
+            console.log($scope.gal_image)
 				myNavigator.pushPage('menucategory.html');
 			}).finally(function () {
 				$scope.hideModal();
@@ -401,8 +405,15 @@ $scope.bookNow = function(d){
 
 			});
 	};
-/*30.06 end*/
 	/*******************************************End Menu Restaurant*********************************************/
+    $scope.onepohoto=function(abc){
+       $scope.one_pohoto=abc;
+         myNavigator.pushPage('onephoto.html');
+    }
+    $scope.photos=function(){
+        console.log($scope.gal_image)
+        myNavigator.pushPage('photos.html');
+    }
 	/*******************************************Restaurant Location*********************************************/
 	$scope.restaurants = {};
 	$scope.address = '';
@@ -419,7 +430,10 @@ $scope.bookNow = function(d){
         $scope.friends = $scope.restaurants;
         $scope.activeMenu='';
         $scope.activeMenuR='';
+        $scope.fastClickItem = '';
+        $scope.clickItem = '';
     }
+    $scope.fastClickItem = '';
 	$scope.quichfilter = function (filter1,filter2) {
 			if(!filter2){
             filter2="";
@@ -427,7 +441,7 @@ $scope.bookNow = function(d){
     
         $scope.quickFilter2 =filter2
         $scope.quickFilter1 =  filter1 ;
-
+		$scope.fastClickItem = filter1;
 
     }
   $scope.rest_part = [] 
@@ -447,7 +461,7 @@ $scope.bookNow = function(d){
   }
   $http.jsonp("http://mealoop.com/mobileapp/api/search?address=" + address + "&callback=JSON_CALLBACK")
    .success(function successCallback(response) {
-
+console.log(response)
     $scope.restaurants = response.details.data;
  
     if (response.msg == "Successful") {
@@ -463,7 +477,7 @@ $scope.bookNow = function(d){
     $http.jsonp("http://mealoop.com/mobileapp/api/SearchSponsored?address=" + address + "&callback=JSON_CALLBACK")
       .success(function successCallback(response) {
 
-       
+       console.log(response)
      
        if (response.msg == "Successful") {
         
@@ -495,6 +509,10 @@ $scope.bookNow = function(d){
 		
     };
 	/*******************************************End Restaurant Location *********************************************/
+
+
+
+
 	/******************************************* Loading Modal *********************************************/
 	$scope.showModal = function () {
 		var modal = document.querySelector('ons-modal');
@@ -506,7 +524,7 @@ $scope.bookNow = function(d){
 			modal.hide();
 
 		}
-		/******************************************* End Loading Modal *********************************************/
+	/******************************************* End Loading Modal *********************************************/
 	$scope.serachPage = function () {
 
 		myNavigator.pushPage('serachPage.html');
@@ -514,12 +532,14 @@ $scope.bookNow = function(d){
 	$scope.round = function (i) {
 		return Math.round(i);
 	};
+	$scope.clickItem ='';
     $scope.searchs = function (search) {
         $scope.searchString = search;
         myNavigator.pushPage('serachPage.html', { animation : 'slide' } );
+        $scope.clickItem = search;
 
     }
-		/**********************************************Search Food***********************************************/
+	/**********************************************Search Food***********************************************/
 	$scope.search_menu = function () {
 
 	};
@@ -537,15 +557,14 @@ $scope.bookNow = function(d){
 			"display": "none"
 		};
 	}
-	/*29.06*/
 	var arr_food = [];
-$scope.arr_food=[];
-$scope.food_search = {};
-$scope.rest_name = []
-$scope.cuisine = []
-$scope.rating = []
-$scope.services = []
-$scope.logo = []
+	$scope.arr_food=[];
+	$scope.food_search = {};
+	$scope.rest_name = []
+	$scope.cuisine = []
+	$scope.rating = []
+	$scope.services = []
+	$scope.logo = []
 	$scope.getfood = function () {
 		arr_food = [];
 		$scope.arr_food=[];
@@ -554,7 +573,7 @@ $scope.logo = []
 		$scope.rating = []
 		$scope.services = []
 		$scope.logo = []
-			var address1 = document.querySelectorAll('#autocomplete')[0].value;
+			var address1 = sessionStorage.getItem("_address");
 			var food1 = document.querySelectorAll('#food1')[document.querySelectorAll('#food1').length-1].value;
 		if(food1){
 			$scope.showModal();
@@ -584,7 +603,7 @@ $scope.logo = []
 
 
 				}).finally(function () {
-					var address2 = document.querySelectorAll('#autocomplete')[document.querySelectorAll('#autocomplete').length-1].value;
+					var address2 = sessionStorage.getItem("_address");
 					var food2 = document.querySelectorAll('#food1')[document.querySelectorAll('#food1').length-1].value;
 					$http.jsonp("http://mealoop.com/mobileapp/api/searchss?address=" + address2 + "&sea=" + food2 +  "&callback=JSON_CALLBACK")
 						.success(function successCallback(response) {
@@ -630,8 +649,7 @@ $scope.logo = []
 				$scope.alert(false, 'Please Select Food');
 		}
 		}
-		/*29.06 end*/
-/*go settings*/
+/*********go settings*******/
 $scope.device_id;
  $scope.goSettings = function () {
       $scope.device_id=  sessionStorage.getItem("device_id");
@@ -650,12 +668,12 @@ $scope.device_id;
       
   myNavigator.pushPage('settingspart.html');
  }
-/*go settingsend*/
+/******go settingsend**********/
 
 
 
 
-		/*******************************************Food  in Menu     *********************************************/
+	/*******************************************Food  in Menu     *********************************************/
 	$scope.food_category = {};
 	$scope.foods_menu = function (category, merchant) {
 		$http.jsonp("http://mealoop.com/mobileapp/api/getItemByCategory?cat_id=" + category + "&merchant_id=" + merchant + "&callback=JSON_CALLBACK")
@@ -736,8 +754,8 @@ $scope.device_id;
 
 			}
 		}
-		/*******************************************End  Food  in Menu  *********************************************/
-		/*******************************************food item details       *********************************************/
+	/*******************************************End  Food  in Menu  *********************************************/
+	/*******************************************food item details       *********************************************/
 	$scope.item_foods = {};
 	$scope.price = 0;
 	$scope.item_details = function (item, category, merchant) {
@@ -926,8 +944,8 @@ $scope.device_id;
 					});
 			}
 		}
-		/****************************************** end add to cart    ********************************************/
-		/*******************************************price food item details    *********************************************/
+	/****************************************** end add to cart    ********************************************/
+	/*******************************************price food item details    *********************************************/
 	$scope.updgrate_price = 0;
 	$scope.subitem = '';
 	$scope.subcat_id = '';
@@ -957,15 +975,12 @@ $scope.device_id;
 
 	};
 
-	/*avelacum popoxutyun*/
-
 
 	$scope.cart = function () {
 			myNavigator.pushPage('cart.html');
 		}
-		/*avelacum popoxutyun verj*/
-		/*******************************************End price food item details    *********************************************/
-		/************************** edit Address Book  ******************************************/
+	/*******************************************End price food item details    *********************************************/
+	/************************** edit Address Book  ******************************************/
 
 	$scope.edit_address = function (address) {
 		$scope.valid_eadrstreet = '';
@@ -1056,8 +1071,8 @@ $scope.device_id;
 
 			}
 		}
-		/************************** End edit Address Book      ******************************************/
-		/************************** delete Address Book  ******************************************/
+	/************************** End edit Address Book      ******************************************/
+	/************************** delete Address Book  ******************************************/
 	function delete_address(num) {
 	
 		$http.jsonp("http://mealoop.com/mobileapp/api/deleteAddressBook?client_token=" + profile_token + "&id=" + num + "&lang_id=" + "" + "&callback=JSON_CALLBACK")
@@ -1070,12 +1085,12 @@ $scope.device_id;
 	$scope.filter = function () {
 			myNavigator.pushPage('filter.html');
 		}
-		/*******************filter end**************************/
-		/***********Next Step**********/
+	/*******************filter end**************************/
+	/***********Next Step**********/
 	$scope.nextStep = function () {
 			myNavigator.pushPage('orderlogin.html');
 		}
-		/***********Next Step end**********/
+	/***********Next Step end**********/
 
 
 
@@ -1099,8 +1114,8 @@ $scope.device_id;
 
 			});
 		}
-		/***************************end delete Address Book  *******************************************/
-		/*******************************************Logout *********************************************/
+	/***************************end delete Address Book  *******************************************/
+	/*******************************************Logout *********************************************/
 	$scope.logout = function () {
 		sessionStorage.removeItem('token')
 		$scope.style_load = {

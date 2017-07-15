@@ -1,75 +1,76 @@
-<!DOCTYPE HTML>
-<html>
-
+<!doctype html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-	<script src="components/loader.js"></script>
-	<script src="lib/angular/angular.min.js"></script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+<link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+<link rel="stylesheet" href="lib/raty/jquery.raty.css">
+
+<link href="lib/mobiscroll/css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.frame.android.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.frame.ios-classic.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.frame.ios.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.android.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.ios-classic.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.ios.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
+<script src="lib/angular/angular.min.js"></script>
 	<script src="lib/onsenui/js/onsenui.min.js"></script>
 	<script src="lib/onsenui/js/angular-onsenui.min.js"></script>
-	<link rel="stylesheet" href="components/loader.css">
-	<link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
-	<link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/app.css">
- 	<link href="lib/mobiscroll/css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.frame.android.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.frame.ios-classic.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.frame.ios.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.scroller.android.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css">
-	<link href="lib/mobiscroll/css/mobiscroll.scroller.ios-classic.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.scroller.ios.css" rel="stylesheet" type="text/css" />
-	<link href="lib/mobiscroll/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="cordova.js"></script>
-	<script src="js/jquery.js"></script>
-	<script src="js/config.js?ver=1.0"></script>
+<script src="lib/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
 
+<script src="lib/raty/jquery.raty.js"></script>
+<script src="lib/jquery.form-validator.min.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="lib/jquery.form-validator.min.js"></script>
-	<link href="lib/intel/build/css/intlTelInput.css" rel="stylesheet" type="text/css" />
-	<script src="js/jquery.geocomplete.min.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.core.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.frame.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.scroller.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.util.datetime.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.datetimebase.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.datetime.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.frame.android-holo.js"></script>
 
-	<script type="text/javascript" src="lib/intel/build/js/intlTelInput.js"></script>
-	<script src="lib/mobiscroll/js/mobiscroll.core.js"></script>
-	<script src="lib/mobiscroll/js/mobiscroll.frame.js"></script>
-	<script src="lib/mobiscroll/js/mobiscroll.scroller.js"></script>
-	<script src="lib/mobiscroll/js/mobiscroll.util.datetime.js"></script>
-	<script src="lib/mobiscroll/js/mobiscroll.datetimebase.js"></script>
-	<script src="lib/mobiscroll/js/mobiscroll.datetime.js"></script>
-	<script src="lib/mobiscroll/js/mobiscroll.frame.android-holo.js"></script>
-	<script src="js/paypal.js?ver=1.0"></script>
+<script type="text/javascript" src="lib/paypal-mobile-js-helper.js"></script>
+<script src="lib/jquery.translate.js"></script>
+<script src="lib/jquery.mask.min.js"></script>
 
-	
-	<script src="js/intel.js"></script>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCHBqHExBh8UgSaAnX1NgNZikZtH2aMk0o&libraries=places"></script>
-<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCHBqHExBh8UgSaAnX1NgNZikZtH2aMk0o&libraries=places"></script>
 <script src="js/jquery.geocomplete.min.js"></script>
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript" src="lib/imagesloaded.pkgd.min.js"></script>
 
+<link href="lib/intel/build/css/intlTelInput.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="lib/intel/build/js/intlTelInput.js"></script>
+
+<script src="js/config.js?ver=1.0"></script>
+<script src="js/paypal.js?ver=1.0"></script>
 <script src="js/old-openfb.js?ver=1.0"></script>
 <script src="js/googlemap.js?ver=1.0"></script>
-<script src="js/tpl.js?ver=1.0"></script>>
-	<script src="js/app.js"></script>
- 	<script src="js/payment_googleaps.js"></script>
+<script src="js/tpl.js?ver=1.0"></script>
+<script src="js/countries.js?ver=1.0"></script>
+
+<script src="js/app.js"></script>
+
+<script src="js/jquery-functions.js"></script>
+
 
 </head>
-
 <body ng-controller="PageController as page">
+
 	<ons-navigator var="myNavigator" page="country.html"></ons-navigator>
 	<ons-toast>
-		Error
+		Looks like your country is not supported
 	</ons-toast>
 	<ons-template id="country.html">
 		<ons-page>
-			<!----------------------------Select Country---------------------------------------->
+<!----------------------------Select Country---------------------------------------->
 			<ons-list-title>
 				<h2 class="newcenter">Hello, please select <br> your country</h2></ons-list-title>
 
@@ -87,12 +88,12 @@
 					</label>
 				</ons-list-item>
 			</ons-list>
-			<!----------------------------End Select Country---------------------------------------->
+<!----------------------------End Select Country---------------------------------------->
 
 
 		</ons-page>
 	</ons-template>
-	<!-- Tab page 1 -->
+<!-- Tab page 1 -->
 	<ons-template id="readyToEat.html">
 		<ons-page>
 			<div class="spaheti_pic">
@@ -113,9 +114,9 @@
 
 		</ons-page>
 	</ons-template>
-	<!-- TAb page 1  end-->
+<!-- TAb page 1  end-->
 
-	<!-- TAb page 2 -->
+<!-- TAb page 2 -->
 	<ons-template id="doItFaster.html">
 		<ons-page>
 			<div class="pizza_pic">
@@ -130,18 +131,22 @@
 				<span class="tab_mine active"></span>
 				<div class="line line2"></div>
 				<div class="locate_munal">
+<!--
 					<ons-button id="push-button" ng-click="manualy()" class="manually_button">Manually</ons-button>
+-->
+<!--
 					<ons-button class="locate_button" onclick="get_loc()">Locate Me</ons-button>
-					<!--<ons-input type="hidden"  input-id="autocomplete"></ons-input>-->
+-->
+					<ons-button id="push-button" class="locate_button" ng-click="manualy()">Locate Me</ons-button>
 				</div>
 			</div>
 
 
 		</ons-page>
 	</ons-template>
-	<!-- TAb page 2 end-->
+<!-- TAb page 2 end-->
 
-	<!-- Tabs part -->
+<!-- Tabs part -->
 	<ons-template id="tabs.html">
 		<ons-page>
 
@@ -159,9 +164,9 @@
 
 		</ons-page>
 	</ons-template>
-	<!-- Tabs part end -->
+<!-- Tabs part end -->
 
-	<!-- Your location home page  -->
+<!-- Your location home page  -->
 	<ons-template id="home.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -176,7 +181,7 @@
 			</p>
 			<div class="city_input_div">
 				<p>
-					<ons-input input-id="autocomplete" modifier="underbar" placeholder="Address" float></ons-input>
+					<ons-input input-id="autocomplete" modifier="underbar" onkeydown="validate(event)" placeholder="Address"  float></ons-input>
 				</p>
 				<ons-button modifier="quiet" class="current_loc" onclick="get_loc()">
 					<span class="current_loc">Use my current location</span>
@@ -187,10 +192,10 @@
 			
 		</ons-page>
 	</ons-template>
-	<!-- Your location home page end -->
+<!-- Your location home page end -->
 
 
-	<!-- profile page -->
+<!-- profile page -->
 	<ons-template id="profile.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -212,7 +217,7 @@
             </div>
 			<p class="welcome use_email">or use your email address</p>
 			<div class="for_log_in_page">
-			<!-- popoxutyun-->	<ons-button modifier="large" class="log_in_but but_width" ng-click="gologin()">Log In</ons-button>
+			<ons-button modifier="large" class="log_in_but but_width" ng-click="gologin()">Log In</ons-button>
 				<p class="for_account">You dont have account?</p>
 				<ons-button modifier="quiet" class="create_account" ng-click="gocreate_account()">
 					Create Account
@@ -224,8 +229,8 @@
 			</div>
 		</ons-page>
 	</ons-template>
-	<!-- profile page end -->
- <!-- map page -->
+<!-- profile page end -->
+<!-- map page -->
 	<ons-template id="mapPage.html">
 		<ons-page id="page-map" modifier="map-page" >
 
@@ -255,8 +260,8 @@
 		</ons-page>
 	</ons-template>
 
- <!-- map page end -->
-  <!-- bookPage -->
+<!-- map page end -->
+<!-- bookPage -->
 	<script type="text/ons-template" id="bookingTY.html">
 		<ons-page id="page-booking-ty" class="onsen-display">
 			<ons-toolbar class="bgcolor_purple toolbar">
@@ -362,9 +367,9 @@
 	</script>
 
 
-	<!-- bookPage end -->
+<!-- bookPage end -->
  
-  <!-- reviewsPage -->
+<!-- reviewsPage -->
 	<ons-template id="reviewsPage.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -450,9 +455,52 @@
 	</ons-template>
 
 
- <!-- reviewsPage end -->
+<!-- reviewsPage end -->
+<!-- Photos -->
+
+<ons-template id="photos.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="white center">
+					Photos
+				</div>
+			</ons-toolbar>
+	<ons-row >
+
+       	   <img ng-repeat="gal_images in gal_image" ng-click="onepohoto(gal_images)" ng-src="http://mealoop.com/upload/{{gal_images}}" style="width:50%;height:235px;float:left" alt="">
+
+   
+	</ons-row>
+
+	
+		</ons-page>
+	</ons-template>
+<ons-template id="onephoto.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="white center">
+					Photos
+				</div>
+			</ons-toolbar>
+	
+
+<img ng-src="http://mealoop.com/upload/{{one_pohoto}}" style="width:100%" alt="">
+
+   
+	
+
+	
+		</ons-page>
+	</ons-template>
+<!-- End Photos -->
  
-  <!-- addReviewsPage -->
+<!-- addReviewsPage -->
 	<ons-template id="addReviewsPage.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -470,7 +518,6 @@
 				<img ng-src="{{menu_category.details.logo}}" class="book_img_page">
 				<span class="center rest_name_book"> {{menu_category.details.restaurant_name}}</span>
 			</div>
-			<!-- 30.06 -->
 			<div class="user_review_part" ng-repeat = "review in rest_review.details">
 				<div class="float_left avatan_review">
 					<ons-icon icon="user"></ons-icon>
@@ -532,13 +579,12 @@
 				</div>
 				<div class="clearfix"></div>
 			</div>
-			<!-- 30.06 end -->
 		</ons-page>
 	</ons-template>
 
 
- <!-- addReviewsPage end -->
- <!-- new review -->
+<!-- addReviewsPage end -->
+<!-- new review -->
 	<ons-template id="addNewReview.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -553,7 +599,6 @@
 				<img ng-src="{{menu_category.details.logo}}" class="book_img_page">
 				<span class="center rest_name_book"> {{menu_category.details.restaurant_name}}</span>
 			</div>
-<!-- 30.06 -->
 					<p class="comment_stars">
 						<img alt="1"  class="star_add" src="img/star-off.png" tappable ng-click="starsOn($event)">
 				        <img alt="2" class="star_add"  src="img/star-off.png" tappable ng-click="starsOn($event)">
@@ -561,7 +606,6 @@
 				        <img alt="4" class="star_add"  src="img/star-off.png" tappable ng-click="starsOn($event)">
 				        <img alt="5"  class="star_add" src="img/star-off.png" tappable ng-click="starsOn($event)">
 					</p>
-<!-- 30.06 end -->	
 			<div class="book_inputs">
     			<p>
       				<ons-input  modifier="underbar" placeholder="Your reviews" ng-model='input_val'></ons-input>
@@ -575,7 +619,7 @@
    		 
 		</ons-page>
 	</ons-template>
- <!-- new review  end-->
+<!-- new review  end-->
 <!-- popover -->
 <ons-popover direction="down" var="popover" cancelable>
   <div >
@@ -585,8 +629,7 @@
     </ons-list>
   </div>
 </ons-popover>
-<!-- popover end -->
-	<!-- verify page -->
+<!-- verify page -->
 	<ons-template id="verify.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -609,13 +652,13 @@
 			</div>
 		</ons-page>
 	</ons-template>
-	<!-- verify page end -->
+<!-- verify page end -->
 
 
 
 
 
-	<!-- create account page -->
+<!-- create account page -->
 
 	<ons-template id="create_account.html">
 		<ons-page>
@@ -656,9 +699,9 @@
 		</ons-page>
 	</ons-template>
 
-	<!-- create account page  end-->
+<!-- create account page  end-->
 
-	<!-- Login page -->
+<!-- Login page -->
 
 	<ons-template id="login.html">
 		<ons-page>
@@ -692,8 +735,8 @@
 
 		</ons-page>
 	</ons-template>
-	<!-- Login page end -->
-	<!-- forgot password dialog page -->
+<!-- Login page end -->
+<!-- forgot password dialog page -->
 	<ons-dialog var="dialog">
 		<div class="reset_passsword">
 			<p class="bgcolor_purple forgot_p">
@@ -712,8 +755,8 @@
 			</p>
 		</div>
 	</ons-dialog>
-	<!-- forgot password dialog page end -->
-	<!-- navbar for restaurant pade -->
+<!-- forgot password dialog page end -->
+<!-- navbar for restaurant pade -->
 	<ons-template id="restaurantLocation.html">
 		<ons-page>
 			<span class="notification cart-num ng-scope" onclick="showCart();" style="display:none;     bottom: 29px;left: 69%; z-index: 44;  position: absolute; margin-left: -10px;"> </span>
@@ -726,9 +769,8 @@
 			</ons-tabbar>
 		</ons-page>
 	</ons-template>
-	<!-- navbar for restaurant pade end-->
+<!-- navbar for restaurant pade end-->
 
-<!--taza jori -->
 	<script type="text/ons-template" id="order-options.html">
 		<ons-page id="page-order-options">
 
@@ -865,7 +907,6 @@
 			</ons-page>
 	</script>
 
-	<!--taza jori -->
 <ons-template id="food.html">
   <ons-page>
    <ons-toolbar class="bgcolor_purple">
@@ -887,17 +928,11 @@
    </div>
    <div class="center spons" ng-style="hide_part">Sponsers </div>
    <div ng-repeat ="res in rest_part.details.data" >
-    <div class="menu_pic1 menu_pics menu-pics_part" ng-style="hide_part" style="background-image:url({{res.logo}})" ng-click="menu_restaurant(res.merchant_id,res.services.delivery,res.services.pickup)">
+    <div class="menu_pic1 menu_pics menu-pics_part" ng-style="hide_part" style="background-image:url(http://mealoop.com/upload/{{res.bg_img}})" ng-click="menu_restaurant(res.merchant_id,res.services.delivery,res.services.pickup)">
     </div>  
    </div>
    <div class="clearfix"></div>
-   <div class="social_media_pics" ng-style="hide_part">
-    <div>
-     <span>Tel: 450</span> Gold
-     <img src="img/fb.png">
-     <img src="img/insta.png">
-    </div>
-   </div>
+  
 
   <ons-list ng-repeat = 'food in arr_food'>
     <ons-list-item class="border_bot_top" ng-click="item_details(food.item_id,food.merchant_id,food.category)">
@@ -977,11 +1012,11 @@
    </ons-list>
   </ons-page>
  </ons-template>
- <!-- food page end -->
+<!-- food page end -->
 
-  <!-- cart page -->
 
-    <!-- cart page -->
+
+<!-- cart page -->
 
  <script type="text/ons-template" id="cart.html">
     <ons-page id="page-cart" class="onsen-display">
@@ -1141,52 +1176,10 @@
 	</script>
 
 
-    <!-- cart page end -->
+<!-- cart page end -->
 
-    <!-- carts accout -->
-    <!--<ons-template id="cartcreate_account.html">-->
- <!--<ons-page>-->
-  <!--<ons-toolbar class="bgcolor_purple">-->
-   <!--<div class="left">-->
-    <!--<ons-back-button class="white"></ons-back-button>-->
-   <!--</div>-->
-   <!--<div class="center white">-->
-    <!--Register-->
-   <!--</div>-->
-  <!--</ons-toolbar>-->
-  <!--<div class="for_log_in_page">-->
-            <!--<button class="button button&#45;&#45;quiet green trn" ng-click="gologin()" data-trn-key="sign_in">-->
-                <!--Sign in-->
-            <!--</button>-->
-   <!--<p>-->
-    <!--<ons-input id="firstname" class="registr_input" modifier="underbar" placeholder="First Name" float></ons-input>-->
-   <!--</p>-->
-   <!--<p>-->
-    <!--<ons-input id="lastname" class="registr_input" modifier="underbar" placeholder="Last Name" float></ons-input>-->
-   <!--</p>-->
-   <!--<p>-->
-    <!--<ons-input id="mobile" class="registr_input" modifier="underbar" placeholder="Mobile Phone" float></ons-input>-->
-   <!--</p>-->
-   <!--<p>-->
-    <!--<ons-input id="email" class="registr_input" modifier="underbar" placeholder="Email Address" float></ons-input>-->
-   <!--</p>-->
-   <!--<p>-->
-    <!--<ons-input id="reg_password" class="registr_input" modifier="underbar" type="password" placeholder="Password" float></ons-input>-->
-   <!--</p>-->
-   <!--<p>-->
-    <!--<ons-input id="reg_password_confirm" class="registr_input" modifier="underbar" type="password" placeholder="Confirm Password" float></ons-input>-->
-   <!--</p>-->
-   <!--<p class="agree_sms">By creating an account, you agree to receive sms from vendor.</p>-->
-   <!--<p class="text_red">{{signup_valid}}</p>-->
-   <!--<ons-button modifier="large" class="log_in_but margin_bottom_20" ng-click='signup()'> Create Account-->
-    <!--<ons-icon icon="ion-chevron-right" class="login_icon ons-icon ons-icon&#45;&#45;ion ion-checkmark-round fa-lg"></ons-icon>-->
-   <!--</ons-button>-->
-  <!--</div>-->
 
- <!--</ons-page>-->
-<!--</ons-template>-->
-    <!--  carts account end -->
-	<!-- profile when login page -->
+<!-- profile when login page -->
 	<ons-template id="loginProfile.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -1223,42 +1216,8 @@
 			</div>
 		</ons-page>
 	</ons-template>
-	<!-- profile when login page end -->
+<!-- profile when login page end -->
 
-	<!-- orders page -->
-<!-- orders page -->
- <!--<ons-template id="orders.html">-->
-  <!--<ons-page>-->
-   <!--<ons-toolbar class="bgcolor_purple">&lt;!&ndash; jnjel &ndash;&gt;-->
-    <!--<div class="center white">-->
-     <!--Orders-->
-    <!--</div>-->
-   <!--</ons-toolbar>-->
-   <!--<div class="wrapper center wrapper-white page-login-fb">   -->
-         <!--<button class="button blue-btn button&#45;&#45;large fb-loginbutton" id="fb-loginbutton" onclick="myFacebookLogin()">-->
-           <!--<ons-icon icon="fa-facebook"></ons-icon> -->
-           <!--<span class="sigin_fb trn" data-trn-key="sigin_fb">Connect in with Facebook</span>-->
-         <!--</button>                   -->
-   <!--</div>-->
-   <!--<div class="or_div">-->
-    <!--<p class="line_div_p"></p>-->
-    <!--<p class="or_or"> OR</p>-->
-    <!--<p class="line_div_p"></p>-->
-    <!--<div class="clearfix"></div>-->
-   <!--</div>-->
-   <!--<div class="email_pat_order">-->
-    <!--<p  class="filter_by margin-left0">Enter your email address</p>-->
-    <!--<p>-->
-     <!--<ons-input  class="registr_input" modifier="underbar" placeholder="Email" float></ons-input>-->
-    <!--</p>-->
-
-       <!--<ons-button modifier="large" class="log_in_but" ng-click="nextStep()">-->
-        <!--Next Step-->
-       <!--</ons-button>-->
-   <!--</div>-->
-  <!--</ons-page>-->
- <!--</ons-template>-->
- <!-- orders page end -->
 
 <!-- nextstep page -->
  <ons-template id="orderlogin.html">
@@ -1312,10 +1271,9 @@
    </div>
   </ons-page>
  </ons-template>
- <!-- nextstep page end -->
-	<!-- orders page end -->
+<!-- nextstep page end -->
 
-	<!-- more page -->
+<!-- more page -->
 	<ons-template id="more.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -1369,8 +1327,8 @@
 			</ons-list>
 		</ons-page>
 	</ons-template>
-	<!-- more page end -->
-	<!-- restaurant location page -->
+<!-- more page end -->
+
 <!-- restaurant location page -->
 	<ons-template id="restaurantlocnav.html">
 		<ons-page>
@@ -1383,28 +1341,22 @@
 				</div>
 				<div class="right ">
 					<ons-icon icon="search" class="search-icon search_icon_part" ng-click="serachPage()"></ons-icon>
-					<ons-icon icon="sliders" class="search-icon" ng-click="filter()"></ons-icon>
+					
 				</div>
 			</ons-toolbar>
 			<ons-list>
-				<ons-list-item class="border_bot_top">{{restaurants.length}} restaurants deliver to you.<span><ons-icon icon="options"></ons-icon></span></ons-list-item>
+				<ons-list-item class="border_bot_top">{{restaurants.length}} restaurants deliver to you.<span><ons-icon icon="options"></ons-icon></span><ons-icon icon="sliders" class="search-icon" style="float:right;color:#80CC1D;margin-right:17px" ng-click="filter()"></ons-icon></ons-list-item>
 			</ons-list>
 
 			<ons-list ng-repeat="restaurant in restaurants|  orderBy:propertyName:reverse">
-				<!-- 30.06 -->
-
-				<!--<ons-list-item ng-if="restaurant[quickFilter1][quickFilter3]&&restaurant[quickFilter1][quickFilter3] !=quickFilter2" ng-click="menu_restaurant(restaurant.merchant_id,restaurant.services.delivery,restaurant.services.pickup)" class="border_bot_top">-->
+			
  				<ons-list-item ng-if=" restaurant[quickFilter1]!=quickFilter2" ng-click="menu_restaurant(restaurant.merchant_id,restaurant.services.delivery,restaurant.services.pickup)" class="border_bot_top">
 
 
-					<!-- 30.06 end -->
 					<div class="all_rest">
-						<!-- popoxutyun -->
 						<div class="img_rest left"><img ng-src="{{restaurant.logo}}" style="width:55px;height:60px">
-							<!-- <span class="red_p">{{restaurant.is_open}}</span> -->
-
+							
 						</div>
-						<!-- popoxutyun verj -->
 
 
 						<div class="float_left about_rest">
@@ -1463,11 +1415,11 @@
 						<div class="clearfix"></div>
 						<p class="float_left dollar">$<span>$$</span></p>
 						<div class="float_left"><span class="icon_pers_card margin_icon"><ons-icon icon="percent"></ons-icon></span><span class="icon_pers_card"><ons-icon icon="credit-card"></ons-icon></span>
-							<!-- 29.06  avelacnel-->
+							
 							<span ng-if="restaurant.is_open == 'open'" class="green_open">{{restaurant.is_open}}</span>
 							<span ng-if="restaurant.is_open == 'closed'" class="red_close">{{restaurant.is_open}}</span>
 							<span ng-if="restaurant.is_open == 'pre-order'" class="green_open">{{restaurant.is_open}}</span>
-							<!-- 29.06 end -->
+							
 						</div>
 						<p class="deliver_min float_right">delivers in 60min </p>
 						<div class="clearfix"></div>
@@ -1479,14 +1431,12 @@
 		</ons-page>
 	</ons-template>
 
- <!-- restaurant location page end -->
-	<!-- restaurant location page end -->
+<!-- restaurant location page end -->
 
-	<!-- restaurant location page end -->
-	<!-- Menu Category   page  -->
+<!-- Menu Category   page  -->
 	<ons-template id="menucategory.html">
 		<ons-page>
-<!-- changed -->			<ons-toolbar class = "bgcolor_purple">
+			<ons-toolbar class = "bgcolor_purple">
 				<div class="left">
 					<ons-back-button class="white"></ons-back-button>
 				</div>
@@ -1494,13 +1444,12 @@
 					Menu
 				</div>
 			</ons-toolbar>
-			<div class="orange-header">
-				<ons-row>
-					<ons-col width="100%">
+			<div class="">
+			
 						<div class="logo-wrap logo-non-auto">
-							<img class="menu_img" ng-src="{{menu_category.details.logo}}" />
+							<img class="menu_img" style="width:100%" ng-src="{{menu_category.details.bg_image}}" />
 							 <div class="rest_start"  ng-switch="round(menu_category.details.ratings.ratings)">
-              <p ng-switch-when="0" class="stars_of_menu_img">
+              <p ng-switch-when="0" class="stars_of_menu_img" ng-click="addReviewsPage(menu_category.details.merchant_id)">
                <img alt="1" src="img/star-off.png" title="Not rated yet!">
                <img alt="1" src="img/star-off.png" title="Not rated yet!">
                <img alt="1" src="img/star-off.png" title="Not rated yet!">
@@ -1547,15 +1496,12 @@
               </p>
              </div>
 						</div>
-					</ons-col>
-					<ons-col class="text-right">
 						<p class="restauran-title rest_name_text concat-text menu_rest_name">{{menu_category.details.restaurant_name}}</p>
 
 						<p class="menu_rest_address">{{menu_category.details.cuisine}}</p>
- 						<!-- <p class="open_time"><span class="now_open">Open Now</span> - <span>9 AM to 12 Midnight (Mon)</span></p> -->
+						<p class="menu_rest_address" ng-style="co_lor">{{menu_category.details.open}}</p>
 						<p class="del_fee"><span class="fee">Delivery FEE: </span><span ng-bind-html=" menu_category.details.delivery_fee|html"></span></p>
-						<!--  <p> min order <span ng-bind-html="menu_category.details.minimum_order|html"> </span></p> -->
-						<!-- 30.06 -->
+						
 						<p class="del_pickup">
 							<span class="del_fee_pick" ng-if= "content == 'Delivery'">{{content}}
                      <i class="fa fa-check-circle-o check_color margin_right_7" aria-hidden="true"></i>
@@ -1566,17 +1512,20 @@
                      </span>	
 
 						</p>
-						<!-- 30.06 end -->
-					<ul class="list_menu_page">
-       <li class="float_left" onclick="loadMap()">Map</li>
+						<ons-col></ons-col>
+						<ons-col>
+					<ul class="list_menu_page" style="padding:0">
        <li class="float_left" onclick="loadBookingForm1()">Book Table</li>
+       <li class="float_left" onclick="loadMap()">Map</li>
+       <li class="float_left" ng-click="addReviewsPage(menu_category.details.merchant_id)">Info</li>
+       <li class="float_left" ng-click="photos()">Photos</li>
        <li class="float_left" ng-click="reviewsPage(menu_category.details.merchant_id)">Reviews</li>
-       <li class="float_left" ng-click="addReviewsPage(menu_category.details.merchant_id)">Add Reviews</li>
       </ul>
-					</ons-col>
-				</ons-row>
+      </ons-col>
+			<ons-col></ons-col>		
 			</div>
-
+<br>
+<br>
 			<ons-scroller class="menu_all">
 				<ons-list>
 					<ons-list-item modifier="tappable" class="row menu_name">Menu</ons-list-item>
@@ -1589,8 +1538,8 @@
 
 		</ons-page>
 	</ons-template>
-	<!-- End Menu Category Page -->
-	 <!-- ShowAddressBook  -->
+<!-- End Menu Category Page -->
+<!-- ShowAddressBook  -->
  <ons-template id="showAddressBook.html">
   <ons-page>
    <ons-toolbar class="bgcolor_purple">
@@ -1621,8 +1570,8 @@
    </ons-list>
   </ons-page>
  </ons-template>
- <!-- ShowAddressBook End -->
-  <!--edit ShowAddressBook  -->
+<!-- ShowAddressBook End -->
+<!--edit ShowAddressBook  -->
 
 
  <ons-template id="editshowAddressBook.html">
@@ -1676,7 +1625,7 @@
    </div>
   </ons-page>
  </ons-template>
- <!--edit ShowAddressBook End -->
+<!--edit ShowAddressBook End -->
 <!--New ShowAddressBook  -->
  <ons-template id="newshowAddressBook.html">
   <ons-page>
@@ -1720,8 +1669,8 @@
    </div>
   </ons-page>
  </ons-template>
- <!--New ShowAddressBook End -->
-	<!-- Settings  -->
+<!--New ShowAddressBook End -->
+<!-- Settings  -->
 	<ons-template id="settings.html">
 		<ons-page>
 			<ons-toolbar>
@@ -1734,8 +1683,8 @@
 			</ons-toolbar>
 		</ons-page>
 	</ons-template>
-	<!-- Settings End -->
-	<!--  Restaurant Signup    -->
+<!-- Settings End -->
+<!--  Restaurant Signup    -->
 	<ons-template id="RestaurantSignup.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -1747,8 +1696,8 @@
 			<iframe src="http://smarturl.it/restsignup" width="100%" height="100%"></iframe>
 		</ons-page>
 	</ons-template>
-	<!--  End   Restaurant Signup   -->
-		<!--  Go News    -->
+<!--  End   Restaurant Signup   -->
+<!--  Go News    -->
 	<ons-template id="gonews.html">
 
 		<ons-page>
@@ -1761,8 +1710,8 @@
 			<iframe src="http://smarturl.it/newsandpromo" width="100%" height="100%"></iframe>
 		</ons-page>
 	</ons-template>
-	<!--  End Go News   -->
-	<!--  Request Cancel Order    -->
+<!--  End Go News   -->
+<!--  Request Cancel Order    -->
 	<ons-template id="RequestCancelOrder.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -1774,8 +1723,8 @@
 			<iframe src="http://smarturl.it/RequestCancelOrder" width="100%" height="100%"></iframe>
 		</ons-page>
 	</ons-template>
-	<!--  Request Cancel Order   -->
-	<!--  Live Support    -->
+<!--  Request Cancel Order   -->
+<!--  Live Support    -->
 	<ons-template id="LiveSupport.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -1787,11 +1736,10 @@
 			<iframe src="http://smarturl.it/livehelp" width="100%" height="100%"></iframe>
 		</ons-page>
 	</ons-template>
-	<!--  End   Live Support   -->
-	<!-- Food in Menu     page  -->
+<!--  End   Live Support   -->
+<!-- Food in Menu     page  -->
 	<ons-template id="foodinmenu.html">
 		<ons-page>
-		<!-- popoxurtyun -->
 		<ons-toolbar class = "bgcolor_purple">
 				<div class="left">
 					<ons-back-button class="white"></ons-back-button>
@@ -1804,19 +1752,15 @@
 					<ons-icon icon="file-text-o" size="22px" class="white icon_size" ng-click="popover.show($event)"></ons-icon>
 				</div>
 		</ons-toolbar>
-		<!-- popoxurtyunverj -->
 			<div class="orange-header">
 				<ons-row>
 					<ons-col width="40%">
-					<!-- popoxutyun -->
 						<div class="logo-wrap logo-non-auto food_logo_part">
 							<img ng-src="{{food_category.details.merchant_info.logo}}" />
 
 						</div>
-						<!-- popoxutyan verj -->
 					</ons-col>
 					<ons-col class="text-right">
-						<!-- popoxutyun -->
 						<div class="stars_part_food">
 							<p>
 								<img alt="1" src="img/star-off.png" title="Not rated yet!">
@@ -1828,31 +1772,23 @@
 							
 							<p class=" restauran-title concat-text ">{{food_category.details.merchant_info.restaurant_name}}</p>
 						</div>
-						<!-- popoxutyan verj -->
-						<!-- jnjel -->
-						<!-- <p>{{menu_category.details.cuisine}}</p>
-						<p>dillevery fee <span ng-bind-html=" food_category.details.merchant_info.delivery_fee|html"></span></p>
-						<p> min order <span ng-bind-html="food_category.details.merchant_info.minimum_order|html"> </span></p> -->
-						<!-- jnjman verj -->
 					</ons-col>
 				</ons-row>
 			</div>
 			<ons-scroller id="category-list">
 				<ons-list ng-repeat="menus in food_category.details.item ">
 					<ons-list-item ng-click="item_details(menus.item_id,food_category.details.merchant_info.merchant_id,food_category.details.category_info.cat_id)" modifier="tappable" class="row">
-					<!-- popoxutyun -->
 						<img style="width: 80px;height:65px" ng-src="{{menus.photo}}" />
 						<p class="name_food_item">{{menus.item_name}}</p>
 						<p class="price_food" ng-bind-html="menus.prices[0]['price_pretty']|html"></p>
-					<!-- popoxutyan verj -->
 					</ons-list-item>
 				</ons-list>
 			</ons-scroller>
 
 		</ons-page>
 	</ons-template>
-	<!-- Food in Menu  page end -->
-	<!-- dialog -->
+<!-- Food in Menu  page end -->
+<!-- dialog -->
 	<script type="text/ons-template" id="tipsDialog.html">
 	 <ons-dialog var="tipsDialog" style="width:60%;height:290px;" cancelable  >
 
@@ -1882,7 +1818,7 @@
 	  </ons-page>
 	 </ons-dialog>
 	</script>
-	<!-- dialog end -->
+<!-- dialog end -->
 <!-- change address -->
 	<script type="text/ons-template" id="change-address.html">
 	 <ons-page id="page-change-address">
@@ -2058,7 +1994,6 @@
 </script>
 <!-- shipping end  -->
 
-	<!--jor taza-->
 	<script type="text/ons-template" id="dialogAddressBook.html">
 		<ons-dialog var="dialogAddressBook"  cancelable  >
 
@@ -2073,7 +2008,6 @@
 			</ons-page>
 		</ons-dialog>
 	</script>
-	<!--jor taza-->
 	<ons-template id="address-selection.html">
   <ons-page id="page-address-selection">
 
@@ -2337,7 +2271,7 @@
     </ons-page>
 </script>
 <!--enter contact  end -->
-	<!-- intem Food in Menu  page  -->
+<!-- intem Food in Menu  page  -->
 	<script type="text/ons-template" id="itemDisplay.html">
 	 <ons-page id="page-itemdisplay">
 	  <ons-toolbar class="bgcolor_purple">
@@ -2489,9 +2423,9 @@
 			</ons-list>
 		</ons-page>
 	</ons-template>
-	<!-- intem Food in Menu  page end  -->
+<!-- intem Food in Menu  page end  -->
 
-	<!-- Ons Modal -->
+<!-- Ons Modal -->
 	<ons-modal direction="up">
 		<div style="text-align: center">
 			<p>
@@ -2499,10 +2433,9 @@
 			</p>
 		</div>
 	</ons-modal>
-	<!-- End Ons Modal -->
-	<!-- popoxutyun -->
+<!-- End Ons Modal -->
 
-	<!-- Settingspart  -->
+<!-- Settingspart  -->
 	<ons-template id="settingspart.html">
   <ons-page>
    <ons-toolbar class="bgcolor_purple">
@@ -2553,10 +2486,10 @@
   </ons-page>
  </ons-template>
 
-	<!-- Settingspart End -->
+<!-- Settingspart End -->
 
 
-	<!-- LOCATION DIALOG -->
+<!-- LOCATION DIALOG -->
 	<ons-dialog var="locationDialog">
 		  	<p class="bgcolor_purple bgcolor_purple forgot_p  white">
 				Select Country
@@ -2567,7 +2500,6 @@
 				<ons-list-header class="list_head_dialog">Country</ons-list-header>
 					<ons-list-item ng-repeat="_country in country" tappable>
 						<label class="left">
-						<!-- avelacum -->
 						<ons-if platform="ios">
 							<ons-input type="radio" class="radio_inp" name="color" ng-click="locationDialog.hide()" class="country_list" input-id="" value="{{_country.value}}"></ons-input>
 						</ons-if>
@@ -2578,7 +2510,6 @@
 						<ons-if platform="other">
 							<ons-input type="radio"  name="color" class="country_list" ng-click="locationDialog.hide()" input-id="" value="{{_country.value}}"></ons-input>
 						</ons-if>
-						<!-- avelacman verj -->
 						</label>
 						<label for="" class="center">
 							{{ _country.name }}
@@ -2587,10 +2518,10 @@
 				</ons-list>
 		    </div>
 	</ons-dialog>
-	<!-- LOCATION DIALOG END  -->
+<!-- LOCATION DIALOG END  -->
 
 
-	<!-- language DIALOG -->
+<!-- language DIALOG -->
 	<ons-dialog var="languageDialog">
 		  	<p class="bgcolor_purple bgcolor_purple forgot_p  white">
 				Select your language
@@ -2601,8 +2532,8 @@
 				<ons-button modifier="quiet" ng-click="languageDialog.hide()">OK</ons-button>
 		    </div>
 	</ons-dialog>
-	<!-- language DIALOG END  -->
-	<!-- cart page -->
+<!-- language DIALOG END  -->
+<!-- cart page -->
 	<ons-template id="carts.html">
 		<ons-page>
 			<ons-toolbar class="bgcolor_purple">
@@ -2781,11 +2712,9 @@
 						   
 						   <ons-list-item modifier="tappable" class="delivery_asap_wrap" >
 						      	<label class="left">
-									<!-- avelacum -->
 									<ons-if platform="ios">
 										<ons-input type="radio"  class="radio_inp"></ons-input>
 									</ons-if>
-									<!-- avelacman verj -->
 
 									<ons-if platform="android">
 										<ons-input type="radio"  class=""></ons-input>
@@ -2831,9 +2760,8 @@
 
 
 
-	<!-- cart page end -->
-	<!-- popoxutyun verj -->
-	<!-- search page -->
+<!-- cart page end -->
+<!-- search page -->
  <ons-template id="serachPage.html">
   <ons-page>
    <ons-toolbar class="bgcolor_purple">
@@ -2856,12 +2784,9 @@
     <ons-list-item  ng-click="menu_restaurant(restaurant.merchant_id)" class="border_bot_top">
 
      <div class="all_rest">
-     <!-- popoxutyun -->
       <div class="img_rest left"><img ng-src="{{restaurant.logo}}" style="width:55px;height:60px">
-       <!-- <span class="red_p">{{restaurant.is_open}}</span> -->
 
       </div>
-      <!-- popoxutyun verj -->
 
 
       <div class="float_left about_rest">
@@ -2920,11 +2845,9 @@
       <div class="clearfix"></div>
       <p class="float_left dollar">$<span>$$</span></p>
       <div class="float_left"><span class="icon_pers_card margin_icon"><ons-icon icon="percent"></ons-icon></span><span class="icon_pers_card"><ons-icon icon="credit-card"></ons-icon></span>
-		<!-- 29.06  avelacnel-->
 	      <span ng-if="restaurant.is_open == 'open'" class="green_open">{{restaurant.is_open}}</span>
 	      <span ng-if="restaurant.is_open == 'closed'" class="red_close">{{restaurant.is_open}}</span>
 	      <span ng-if="restaurant.is_open == 'pre-order'" class="green_open">{{restaurant.is_open}}</span>
-      	<!-- 29.06 end -->
       </div>
       <p class="deliver_min float_right">delivers in 60min </p>
       <div class="clearfix"></div>
@@ -2948,8 +2871,8 @@
  </ons-template>
 
 
- <!-- search page end -->
-	 <!-- filers  -->
+<!-- search page end -->
+<!-- filers  -->
  <ons-template id="filter.html">
   <ons-page>
    <ons-toolbar class="bgcolor_purple">
@@ -3015,33 +2938,33 @@
    </ul>
 
 	<p class="filter_by">Quick filters</p>
-	<ul class="about_menus_part">
+	<ul class="about_menus_part fasting_part">
 
-		<li>FASTING</li>
-		<li ng-click='quichfilter("newpickup")'>PICK UP</li>
-		<li ng-click="quichfilter('is_open', 'closed')">IS OPEN</li>
-		<li ng-click='quichfilter("newonline")'>ONLINE PAYMENT IS AVAILABLE</li>
+		<li ng-click='quichfilter("fasting")' ng-class="{activeli : fastClickItem === 'fasting'}">FASTING</li>
+		<li ng-click='quichfilter("newpickup")' ng-class="{activeli : fastClickItem === 'newpickup'}">PICK UP</li>
+		<li ng-click="quichfilter('is_open', 'closed')" ng-class="{activeli : fastClickItem === 'is_open'}">IS OPEN</li>
+		<li ng-click='quichfilter("newonline")' ng-class="{activeli : fastClickItem === 'newonline'}">ONLINE PAYMENT IS AVAILABLE</li>
 		<li class = "clearfix"></li>
 	</ul>
 
 	<p class="filter_by">Cuisines</p>
 	<ul class="about_menus_part">
-		<li ng-click="searchs('Sandwiches')">Sandwiches</li>
-		<li ng-click="searchs('Burgers')">Burgers</li>
-		<li ng-click="searchs('Breakfast')">Breakfast</li>
-		<li ng-click="searchs('Lunch')">Lunch</li>
-		<li ng-click="searchs('Dinner')">Dinner</li>
-		<li ng-click="searchs('Healthy')">Healthy</li>
-		<li ng-click="searchs('Barbeque')">Barbeque</li>
-		<li ng-click="searchs('Seafood')">Seafood</li>
+		<li ng-click="searchs('Sandwiches')"  ng-class="{activeli : clickItem === 'Sandwiches'}">Sandwiches</li>
+		<li ng-click="searchs('Burgers')"  ng-class="{activeli : clickItem === 'Burgers'}">Burgers</li>
+		<li ng-click="searchs('Breakfast')"  ng-class="{activeli : clickItem === 'Breakfast'}">Breakfast</li>
+		<li ng-click="searchs('Lunch')"  ng-class="{activeli : clickItem === 'Lunch'}">Lunch</li>
+		<li ng-click="searchs('Dinner')"  ng-class="{activeli : clickItem === 'Dinner'}">Dinner</li>
+		<li ng-click="searchs('Healthy')"  ng-class="{activeli : clickItem === 'Healthy'}">Healthy</li>
+		<li ng-click="searchs('Barbeque')"  ng-class="{activeli : clickItem === 'Barbeque'}">Barbeque</li>
+		<li ng-click="searchs('Seafood')"  ng-class="{activeli : clickItem === 'Seafood'}">Seafood</li>
 	    <li class="clearfix"></li>
 	</ul>
  
 
   </ons-page>
  </ons-template> 
- <!-- Filters End -->
- <!-- popoverCountry -->
+<!-- Filters End -->
+<!-- popoverCountry -->
 
 <ons-popover direction="down" var="popoverCountry" cancelable class="country_pop">
   <div>
@@ -3051,7 +2974,5 @@
     </p>
   </div>
 </ons-popover>
- <!-- popoverCountry end -->
+<!-- popoverCountry end -->
 </body>
-
-</html>

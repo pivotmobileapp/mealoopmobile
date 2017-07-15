@@ -116,7 +116,7 @@
 }
 .locate_button{
 	background-color: #01b17a;
-	width:47%;
+	width:100%;
 	
 }
 .locate_munal{
@@ -441,15 +441,18 @@
 }
 .list_menu_page li{
  list-style:none;
- padding:6px 6px 6px 0px;
+ padding:6px 8px 6px 8px;
  font-size:14px; 
+    background: #E2E2E2;
+    border: 1px solid #BEBEBE;
+    border-radius: 3px;
 }
-.list_menu_page>li:not(:first-child) {
+/*.list_menu_page>li:not(:first-child) {
     padding-left: 14px;
-}
+}*/
 .list_menu_page {
  margin: 0 auto;
-    padding: 0px 11px;
+   
     width: 320px;
 
 }
@@ -572,7 +575,6 @@
  border-radius:50%;
  display:block;
 }
-/*im*/
 .item-header{
  height: 260px;
  background: #fff;
@@ -763,7 +765,6 @@ price, .onsen-display price {
 	color:#ccc;
 }
 
-/*new*/
 .radio_inp{
     border: 1px solid #717171;
     border-radius: 50%;
@@ -1094,7 +1095,6 @@ price, .onsen-display price {
     width: 100%;
     margin-top: 4px;
 }
-/*30.06*/
 .rest_name_book{
     position: relative;
     top: -45px;
@@ -1104,7 +1104,6 @@ price, .onsen-display price {
     line-height: 20px;
     display: inline-block;
 }
-/*30.06 end*/
 .book_img_page{
     width: 55px;
     padding: 20px;
@@ -1161,13 +1160,11 @@ price, .onsen-display price {
     margin-bottom:0;
     text-align:center;
 }
-/*30.06*/
 .user_review_text{
     font-size:14px;
     word-wrap: break-word;
     margin-top:7px;
 }
-/*30.06 end*/
 .avatan_review{
     width: 23%;
     text-align: center;
@@ -1195,23 +1192,18 @@ price, .onsen-display price {
     line-height:35px;
 }
 
-
-/*29.06 tvyal class@ poxel sranov*/
 .search_input {
     width: 100%;
     right: -3px;
 }
-/*29.06*/
 .menu_list_part .list-item__center{
     padding: 0px;
 }
-/*30.06*/
 .menu_list_part span{
     line-height: 44px;
     display: block;
     width: 100%;
 }
-/*30.06 end*/
 .country_pop .popover__content{
     min-height:0;
 }
@@ -1254,7 +1246,6 @@ price, .onsen-display price {
     color:lightgray;
     font-size:12px;
 }
-/*30.06*/
 .rest_start_review .comment_stars{
     text-align:left;
 }
@@ -1262,9 +1253,6 @@ price, .onsen-display price {
     position:relative;
     right:20px;
 }
-/****************************/
-
-
    .checkbox > input[type="checkbox"] {
        position: absolute;
        overflow: hidden;
@@ -1286,33 +1274,6 @@ price, .onsen-display price {
        height: 0;
        width: 0;
    }
-
-/*
-.checkbox > .checkbox__checkmark {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 400;
-    font-size: 17px;
-    position: relative;
-    overflow: hidden;
-    width: 24px;
-    height: 24px;
-}
-*/
 .white, .toolbar-button, .ons-back-button__icon, .restauran-title.white {
     color: #fff;
 }
@@ -1371,7 +1332,6 @@ price, .onsen-display price {
     height: 0px;
     width: 0px;
 }
-/*jor*/
 .orange-header {
     padding-left: 8px;
     padding-right: 8px;
@@ -1517,7 +1477,6 @@ price, .onsen-display price {
     font-size: 20px;
 }
 
-/*newjor*/
 .rounded-green, .rounded-green:after {
     border-radius: 50%;
     width: 10em;
@@ -1566,7 +1525,6 @@ price, .onsen-display price {
     padding-top: 30px;
     padding-bottom: 30px;
     position: relative;
-    /* min-height: 200px; */
 }
 .track-status-wrap ul, .track-status-wrap ul li {
     margin: 0;
@@ -1665,9 +1623,43 @@ price, .onsen-display price {
 height:100px;
 width:100%;
 }
+/*#map_canvas_div{
+position: absolute; 
+    width:100%; 
+    height: 100%; 
+    margin: 0; 
+    padding: 0;   
+    z-index: -1
+}*/
+.page--menu-page__background {
+/*background-color: #333;
+color: white;*/
+/*background-color:#363535; color:#868686;*/
+background-color:#F2F2F3;
+color:#333;
+}
+
 .intl-tel-input{
     width:100%;
 }
+.selected-flag{
+    background: lightgray!important;
+    width: 46px!important;
+    top: -4px!important;
+}
 .maps{
         height: calc( 100% - 71px )!important;
+}
+#frm-settings .switch__toggle:before{
+    background-color:transparent;
+}
+.delivery_asap+.checkbox__checkmark{
+    margin-left:10px;
+}
+.about_menus_part li.activeli{
+    background-color: #02b07a;
+    color: #fff;
+}
+#map_canvas_div{
+    background-image: url(images/banner.png);
 }
