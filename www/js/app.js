@@ -45,13 +45,13 @@ app.controller('PageController', function ($scope, $http) {
 			if ($scope.cauntry_val == 'Guyana') {
 				$scope.cauntry_code = 'AM';
 			} else if ($scope.cauntry_val == 'Jamaica') {
-				$scope.cauntry_code = 'JAM';
+				$scope.cauntry_code = 'JM';
 			} else if ($scope.cauntry_val == 'Lucia') {
-				$scope.cauntry_code = 'LCA';
+				$scope.cauntry_code = 'LC';
 			} else if ($scope.cauntry_val == 'Trinidad') {
-				$scope.cauntry_code = 'TTO';
+				$scope.cauntry_code = 'TT';
 			} else {
-				$scope.cauntry_code = 'ATG';
+				$scope.cauntry_code = 'AG';
 			}
 			sessionStorage.removeItem('cauntry_code');
 			sessionStorage.setItem('cauntry_code', $scope.cauntry_code);
@@ -395,7 +395,7 @@ $scope.bookNow = function(d){
                  $scope.co_lor={'color':'#80CC1D'}
             }
             $scope.gal_image=response.details.gal_image;
-            console.log($scope.gal_image)
+            
 				myNavigator.pushPage('menucategory.html');
 			}).finally(function () {
 				$scope.hideModal();
@@ -411,7 +411,7 @@ $scope.bookNow = function(d){
          myNavigator.pushPage('onephoto.html');
     }
     $scope.photos=function(){
-        console.log($scope.gal_image)
+       
         myNavigator.pushPage('photos.html');
     }
 	/*******************************************Restaurant Location*********************************************/
@@ -461,7 +461,7 @@ $scope.bookNow = function(d){
   }
   $http.jsonp("http://mealoop.com/mobileapp/api/search?address=" + address + "&callback=JSON_CALLBACK")
    .success(function successCallback(response) {
-console.log(response)
+
     $scope.restaurants = response.details.data;
  
     if (response.msg == "Successful") {
@@ -477,7 +477,7 @@ console.log(response)
     $http.jsonp("http://mealoop.com/mobileapp/api/SearchSponsored?address=" + address + "&callback=JSON_CALLBACK")
       .success(function successCallback(response) {
 
-       console.log(response)
+    
      
        if (response.msg == "Successful") {
         

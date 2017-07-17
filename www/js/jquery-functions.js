@@ -172,7 +172,7 @@ setInterval(function(){
 })
 
     },1000)
-  /*  getCurrentLocation();*/
+    getCurrentLocation();
     myFunction();
     var krms_config ={  
     'ApiUrl' : "http://mealoop.com/mobileapp/api",
@@ -2717,16 +2717,114 @@ function showChangeAddressPage(object) {
     };
     myNavigator.pushPage("change-address.html", options);
 }
+
 function showMapAddress(map_address_action) {
     setStorage("map_address_action", map_address_action)
 
     var options = {
         animation: 'none',
         callback: function () {
-            checkGPS_AddressMap();
+            /*checkGPS_AddressMap();*/
+            newFuncChange();
         }
     };
     myNavigator.pushPage("address-bymap.html", options);
+}
+var markers = [];
+
+function newFuncChange(){
+
+
+    var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
+        center: {lat:  parseFloat(sessionStorage.getItem('changeLat')), lng: parseFloat( sessionStorage.getItem('changeLng'))},
+        zoom: 13,
+        mapTypeId: 'roadmap'
+    });
+    var input = document.getElementById('search_address_geo');
+    var latlngbounds = new google.maps.LatLngBounds();
+
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+    markers= [];
+    markers.push(new google.maps.Marker({
+        map: map,
+        position: new google.maps.LatLng( parseFloat(sessionStorage.getItem('changeLat')), parseFloat(sessionStorage.getItem('changeLng'))),
+    }));
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+
+        // Clear out the old markers.
+        markers.forEach(function(marker) {
+            marker.setMap(null);
+        });
+        markers = [];
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+       
+
+        places.forEach(function(place) {
+           
+            if (!place.geometry) {
+          
+                return;
+            }
+            var icon = {
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            sessionStorage.removeItem('changeLat')
+            sessionStorage.removeItem('changeLng')
+            sessionStorage.setItem('changeLat',place.geometry.location.lat())
+            sessionStorage.setItem('changeLng',place.geometry.location.lng())
+            markers.push(new google.maps.Marker({
+                map: map,
+                title: place.name,
+                position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);
+            } else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        map.fitBounds(bounds);
+    });
+    google.maps.event.addListener(map, 'click', function (e) {
+        // alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
+        sessionStorage.removeItem('changeLat')
+        sessionStorage.removeItem('changeLng')
+        sessionStorage.setItem('changeLat',e.latLng.lat())
+        sessionStorage.setItem('changeLng',e.latLng.lng())
+        markers.forEach(function(marker) {
+            marker.setMap(null);
+        });
+        markers= [];
+        markers.push(new google.maps.Marker({
+            map: map,
+            position: new google.maps.LatLng( parseFloat(sessionStorage.getItem("changeLat")), parseFloat(sessionStorage.getItem("changeLng"))),
+        }));
+
+    });
+
 }
 function useThisLocation() {
 
@@ -2816,6 +2914,7 @@ function checkGPS_AddressMap() {
         });
 
         var country_code_set = sessionStorage.getItem('cauntry_code');
+        
         if (empty(sessionStorage.getItem('cauntry_code'))) {
             country_code_set = '';
         }
@@ -2888,7 +2987,6 @@ function checkGPS_AddressMap() {
 
             setStorage("google_lat", result.geometry.location.lat());
             setStorage("google_lng", result.geometry.location.lng());
-
         });
     } /*end search geo*/
 
@@ -3411,7 +3509,7 @@ function loadMap() {
             checkGPS();
         }
     };
-    myNavigator.pushPage('mapPage.html', options);
+    myNavigator.pushPage('map.html', options);
     
 }
 function popUpAddressBook() {
@@ -3480,7 +3578,7 @@ function cancelRedeem() {
     $(".total-amount").html(prettyPrice(getStorage("order_total_raw")));
 }
 
-function checkGPS() {
+/*function checkGPS() {
     if (isDebug()) {
         viewTaskMapInit();
         return;
@@ -3519,7 +3617,45 @@ function checkGPS() {
 
     cordova.plugins.locationAccuracy.request(onRequestSuccessMap,
         onRequestFailureMap, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-}
+}*/
+
+
+function checkGPS(){
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+        var directionsService = new google.maps.DirectionsService;
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: {lat: 40.151994, lng: 44.542117}
+        });
+        directionsDisplay.setMap(map);
+
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+        document.getElementById('mode').addEventListener('change', function() {
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
+        });
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            var  merchant_latitude = sessionStorage.getItem("merchant_latitude");
+  var  merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
+          var  _lat = sessionStorage.getItem("_lat");
+  var  _long = sessionStorage.getItem("_long");
+        var selectedMode = document.getElementById('mode').value;
+        directionsService.route({
+          origin: {lat: parseFloat(merchant_latitude), lng: parseFloat(merchant_longtitude)},  // Haight.
+          destination: {lat: parseFloat(_lat), lng: parseFloat(_long)},  // Ocean Beach.
+          // Note that Javascript allows us to access the constant
+          // using square brackets and a string value as its
+          // "property."
+          travelMode: google.maps.TravelMode[selectedMode]
+        }, function(response, status) {
+          if (status == 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
 function onRequestSuccessMap(success) {
    
     //alert("Successfully requested accuracy: "+success.message);
@@ -3545,8 +3681,6 @@ function viewTaskMapInit() {
 
   var  merchant_latitude = sessionStorage.getItem("merchant_latitude");
   var  merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
-    console.log(merchant_longtitude)
-
  var   google_lat = new plugin.google.maps.LatLng(merchant_latitude, merchant_longtitude);
     setTimeout(function () {
     
@@ -3579,7 +3713,6 @@ function onMapInit() {
     map.off();
     map.setCenter(GOOGLE);
     map.setZoom(17);
-console.log(getStorage("destination_icon"))
     map.addMarker({
         'position': new plugin.google.maps.LatLng(merchant_latitude, merchant_longtitude),
         'title': delivery_address,
@@ -3668,7 +3801,7 @@ function viewTaskDirection() {
   var  merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
 
     navigator.geolocation.getCurrentPosition(function (position) {
-console.log(position.coords.latitude)
+
         var your_location = new plugin.google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         //demo
         //var yourLocation = new plugin.google.maps.LatLng(34.039413 , -118.25480649999997);
@@ -4008,7 +4141,6 @@ function geolocationSuccess(position) {
     dump(position);
     var params = "lat=" + position.coords.latitude;
     params += "&lng=" + position.coords.longitude;
-    console.log(params)
     callAjaxx("reverseGeoCoding", params);
     var address_full = "http://mealoop.com/mobileapp/api/reverseGeoCoding?" + params + "";
 
@@ -4025,8 +4157,12 @@ function geolocationSuccess(position) {
     })
     sessionStorage.removeItem("_lat");
     sessionStorage.removeItem("_long");
+    sessionStorage.removeItem("changeLat");
+    sessionStorage.removeItem("changeLng");
     sessionStorage.setItem("_lat", position.coords.latitude);
     sessionStorage.setItem("_long", position.coords.longitude);
+    sessionStorage.setItem('changeLat',position.coords.latitude)
+    sessionStorage.setItem('changeLng',position.coords.longitude)
 }
 
 

@@ -1,3 +1,19 @@
+  #map {
+       height: calc( 100% - 71px )!important;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 40%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
 .newcenter {
 	text-align: center;
 }
@@ -1660,6 +1676,6 @@ color:#333;
     background-color: #02b07a;
     color: #fff;
 }
-#map_canvas_div{
-    background-image: url(images/banner.png);
+.filter_icon_new{
+    font-size:24px!important;
 }

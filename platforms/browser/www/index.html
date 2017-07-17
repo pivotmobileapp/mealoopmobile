@@ -63,7 +63,6 @@
 
 </head>
 <body ng-controller="PageController as page">
-
 	<ons-navigator var="myNavigator" page="country.html"></ons-navigator>
 	<ons-toast>
 		Looks like your country is not supported
@@ -181,7 +180,7 @@
 			</p>
 			<div class="city_input_div">
 				<p>
-					<ons-input input-id="autocomplete" modifier="underbar" onkeydown="validate(event)" placeholder="Address"  float></ons-input>
+					<ons-input input-id="autocomplete" modifier="underbar" onkeydown="validate(event)" placeholder="" readonly="readonly"  float></ons-input>
 				</p>
 				<ons-button modifier="quiet" class="current_loc" onclick="get_loc()">
 					<span class="current_loc">Use my current location</span>
@@ -231,34 +230,38 @@
 	</ons-template>
 <!-- profile page end -->
 <!-- map page -->
-	<ons-template id="mapPage.html">
-		<ons-page id="page-map" modifier="map-page" >
+<script type="text/ons-template" id="map.html"> 
+		<ons-page id="page-map" modifier="transparent" >
 
 			<ons-toolbar class="bgcolor_purple">
 				<div class="left"><ons-back-button class="white"></ons-back-button></div>
 				<div class="center white"><span class="trn" data-trn-key="map" >Map</span></div>
 			</ons-toolbar>
-
-			<div id="map_canvas_div" class="maps">
-
-				
-
-			</div>
-			<div class="list-wrapper" id="direction-wrap">
-					<ons-list>
-						<ons-list-item  modifier="task-list"  >
-
-							<ons-row>
-								<ons-button class="button green-btn button--large" onclick="viewTaskDirection()" >
-									<span class="trn" data-trn-key="view_direction">View Direction</span>
-								</ons-button>
-							</ons-row>
-
-						</ons-list-item>
-					</ons-list>
-			</div>
+  <div id="floating-panel">
+    <b>Start: </b>
+    <select id="mode">
+      <option value="DRIVING">Driving</option>
+      <option value="WALKING">Walking</option>
+      <option value="BICYCLING">Bicycling</option>
+      <option value="TRANSIT">Transit</option>
+    </select>
+    </div>
+    <div id="map"></div>
+       <div class="list-wrapper" id="direction-wrap">
+         <ons-list>
+           <ons-list-item  modifier="task-list"  >
+                       
+            <ons-row>
+            <ons-button class="button green-btn button--large" onclick="viewTaskDirection()" >
+              <span class="trn" data-trn-key="view_direction">View Direction</span>
+             </ons-button>          
+            </ons-row>
+           
+           </ons-list-item>
+         </ons-list>
+        </div>
 		</ons-page>
-	</ons-template>
+</script>
 
 <!-- map page end -->
 <!-- bookPage -->
@@ -1345,7 +1348,9 @@
 				</div>
 			</ons-toolbar>
 			<ons-list>
-				<ons-list-item class="border_bot_top">{{restaurants.length}} restaurants deliver to you.<span><ons-icon icon="options"></ons-icon></span><ons-icon icon="sliders" class="search-icon" style="float:right;color:#80CC1D;margin-right:17px" ng-click="filter()"></ons-icon></ons-list-item>
+				<ons-list-item class="border_bot_top">{{restaurants.length}} restaurants deliver to you.<span><ons-icon icon="options"></ons-icon></span>
+				<ons-icon icon="sliders" class="search-icon filter_icon_new" style="float:right;color:#80CC1D;margin-right:17px;" ng-click="filter()"></ons-icon>
+				</ons-list-item>
 			</ons-list>
 
 			<ons-list ng-repeat="restaurant in restaurants|  orderBy:propertyName:reverse">
@@ -1517,9 +1522,9 @@
 					<ul class="list_menu_page" style="padding:0">
        <li class="float_left" onclick="loadBookingForm1()">Book Table</li>
        <li class="float_left" onclick="loadMap()">Map</li>
-       <li class="float_left" ng-click="addReviewsPage(menu_category.details.merchant_id)">Info</li>
+       <li class="float_left" ng-click="reviewsPage(menu_category.details.merchant_id)">Info</li>
        <li class="float_left" ng-click="photos()">Photos</li>
-       <li class="float_left" ng-click="reviewsPage(menu_category.details.merchant_id)">Reviews</li>
+       <li class="float_left" ng-click="addReviewsPage(menu_category.details.merchant_id)">Reviews</li>
       </ul>
       </ons-col>
 			<ons-col></ons-col>		
