@@ -4365,7 +4365,7 @@ function initAutocomplete(contentxx) {
 document.addEventListener('pageinit', function (e) {
 
 	_country = sessionStorage.getItem('cauntry_code');
-
+    get_loc1();
 	if (e.target.querySelector('#autocomplete')) {
 		content = e.target.querySelector('#autocomplete');
 		initAutocomplete(content);
@@ -4386,16 +4386,23 @@ function get_loc() {
 
 	}
 }
+function get_loc1() {
+	if (navigator.geolocation) {
+
+		navigator.geolocation.getCurrentPosition(successFunction1, errorFunction1);
+
+	}
+}
 
 //Get the latitude and the longitude;
-function successFunction(position) {
+function successFunction1(position) {
 	var lat = position.coords.latitude;
 	var lng = position.coords.longitude;
 
-	codeLatLng(lat, lng)
+	codeLatLng1(lat, lng)
 }
 
-function errorFunction() {
+function errorFunction1() {
 /*	alert("Geocoder failed");*/
 }
 function successFunction(position) {
@@ -4412,7 +4419,7 @@ function errorFunction() {
 
 
 function codeLatLng(lat, lng) {
-
+console.log(_country)
 	var latlng = new google.maps.LatLng(lat, lng);
 	geocoder.geocode({
 		'latLng': latlng
@@ -4420,12 +4427,15 @@ function codeLatLng(lat, lng) {
 		if (status == google.maps.GeocoderStatus.OK) {
 
 			if (results[1]) {
-				
-				for (var i = 0; i < results[1].address_components.length; i++) {
-
-					if (_country == results[1].address_components[i].short_name) {
-						_arr = [];
+				_arr = [];
 						arr = [];
+				for (var i = 0; i < results[1].address_components.length; i++) {
+ console.log(i)
+					if (_country == results[1].address_components[i].short_name) {
+                        console.log(_arr)
+                        console.log(arr)
+                       
+						
 						_arr.push(_country);
 						arr.push(results[0].formatted_address);
 						
@@ -4447,6 +4457,44 @@ function codeLatLng(lat, lng) {
 		$(document).find('#autocomplete').eq($(document).find('#autocomplete').length-1).val(arr[0]) 
         
 	}
+	});
+	
+}
+function codeLatLng1(lat, lng) {
+
+	var latlng = new google.maps.LatLng(lat, lng);
+	geocoder.geocode({
+		'latLng': latlng
+	}, function (results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+
+			if (results[1]) {
+				_arr = [];
+						arr = [];
+				for (var i = 0; i < results[1].address_components.length; i++) {
+
+					if (_country == results[1].address_components[i].short_name) {
+						
+						_arr.push(_country);
+						arr.push(results[0].formatted_address);
+						
+					}
+
+				}
+
+			} else {
+				 /*js_alert(false,"No results found");*/
+			}
+		} else {
+			/*js_alert(false,"Geocoder failed due to: " + status);*/
+		}
+		
+	
+       
+		$(document).find('#loc_me_hid_but').eq($(document).find('#loc_me_hid_but').length-1).val(arr[0]) ;
+     
+        
+	
 	});
 	
 }

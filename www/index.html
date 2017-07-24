@@ -99,7 +99,7 @@
 			</div>
 			<div class="about_part">
 				<p class='header'><strong>Ready to eat?</strong></p>
-				<p class="about_part_p">Select from thre best rated restaurants and various payment methods - online and offline</p>
+				<p class="about_part_p">Select from the best rated restaurants and payment methods - Credit card or Cash on Devilery</p>
 				<div class="line line1"></div>
 				<span class="tab_mine active"></span>
 				<span ng-click="tabs_change(2)" class="tab_mine"></span>
@@ -130,13 +130,13 @@
 				<span class="tab_mine active"></span>
 				<div class="line line2"></div>
 				<div class="locate_munal">
-<!--
+<input type="hidden" id="loc_me_hid_but">
 					<ons-button id="push-button" ng-click="manualy()" class="manually_button">Manually</ons-button>
--->
-<!--
-					<ons-button class="locate_button" onclick="get_loc()">Locate Me</ons-button>
--->
-					<ons-button id="push-button" class="locate_button" ng-click="manualy()">Locate Me</ons-button>
+
+
+					<ons-button class="locate_button" ng-click="restaurant1()">Locate Me</ons-button>
+
+			<!--		<ons-button id="push-button" class="locate_button" ng-click="manualy()">Locate Me</ons-button>-->
 				</div>
 			</div>
 
@@ -180,7 +180,7 @@
 			</p>
 			<div class="city_input_div">
 				<p>
-					<ons-input input-id="autocomplete" modifier="underbar" onkeydown="validate(event)" placeholder="" readonly="readonly"  float></ons-input>
+					<ons-input input-id="autocomplete" modifier="underbar"  placeholder=""   float></ons-input>
 				</p>
 				<ons-button modifier="quiet" class="current_loc" onclick="get_loc()">
 					<span class="current_loc">Use my current location</span>
@@ -765,7 +765,7 @@
 			<span class="notification cart-num ng-scope" onclick="showCart();" style="display:none;     bottom: 29px;left: 69%; z-index: 44;  position: absolute; margin-left: -10px;"> </span>
 			<ons-tabbar var="tabbar" position="bottom">
 				<ons-tab icon="th" label="Restaurants" page="restaurantlocnav.html" active="true"></ons-tab>
-				<ons-tab icon="chevron-circle-up" label="Food" page="food.html"></ons-tab>
+				<ons-tab icon="chevron-circle-up" ng-click="clear_food()" label="Food Search" page="food.html"></ons-tab>
 				<ons-tab icon="cutlery" label="Orders"  onclick="showOrders()"></ons-tab>
 				<ons-tab icon="shopping-basket" label="Basket" onclick="showCart()"></ons-tab>
 				<ons-tab icon="ion-more" label="More" page="more.html"></ons-tab>
@@ -929,9 +929,9 @@
     <input type="text" placeholder="Type food name" id="food1">
     <ons-button modifier="large" style="search_button" ng-click="getfood()">Search</ons-button>
    </div>
-   <div class="center spons" ng-style="hide_part">Sponsers </div>
+   <div class="center spons" ng-style="hide_part">Featured Restaurants </div>
    <div ng-repeat ="res in rest_part.details.data" >
-    <div class="menu_pic1 menu_pics menu-pics_part" ng-style="hide_part" style="background-image:url(http://mealoop.com/upload/{{res.bg_img}})" ng-click="menu_restaurant(res.merchant_id,res.services.delivery,res.services.pickup)">
+    <div class="menu_pic1 menu_pics menu-pics_part" ng-style="hide_part" style="background-image:url(http://mealoop.com/upload/{{res.bg_img}});background-size:contain" ng-click="menu_restaurant(res.merchant_id,res.services.delivery,res.services.pickup)">
     </div>  
    </div>
    <div class="clearfix"></div>
@@ -941,72 +941,22 @@
     <ons-list-item class="border_bot_top" ng-click="item_details(food.item_id,food.merchant_id,food.category)">
  <div class="all_rest">
      
-     <div class="img_rest left"><img ng-src="http://mealoop.com/upload/{{food.photo}}" style="width:55px;height:60px">
-     <div>
-      <span class="gray_font" ng-if="food.services.pickup">{{food.services.pickup}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
-      <span class="gray_font" ng-if="food.services.delivery">{{food.services.delivery}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
-      <span></span>
-
-     </div> 
-     <div>
-      <img ng-src="{{food.logo}}" style="width:44px;height:48px">
-     </div>
-     </div>
-     <div class="rest_start menu_search_stars" ng-switch="round(food.ratings.ratings)">
-         <p ng-switch-when="0" class="rest_rating">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-         </p>
-         <p ng-switch-when="1" class="rest_rating">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-         </p>
-         <p ng-switch-when="2" class="rest_rating">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-         </p>
-         <p ng-switch-when="3" class="rest_rating">
-
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-         </p>
-         <p ng-switch-when="4" class="rest_rating">
-
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-off.png">
-         </p>
-         <p ng-switch-when="5" class="rest_rating">
-
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-         </p>
-        </div> 
+     <div class="img_rest left"><img ng-src="http://mealoop.com/upload/{{food.photo}}" style="width:90px;height:60px">
+     <p class="rest_address food_price">${{food.price}}</p>
+      </div>
+     
       <div class="float_left about_rest">
        <p class="rest_address ">{{food.item_name}}</p>
-       <p class="rest_address food_price">{{food.price}} EC</p>
-       <div class="clearfix"></div>
+       
        <p class="rest_name">{{food.restaurant_name}}</p>
-       <p class="rest_food">{{food.cuisine}}</p>
        <div class="icon_p_rest float_left"></div>
        <div class="clearfix"></div>
+       <span class="gray_font" ng-if="food.services.pickup">{{food.services.pickup}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
+      <span class="gray_font" ng-if="food.services.delivery">{{food.services.delivery}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
+      <span></span>
+<!--       <div>
+      <img ng-src="{{food.logo}}" style="width:44px;height:48px">
+     </div>-->
       </div>
       
      </div>
@@ -1315,14 +1265,14 @@
 					<span class="menu_item">Settings</span>
 					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
 				</ons-list-item>
-				<ons-list-item class="menu_part_border" ng-click="gohelp()" tappable>
+<!--				<ons-list-item class="menu_part_border" ng-click="gohelp()" tappable>
 					<span class="menu_item">Help</span>
 					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
 				</ons-list-item>
 				<ons-list-item class="menu_part_border" ng-click="goabout()" tappable>
 					<span class="menu_item">About</span>
 					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
-				</ons-list-item>
+				</ons-list-item>-->
 				<ons-list-item class="menu_part_border " id="log_out" ng-style="style_load" ng-click="logout()" tappable>
 					<span class="menu_item">Logout</span>
 					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
@@ -1359,7 +1309,7 @@
 
 
 					<div class="all_rest">
-						<div class="img_rest left"><img ng-src="{{restaurant.logo}}" style="width:55px;height:60px">
+						<div class="img_rest left"><img ng-src="{{restaurant.logo}}" style="width:80px;height:60px">
 							
 						</div>
 
@@ -2789,7 +2739,7 @@
     <ons-list-item  ng-click="menu_restaurant(restaurant.merchant_id)" class="border_bot_top">
 
      <div class="all_rest">
-      <div class="img_rest left"><img ng-src="{{restaurant.logo}}" style="width:55px;height:60px">
+      <div class="img_rest left"><img ng-src="{{restaurant.logo}}" style="width:80px;height:60px">
 
       </div>
 

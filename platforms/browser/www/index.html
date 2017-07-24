@@ -929,7 +929,7 @@
     <input type="text" placeholder="Type food name" id="food1">
     <ons-button modifier="large" style="search_button" ng-click="getfood()">Search</ons-button>
    </div>
-   <div class="center spons" ng-style="hide_part">Sponsers </div>
+   <div class="center spons" ng-style="hide_part">Sponsors </div>
    <div ng-repeat ="res in rest_part.details.data" >
     <div class="menu_pic1 menu_pics menu-pics_part" ng-style="hide_part" style="background-image:url(http://mealoop.com/upload/{{res.bg_img}})" ng-click="menu_restaurant(res.merchant_id,res.services.delivery,res.services.pickup)">
     </div>  
@@ -941,72 +941,28 @@
     <ons-list-item class="border_bot_top" ng-click="item_details(food.item_id,food.merchant_id,food.category)">
  <div class="all_rest">
      
-     <div class="img_rest left"><img ng-src="http://mealoop.com/upload/{{food.photo}}" style="width:55px;height:60px">
+     <div class="img_rest left"><img ng-src="http://mealoop.com/upload/{{food.photo}}" style="width:100px;height:60px">
+     <p class="rest_address food_price">${{food.price}}</p>
      <div>
-      <span class="gray_font" ng-if="food.services.pickup">{{food.services.pickup}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
-      <span class="gray_font" ng-if="food.services.delivery">{{food.services.delivery}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
-      <span></span>
+      
 
      </div> 
-     <div>
-      <img ng-src="{{food.logo}}" style="width:44px;height:48px">
+    
      </div>
-     </div>
-     <div class="rest_start menu_search_stars" ng-switch="round(food.ratings.ratings)">
-         <p ng-switch-when="0" class="rest_rating">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-          <img alt="1" src="img/star-off.png" title="Not rated yet!">
-         </p>
-         <p ng-switch-when="1" class="rest_rating">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-         </p>
-         <p ng-switch-when="2" class="rest_rating">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-         </p>
-         <p ng-switch-when="3" class="rest_rating">
-
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-off.png">
-          <img alt="1" src="img/star-off.png">
-         </p>
-         <p ng-switch-when="4" class="rest_rating">
-
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-off.png">
-         </p>
-         <p ng-switch-when="5" class="rest_rating">
-
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-          <img alt="1" src="img/star-on.png">
-         </p>
-        </div> 
+     
       <div class="float_left about_rest">
        <p class="rest_address ">{{food.item_name}}</p>
-       <p class="rest_address food_price">{{food.price}} EC</p>
        <div class="clearfix"></div>
        <p class="rest_name">{{food.restaurant_name}}</p>
        <p class="rest_food">{{food.cuisine}}</p>
        <div class="icon_p_rest float_left"></div>
        <div class="clearfix"></div>
+       <span class="gray_font" ng-if="food.services.pickup">{{food.services.pickup}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
+      <span class="gray_font" ng-if="food.services.delivery">{{food.services.delivery}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
+      <span></span>
+<!--       <div>
+      <img ng-src="{{food.logo}}" style="width:44px;height:48px">
+     </div>-->
       </div>
       
      </div>

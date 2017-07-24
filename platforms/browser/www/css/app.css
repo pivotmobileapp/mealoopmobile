@@ -1250,6 +1250,7 @@ price, .onsen-display price {
 }
 .rest_name{
     margin:0px 10px;
+	color: #37A357;
 }
 .menu_search_stars{
     margin-left:36px;
@@ -1265,6 +1266,9 @@ price, .onsen-display price {
 .rest_start_review .comment_stars{
     text-align:left;
 }
+.holds-the-iframe {
+  background:url(./images/loader.gif) center center no-repeat;
+ }
 .pos_rel{
     position:relative;
     right:20px;
