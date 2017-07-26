@@ -35,15 +35,15 @@ app.controller('PageController', function ($scope, $http) {
 
 	/*******************************End Select Country*********************************************************/
 	$scope.first_page = function () {
-		/*	myNavigator.pushPage('country.html')*/
-        myNavigator.resetToPage('country.html')
+        sessionStorage.removeItem('cauntry_code');
+        myNavigator.resetToPage('country.html');
 		}
 	/*******************************Get Country Value*********************************************************/
 
 	$scope.get_country_value = function (obj) {
 			$scope.cauntry_val = obj.target.attributes.value.nodeValue;
 			if ($scope.cauntry_val == 'Guyana') {
-				$scope.cauntry_code = 'AM';
+				$scope.cauntry_code = 'GY';
 			} else if ($scope.cauntry_val == 'Jamaica') {
 				$scope.cauntry_code = 'JM';
 			} else if ($scope.cauntry_val == 'Lucia') {
@@ -487,6 +487,47 @@ $scope.bookNow = function(d){
       })
 
  };
+      $scope.restaurant1 = function () {
+  $scope.showModal();
+  var address = document.querySelectorAll('#loc_me_hid_but')[document.querySelectorAll('#loc_me_hid_but').length-1].value;
+  sessionStorage.removeItem("_address");
+  sessionStorage.setItem("_address", address);
+
+  var str = sessionStorage.getItem("_address");
+  var _str = str.substring(0, str.indexOf(","))
+
+  if (_str) {
+   $scope.address = _str;
+  } else {
+   $scope.address = str;
+  }
+  $http.jsonp("http://mealoop.com/mobileapp/api/search?address=" + address + "&callback=JSON_CALLBACK")
+   .success(function successCallback(response) {
+
+    $scope.restaurants = response.details.data;
+ 
+    if (response.msg == "Successful") {
+     myNavigator.pushPage('restaurantLocation.html');
+    } else {
+     $scope.alert(false, 'Not Found Restaurants');
+    }
+   }).finally(function () {
+
+    $scope.hideModal();
+
+   });
+    $http.jsonp("http://mealoop.com/mobileapp/api/SearchSponsored?address=" + address + "&callback=JSON_CALLBACK")
+      .success(function successCallback(response) {
+
+    
+     
+       if (response.msg == "Successful") {
+                 $scope.rest_part = response
+      
+       }
+      })
+
+ };
     $scope.propertyName = 'restaurant_name';
     $scope.reverse = true;
     $scope.friends = $scope.restaurants;
@@ -540,8 +581,9 @@ $scope.bookNow = function(d){
 
     }
 	/**********************************************Search Food***********************************************/
-	$scope.search_menu = function () {
-
+	$scope.clear_food = function () {
+$scope.arr_food=[]
+$scope.hide_part ={'display':'block'}
 	};
 	/*******************************************End Search Food*********************************************/
 
