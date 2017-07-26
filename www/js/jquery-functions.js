@@ -1,7 +1,7 @@
 var ajax_request;
 var ajax_url = "http://mealoop.com/mobileapp/api";
 var cart = [];
-var dialog_title_default ="mealoop";
+var dialog_title_default = "mealoop";
 var pushNotificationSenderid = "1039967975155";
 var map;
 var map_search;
@@ -11,11 +11,34 @@ var track_order_interval;
 var track_order_map_interval;
 var drag_marker_bounce = 1;
 var _country,
-	autocomplete,
-	input,
-	content,
-	arr = [],
-	_arr = [];
+    autocomplete,
+    input,
+    content,
+    arr = [],
+    _arr = [];
+
+function _update_location() {
+    var _lat = sessionStorage.getItem("_lat"),
+        _long = sessionStorage.getItem("_long"),
+        _address = sessionStorage.getItem("_new_address"),
+        _date = new Date(),
+        _time = _date.getTime(),
+        device_id = sessionStorage.getItem("device_id");
+
+    if (_lat && _long && _address && device_id) {
+
+        var address_for_update = "http://mealoop.com/mobileapp/api/MobilesRregistering?id=" + device_id + "&time=" + _time + "&lat=" + _lat + "&long=" + _long + "&country=" + _address + "";
+        $.ajax({
+            url: address_for_update,
+            type: 'post',
+            dataType: 'jsonp',
+            success: function (data) {
+
+            }
+        })
+    }
+}
+
 function empty(data) {
     if (typeof data === "undefined" || data == null || data == "") {
         return true;
@@ -42,6 +65,7 @@ function submitBooking() {
         }
     });
 }
+
 function loadBookingForm() {
     var options = {
         animation: 'slide',
@@ -76,112 +100,196 @@ function loadBookingForm() {
 
 
 document.addEventListener("deviceready", onDeviceReady, false);
+
 function validate(evt) {
-  evt.preventDefault()
+    evt.preventDefault()
 }
+
 function onDeviceReady() {
- navigator.splashscreen.hide();
-setInterval(function(){
+    setTimeout(function () {
+        get_loc1();
+        getCurrentLocation();
+        _update_location();
 
-           $(document).find('#mobile').intlTelInput({
-              // allowDropdown: false,
-              // autoHideDialCode: false,
-              // autoPlaceholder: "off",
-              // dropdownContainer: "body",
-              // excludeCountries: ["us"],
-              // formatOnDisplay: false,
-              defaultCountry: "ag",
-              // geoIpLookup: function(callback) {
-              //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-              //     var countryCode = (resp && resp.country) ? resp.country : "";
-              //     callback(countryCode);
-              //   });
-              // },
-              // initialCountry: "auto",
-              // nationalMode: false,
-              // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-              // placeholderNumberType: "MOBILE",
-              // preferredCountries: ['cn', 'jp'],
-              // separateDialCode: true,    
-        })
- 
-
-        
-     $(document).find("#cont_tel").intlTelInput({
-      // allowDropdown: false,
-      // autoHideDialCode: false,
-      // autoPlaceholder: "off",
-      // dropdownContainer: "body",
-      // excludeCountries: ["us"],
-      // formatOnDisplay: false,
-      defaultCountry: "ag",
-      // geoIpLookup: function(callback) {
-      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-      //     var countryCode = (resp && resp.country) ? resp.country : "";
-      //     callback(countryCode);
-      //   });
-      // },
-      // initialCountry: "auto",
-      // nationalMode: false,
-      // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-      // placeholderNumberType: "MOBILE",
-      // preferredCountries: ['cn', 'jp'],
-      // separateDialCode: true,    
-    })
-     $(document).find("#mob_num").intlTelInput({
-      // allowDropdown: false,
-      // autoHideDialCode: false,
-      // autoPlaceholder: "off",
-      // dropdownContainer: "body",
-      // excludeCountries: ["us"],
-      // formatOnDisplay: false,
-      defaultCountry: "ag",
-      // geoIpLookup: function(callback) {
-      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-      //     var countryCode = (resp && resp.country) ? resp.country : "";
-      //     callback(countryCode);
-      //   });
-      // },
-      // initialCountry: "auto",
-      // nationalMode: false,
-      // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-      // placeholderNumberType: "MOBILE",
-      // preferredCountries: ['cn', 'jp'],
-      // separateDialCode: true,    
-})
-     $(document).find("#mob_phone").intlTelInput({
-      // allowDropdown: false,
-      // autoHideDialCode: false,
-      // autoPlaceholder: "off",
-      // dropdownContainer: "body",
-      // excludeCountries: ["us"],
-      // formatOnDisplay: false,
-      defaultCountry: "ag",
-      // geoIpLookup: function(callback) {
-      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-      //     var countryCode = (resp && resp.country) ? resp.country : "";
-      //     callback(countryCode);
-      //   });
-      // },
-      // initialCountry: "auto",
-      // nationalMode: false,
-      // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-      // placeholderNumberType: "MOBILE",
-      // preferredCountries: ['cn', 'jp'],
-      // separateDialCode: true,    
-})
-
-    },1000)
-    getCurrentLocation();
-    myFunction();
-    var krms_config ={  
-    'ApiUrl' : "http://mealoop.com/mobileapp/api",
-    'DialogDefaultTitle' : "mealoop",
-    'pushNotificationSenderid' : "1039967975155",
-    'facebookAppId' : "1785452871717052",
-    'APIHasKey' : "fed7b441b349bae8f146711fbd215e90"
-};
+        var krms_config = {
+            'ApiUrl': "http://mealoop.com/mobileapp/api",
+            'DialogDefaultTitle': "mealoop",
+            'pushNotificationSenderid': "1039967975155",
+            'facebookAppId': "1785452871717052",
+            'APIHasKey': "fed7b441b349bae8f146711fbd215e90"
+        };
         if (krms_config.pushNotificationSenderid) {
+
+            var push = PushNotification.init({
+                "android": {
+                    "senderID": krms_config.pushNotificationSenderid
+                },
+                "ios": {
+                    "alert": "true",
+                    "badge": "true",
+                    "sound": "true",
+                    "clearBadge": "true"
+                },
+                "windows": {}
+            });
+
+            push.on('registration', function (data) {
+                sessionStorage.removeItem('device_id');
+                sessionStorage.setItem("device_id", data.registrationId);
+
+                sessionStorage.getItem('form_add');
+                var params = "registrationId=" + data.registrationId;
+                params += "&device_platform=" + device.platform;
+                params += "&client_token=" + sessionStorage.getItem("token");
+                params += "&country=" + sessionStorage.getItem('form_add');
+                /* if(sessionStorage.getItem('form_add')=='GY'||sessionStorage.getItem('form_add')=='JM'||sessionStorage.getItem('form_add')=='LC'||sessionStorage.getItem('form_add')=='TT'||sessionStorage.getItem('form_add')=='AG'){*/
+                callAjaxx("registerMobile", params);
+                /*}*/
+
+
+            });
+
+            push.on('notification', function (data) {
+                //alert(JSON.stringify(data));           
+                if (data.additionalData.foreground) {
+                    //alert("when the app is active");
+
+                    playNotification();
+
+                    if (data.additionalData.additionalData.push_type == "order") {
+
+                    } else {
+
+                    }
+                } else {
+                    //alert("when the app is not active");
+                    if (data.additionalData.additionalData.push_type == "order") {
+
+                    } else {
+
+                    }
+                }
+                /*push.finish(function () {
+                    alert('finish successfully called');
+                }); */
+            });
+
+            push.on('error', function (e) {
+                //onsenAlert("push error");
+            });
+
+            push.finish(function () {
+                //alert('finish successfully called');
+            });
+
+        }
+
+    }, 3000);
+    get_loc1();
+    getCurrentLocation();
+    _update_location();
+    
+    setInterval(function () {
+
+        $(document).find('#mobile').intlTelInput({
+            // allowDropdown: false,
+            // autoHideDialCode: false,
+            // autoPlaceholder: "off",
+            // dropdownContainer: "body",
+            // excludeCountries: ["us"],
+            // formatOnDisplay: false,
+            defaultCountry: "ag",
+            // geoIpLookup: function(callback) {
+            //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            //     var countryCode = (resp && resp.country) ? resp.country : "";
+            //     callback(countryCode);
+            //   });
+            // },
+            // initialCountry: "auto",
+            // nationalMode: false,
+            // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+            // placeholderNumberType: "MOBILE",
+            // preferredCountries: ['cn', 'jp'],
+            // separateDialCode: true,    
+        })
+
+
+
+        $(document).find("#cont_tel").intlTelInput({
+            // allowDropdown: false,
+            // autoHideDialCode: false,
+            // autoPlaceholder: "off",
+            // dropdownContainer: "body",
+            // excludeCountries: ["us"],
+            // formatOnDisplay: false,
+            defaultCountry: "ag",
+            // geoIpLookup: function(callback) {
+            //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            //     var countryCode = (resp && resp.country) ? resp.country : "";
+            //     callback(countryCode);
+            //   });
+            // },
+            // initialCountry: "auto",
+            // nationalMode: false,
+            // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+            // placeholderNumberType: "MOBILE",
+            // preferredCountries: ['cn', 'jp'],
+            // separateDialCode: true,    
+        })
+        $(document).find("#mob_num").intlTelInput({
+            // allowDropdown: false,
+            // autoHideDialCode: false,
+            // autoPlaceholder: "off",
+            // dropdownContainer: "body",
+            // excludeCountries: ["us"],
+            // formatOnDisplay: false,
+            defaultCountry: "ag",
+            // geoIpLookup: function(callback) {
+            //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            //     var countryCode = (resp && resp.country) ? resp.country : "";
+            //     callback(countryCode);
+            //   });
+            // },
+            // initialCountry: "auto",
+            // nationalMode: false,
+            // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+            // placeholderNumberType: "MOBILE",
+            // preferredCountries: ['cn', 'jp'],
+            // separateDialCode: true,    
+        })
+        $(document).find("#mob_phone").intlTelInput({
+            // allowDropdown: false,
+            // autoHideDialCode: false,
+            // autoPlaceholder: "off",
+            // dropdownContainer: "body",
+            // excludeCountries: ["us"],
+            // formatOnDisplay: false,
+            defaultCountry: "ag",
+            // geoIpLookup: function(callback) {
+            //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            //     var countryCode = (resp && resp.country) ? resp.country : "";
+            //     callback(countryCode);
+            //   });
+            // },
+            // initialCountry: "auto",
+            // nationalMode: false,
+            // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+            // placeholderNumberType: "MOBILE",
+            // preferredCountries: ['cn', 'jp'],
+            // separateDialCode: true,    
+        })
+
+    }, 1000)
+
+
+    var krms_config = {
+        'ApiUrl': "http://mealoop.com/mobileapp/api",
+        'DialogDefaultTitle': "mealoop",
+        'pushNotificationSenderid': "1039967975155",
+        'facebookAppId': "1785452871717052",
+        'APIHasKey': "fed7b441b349bae8f146711fbd215e90"
+    };
+    if (krms_config.pushNotificationSenderid) {
 
         var push = PushNotification.init({
             "android": {
@@ -197,14 +305,18 @@ setInterval(function(){
         });
 
         push.on('registration', function (data) {
-sessionStorage.removeItem('device_id');
-           sessionStorage.setItem("device_id", data.registrationId);
+            sessionStorage.removeItem('device_id');
+            sessionStorage.setItem("device_id", data.registrationId);
 
+            sessionStorage.getItem('form_add');
             var params = "registrationId=" + data.registrationId;
             params += "&device_platform=" + device.platform;
             params += "&client_token=" + sessionStorage.getItem("token");
+            params += "&country=" + sessionStorage.getItem('form_add');
+            /* if(sessionStorage.getItem('form_add')=='GY'||sessionStorage.getItem('form_add')=='JM'||sessionStorage.getItem('form_add')=='LC'||sessionStorage.getItem('form_add')=='TT'||sessionStorage.getItem('form_add')=='AG'){*/
             callAjaxx("registerMobile", params);
-            
+            /*  }
+             */
         });
 
         push.on('notification', function (data) {
@@ -215,16 +327,16 @@ sessionStorage.removeItem('device_id');
                 playNotification();
 
                 if (data.additionalData.additionalData.push_type == "order") {
-             
+
                 } else {
-           
+
                 }
             } else {
                 //alert("when the app is not active");
                 if (data.additionalData.additionalData.push_type == "order") {
-                  
+
                 } else {
-               
+
                 }
             }
             /*push.finish(function () {
@@ -242,7 +354,7 @@ sessionStorage.removeItem('device_id');
 
     }
 
-    }
+}
 
 
 
@@ -252,6 +364,7 @@ function isLogin() {
     }
     return false;
 }
+
 function stopTrackInterval() {
     clearInterval(track_order_interval);
 }
@@ -267,28 +380,32 @@ function runTrackOrder() {
         stopTrackInterval();
     }
 }
+
 function showOrders() {
     if (isLogin()) {
         var options = {
             animation: 'slide',
             callback: function () {
-                callAjax('getOrderHistory',"client_token=" + getStorage("token"))
+                callAjax('getOrderHistory', "client_token=" + getStorage("token"))
 
             }
         };
-        myNavigator.pushPage('orders.html',options);
+        myNavigator.pushPage('orders.html', options);
     } else {
 
         myNavigator.pushPage("profile.html");
     }
 }
+
 function reOrder(order_id) {
     var params = "client_token=" + getStorage("token") + "&order_id=" + order_id;
     callAjax("reOrder", params);
 }
+
 function reOrder2() {
     reOrder($(".order_option_order_id").val());
 }
+
 function showTrackPage() {
     var options = {
         animation: 'slide',
@@ -318,6 +435,7 @@ function showOrderOptions(order_id) {
     };
     myNavigator.pushPage("order-options.html", options);
 }
+
 function showOrderDetails(order_id) {
     dump(order_id);
     var options = {
@@ -331,14 +449,14 @@ function showOrderDetails(order_id) {
 }
 
 function showOrderDetails2() {
-  
+
     showOrderDetails($(".order_option_order_id").val());
 }
 
 
 
 function displayOrderHistory(data) {
-     var htm = '<ons-list>';
+    var htm = '<ons-list>';
     $.each(data, function (key, val) {
         //htm+='<ons-list-item modifier="tappable" class="list-item-container" onclick="showOrderDetails('+val.order_id+');" >';
         htm += '<ons-list-item modifier="tappable" class="list-item-container" onclick="showOrderOptions(' + val.order_id + ');" >';
@@ -360,10 +478,12 @@ function modalShow() {
     var modal = document.querySelector('ons-modal');
     modal.show();
 }
+
 function modalHide() {
     var modal = document.querySelector('ons-modal');
     modal.hide();
 }
+
 function saveCartToDb() {
     var mobile_save_cart_db = getStorage("mobile_save_cart_db");
     if (mobile_save_cart_db == 1) {
@@ -371,6 +491,7 @@ function saveCartToDb() {
     }
     return false;
 }
+
 function hideAllModal() {
 
     modalHide();
@@ -491,6 +612,7 @@ function reInitTrackMap(data) {
 
     });
 }
+
 function setCartValue() {
     /*set the default total price based on selected price*/
     var selected_price = parseFloat($(".price:checked").val());
@@ -553,6 +675,7 @@ function setCartValue() {
     //$(".total_value").html(  $(".currency_symbol").val() +" "+ total_value);
     $(".total_value").html(prettyPrice(total_value));
 }
+
 function addCartQty(bolean) {
     var qty = parseInt($("#page-itemdisplay .qty").val());
     if (bolean == 2) {
@@ -567,6 +690,7 @@ function addCartQty(bolean) {
     }
     setCartValue();
 }
+
 function explode(sep, string) {
     var res = string.split(sep);
     return res;
@@ -593,6 +717,7 @@ function getTrans(words, words_key) {
     }
     return words;
 }
+
 function prettyPrice(price) {
     dump(price);
 
@@ -617,6 +742,7 @@ function prettyPrice(price) {
         return price + " " + currency_symbol;
     }
 }
+
 function number_format(number, decimals, dec_point, thousands_sep) {
     number = (number + '')
         .replace(/[^0-9+\-Ee.]/g, '');
@@ -628,7 +754,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
         toFixedFix = function (n, prec) {
             var k = Math.pow(10, prec);
             return '' + (Math.round(n * k) / k)
-                    .toFixed(prec);
+                .toFixed(prec);
         };
     // Fix for IE parseFloat(0.55).toFixed(0) = 0;
     s = (prec ? toFixedFix(n, prec) : '' + Math.round(n))
@@ -637,7 +763,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
         s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
     }
     if ((s[1] || '')
-            .length < prec) {
+        .length < prec) {
         s[1] = s[1] || '';
         s[1] += new Array(prec - s[1].length + 1)
             .join('0');
@@ -648,6 +774,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 function dump(data) {
     console.debug(data);
 }
+
 function setStorage(key, value) {
     sessionStorage.setItem(key, value);
 }
@@ -659,6 +786,7 @@ function getStorage(key) {
 function removeStorage(key) {
     sessionStorage.removeItem(key);
 }
+
 function createElement(elementId, elementvalue) {
     var content = document.getElementById(elementId);
     content.innerHTML = elementvalue;
@@ -673,7 +801,7 @@ function callAjax(action, params) {
     /*add language use parameters*/
     params += "&lang_id=" + getStorage("default_lang");
 
-    params += "&api_key=fed7b441b349bae8f146711fbd215e90" ;
+    params += "&api_key=fed7b441b349bae8f146711fbd215e90";
 
 
     dump(ajax_url + "/" + action + "?" + params);
@@ -704,7 +832,7 @@ function callAjax(action, params) {
                         break;
                     case "getLanguageSettings":
                         // loaderLang.show();
-                       
+
                         modalShow()
 
                         break;
@@ -720,11 +848,11 @@ function callAjax(action, params) {
             hideAllModal();
         },
         success: function (data) {
-        
+
 
             if (data.code == 1) {
                 switch (action) {
-                           case "registerUsingFb":
+                    case "registerUsingFb":
                     case "login":
                         //onsenAlert(data.msg);
                         setStorage("token", data.details.token);
@@ -901,7 +1029,7 @@ function callAjax(action, params) {
 
                     case "getItemDetails":
                         displayItem(data.details);
-                         break;
+                        break;
                     case "getLanguageSettings":
                         setStorage("translation", JSON.stringify(data.details.translation));
 
@@ -1095,9 +1223,9 @@ function callAjax(action, params) {
                         } else {
                             $(".tip_amount_wrap").hide();
                         }
-                      
+
                         displayCart(data.details);
-                        
+
 
                         if (!empty(data.details.cart.discount)) {
                             setStorage("has_discount", 1);
@@ -1112,7 +1240,7 @@ function callAjax(action, params) {
                         }
 
                         break;
-                                  case "coordinatesToAddress":
+                    case "coordinatesToAddress":
 
                         var your_location = new plugin.google.maps.LatLng(data.details.lat, data.details.lng);
 
@@ -1274,7 +1402,7 @@ function callAjax(action, params) {
                                         getStorage("order_total"),
                                         'page-paymentoption'
                                     );
-                                    var params = "merchant_id=" +  sessionStorage.getItem('merchant_id');
+                                    var params = "merchant_id=" + sessionStorage.getItem('merchant_id');
                                     params += "&client_token=" + getStorage("token");
                                     params += "&transaction_type=" + $(".transaction_type:checked").val();
                                     callAjax("getPaymentOptions", params);
@@ -1307,7 +1435,7 @@ function callAjax(action, params) {
                                 }
                             };
                             sessionStorage.removeItem('cartLogin')
-                            sessionStorage.setItem('cartLogin',getStorage("transaction_type"))
+                            sessionStorage.setItem('cartLogin', getStorage("transaction_type"))
                             myNavigator.pushPage("cartcreate_account.html", options);
                         }
                         break;
@@ -1388,15 +1516,15 @@ function callAjax(action, params) {
                         break;
 
                     case "loadCart":
-                    /*    displayMerchantLogo(data.details, 'page-cart');
-                        //onsenAlert(data.msg);
-                        toastMsg(data.msg);*/
+                        /*    displayMerchantLogo(data.details, 'page-cart');
+                            //onsenAlert(data.msg);
+                            toastMsg(data.msg);*/
                         myNavigator.pushPage('basket.html')
-/*
-                        $("#page-cart .wrapper").hide();
-                        $("#page-cart .frm-cart").hide();
-                        $(".checkout-footer").hide();
-                        showCartNosOrder();*/
+                        /*
+                                                $("#page-cart .wrapper").hide();
+                                                $("#page-cart .frm-cart").hide();
+                                                $(".checkout-footer").hide();
+                                                showCartNosOrder();*/
                         break;
                     case "getPaymentOptions":
                         if (data.details == 3) {
@@ -1446,7 +1574,7 @@ function callAjax(action, params) {
                         break;
 
 
-                    /*silent*/
+                        /*silent*/
                     case "addToCart":
                     case "getCustomFields":
                         break;
@@ -1486,6 +1614,7 @@ function callAjax(action, params) {
         }
     });
 }
+
 function initIntelInputs() {
     var mobile_country_code = getStorage("mobile_country_code");
     dump(mobile_country_code);
@@ -1518,6 +1647,7 @@ function onsenAlert(message, dialog_title) {
         title: dialog_title
     });
 }
+
 function displayOrderHistoryDetails(data) {
 
     $("#page-orderdetails .title").html(getTrans('Total', 'total') + " : " + data.total);
@@ -1569,10 +1699,10 @@ function displayOrderHistoryDetails(data) {
         createElement('re-order-wrap', html);
     }
 
- }
+}
 
 function displayCart(data) {
-  
+
     // display merchant logo
     displayMerchantLogo(data, 'page-cart');
 
@@ -1814,6 +1944,7 @@ function displayCart(data) {
     initMobileScroller();
     translatePage();
 }
+
 function displayLanguageSelection(data) {
     var selected = getStorage("default_lang");
     dump("selected=>" + selected);
@@ -1877,6 +2008,7 @@ function setLanguage(lang_id) {
         }
     }
 }
+
 function hasConnection() {
     if (isDebug()) {
         return true;
@@ -1892,11 +2024,12 @@ function getLanguageSettings() {
     var params = "&client_token=" + getStorage("client_token");
     callAjax("getLanguageSettings", params);
 }
+
 function displayItem(data) {
 
     setStorage("currency_set", data.currency_symbol);
 
-  
+
     $("#page-itemdisplay .item-header").css({
         'background-image': 'url(' + data.photo + ')'
     });
@@ -2137,10 +2270,10 @@ function loadItemDetails(item_id, mtid, cat_id, bool) {
         setStorage('bool', bool);
     }
     if ($("#close_store").val() == 2 || $("#merchant_open").val() == 1) {
-        $scope.alert(false,getTrans("This Restaurant Is Closed Now.  Please Check The Opening Times", 'restaurant_close'));
+        $scope.alert(false, getTrans("This Restaurant Is Closed Now.  Please Check The Opening Times", 'restaurant_close'));
         return;
     }
-     var options = {
+    var options = {
         animation: 'slide',
         callback: function () {
 
@@ -2148,9 +2281,10 @@ function loadItemDetails(item_id, mtid, cat_id, bool) {
         }
 
     };
-  
+
     myNavigator.pushPage("itemDisplay.html", options);
 }
+
 function addToCart() {
     var proceed = true;
     /*check if sub item has required*/
@@ -2231,7 +2365,7 @@ function addToCart() {
         if ($(".two_flavors").val() == 2) {
             var sub_item_selected = $(".sub_item:checked").length;
             if (sub_item_selected < 2) {
-                $scope.alert(false,getTrans("You must select price for left and right flavor", 'two_flavor_required'));
+                $scope.alert(false, getTrans("You must select price for left and right flavor", 'two_flavor_required'));
                 return;
             }
 
@@ -2326,6 +2460,7 @@ function addToCart() {
 jQuery.fn.exists = function () {
     return this.length > 0;
 }
+
 function toastMsg(message) {
     if (isDebug()) {
         onsenAlert(message);
@@ -2376,7 +2511,7 @@ function showCartNosOrder() {
 
 function showCart() {
     dump('showCart');
-   
+
     var options = {
         animation: 'none',
         callback: function () {
@@ -2392,7 +2527,7 @@ function showCart() {
 
             callAjax("loadCart", "merchant_id=" + sessionStorage.getItem('merchant_id') + "&search_address=" +
                 encodeURIComponent(sessionStorage.getItem("_address")) + "&cart=" + cart_params + "&transaction_type=" +
-                getStorage("transaction_type") + "&device_id=" + getStorage("device_id") + "&tips_percentage=" + getStorage("tips_percentage")) ;
+                getStorage("transaction_type") + "&device_id=" + getStorage("device_id") + "&tips_percentage=" + getStorage("tips_percentage"));
         }
     };
 
@@ -2414,7 +2549,7 @@ function fillShippingAddress() {
     }
 }
 
-function cartsignin(data){
+function cartsignin(data) {
     sessionStorage.removeItem('cartLogin')
 
     setStorage("avatar", data.details.avatar);
@@ -2435,13 +2570,14 @@ function cartsignin(data){
 
     }
 }
-function cartLoadLog(data){
+
+function cartLoadLog(data) {
     sessionStorage.removeItem('cartLogin')
 
     setStorage("avatar", data.details.avatar);
     setStorage("client_name_cookie", data.details.client_name_cookie);
 
- 
+
     switch (data.details.next_steps) {
         case "delivery":
             var options = {
@@ -2503,7 +2639,7 @@ function cartLoadLog(data){
                         getStorage("order_total"),
                         'page-paymentoption'
                     );
-                    var params = "merchant_id=" +  sessionStorage.getItem('merchant_id');
+                    var params = "merchant_id=" + sessionStorage.getItem('merchant_id');
                     callAjax("getPaymentOptions", params);
                 }
             };
@@ -2523,11 +2659,13 @@ function cartLoadLog(data){
     }
 
 }
+
 function isDebug() {
     //on/off
     //return true;
     return false;
 }
+
 function displayMerchantLogo(data, page_id) {
     if (!empty(data.merchant_info)) {
         $("#" + page_id + " .logo-wrap").html('<img src="' + data.merchant_info.logo + '" />')
@@ -2550,6 +2688,7 @@ function displayMerchantLogo2(logo, total, page_id) {
         $("#" + page_id + " .restauran-title").html(merchant_name);
     }
 }
+
 function urlencode(data) {
     return encodeURIComponent(data);
 }
@@ -2710,6 +2849,7 @@ function showTip() {
         tipsDialog.show();
     }
 }
+
 function showChangeAddressPage(object) {
     var options = {
         animation: 'slide',
@@ -2732,11 +2872,14 @@ function showMapAddress(map_address_action) {
 }
 var markers = [];
 
-function newFuncChange(){
+function newFuncChange() {
 
 
     var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-        center: {lat:  parseFloat(sessionStorage.getItem('changeLat')), lng: parseFloat( sessionStorage.getItem('changeLng'))},
+        center: {
+            lat: parseFloat(sessionStorage.getItem('changeLat')),
+            lng: parseFloat(sessionStorage.getItem('changeLng'))
+        },
         zoom: 13,
         mapTypeId: 'roadmap'
     });
@@ -2747,17 +2890,17 @@ function newFuncChange(){
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
-    map.addListener('bounds_changed', function() {
+    map.addListener('bounds_changed', function () {
         searchBox.setBounds(map.getBounds());
     });
-    markers= [];
+    markers = [];
     markers.push(new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng( parseFloat(sessionStorage.getItem('changeLat')), parseFloat(sessionStorage.getItem('changeLng'))),
+        position: new google.maps.LatLng(parseFloat(sessionStorage.getItem('changeLat')), parseFloat(sessionStorage.getItem('changeLng'))),
     }));
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
-    searchBox.addListener('places_changed', function() {
+    searchBox.addListener('places_changed', function () {
         var places = searchBox.getPlaces();
 
         if (places.length == 0) {
@@ -2765,19 +2908,19 @@ function newFuncChange(){
         }
 
         // Clear out the old markers.
-        markers.forEach(function(marker) {
+        markers.forEach(function (marker) {
             marker.setMap(null);
         });
         markers = [];
 
         // For each place, get the icon, name and location.
         var bounds = new google.maps.LatLngBounds();
-       
 
-        places.forEach(function(place) {
-           
+
+        places.forEach(function (place) {
+
             if (!place.geometry) {
-          
+
                 return;
             }
             var icon = {
@@ -2791,8 +2934,8 @@ function newFuncChange(){
             // Create a marker for each place.
             sessionStorage.removeItem('changeLat')
             sessionStorage.removeItem('changeLng')
-            sessionStorage.setItem('changeLat',place.geometry.location.lat())
-            sessionStorage.setItem('changeLng',place.geometry.location.lng())
+            sessionStorage.setItem('changeLat', place.geometry.location.lat())
+            sessionStorage.setItem('changeLng', place.geometry.location.lng())
             markers.push(new google.maps.Marker({
                 map: map,
                 title: place.name,
@@ -2812,20 +2955,21 @@ function newFuncChange(){
         // alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
         sessionStorage.removeItem('changeLat')
         sessionStorage.removeItem('changeLng')
-        sessionStorage.setItem('changeLat',e.latLng.lat())
-        sessionStorage.setItem('changeLng',e.latLng.lng())
-        markers.forEach(function(marker) {
+        sessionStorage.setItem('changeLat', e.latLng.lat())
+        sessionStorage.setItem('changeLng', e.latLng.lng())
+        markers.forEach(function (marker) {
             marker.setMap(null);
         });
-        markers= [];
+        markers = [];
         markers.push(new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng( parseFloat(sessionStorage.getItem("changeLat")), parseFloat(sessionStorage.getItem("changeLng"))),
+            position: new google.maps.LatLng(parseFloat(sessionStorage.getItem("changeLat")), parseFloat(sessionStorage.getItem("changeLng"))),
         }));
 
     });
 
 }
+
 function useThisLocation() {
 
     var data_action = $(".change_cemara_action").val();
@@ -2898,6 +3042,7 @@ function useThisLocation() {
             break;
     }
 }
+
 function checkGPS_AddressMap() {
     //puta
 
@@ -2914,7 +3059,7 @@ function checkGPS_AddressMap() {
         });
 
         var country_code_set = sessionStorage.getItem('cauntry_code');
-        
+
         if (empty(sessionStorage.getItem('cauntry_code'))) {
             country_code_set = '';
         }
@@ -3043,25 +3188,26 @@ function checkGPS_AddressMap() {
 
 function addressPopup() {
     $('#dialog-1').show()
-/*
-    if (typeof addressDialog === "undefined" || addressDialog == null || addressDialog == "") {
-      /!*      .then(function (dialog) {
-            dialog.show()
-            /!*{
-             "callback": geoCompleteChangeAddress
-             });
-             translatePage();
-             translateValidationForm();
-             $(".new_s").attr("placeholder", getTrans('Enter your address', 'enter_your_address'));
-             });
-             } else {
-             addressDialog.show({
-             "callback": geoCompleteChangeAddress
-             });
-             }*!/
-        })*!/
-    }*/
+    /*
+        if (typeof addressDialog === "undefined" || addressDialog == null || addressDialog == "") {
+          /!*      .then(function (dialog) {
+                dialog.show()
+                /!*{
+                 "callback": geoCompleteChangeAddress
+                 });
+                 translatePage();
+                 translateValidationForm();
+                 $(".new_s").attr("placeholder", getTrans('Enter your address', 'enter_your_address'));
+                 });
+                 } else {
+                 addressDialog.show({
+                 "callback": geoCompleteChangeAddress
+                 });
+                 }*!/
+            })*!/
+        }*/
 }
+
 function translateValidationForm() {
     $.each($(".has_validation"), function () {
         var validation_type = $(this).data("validation");
@@ -3107,7 +3253,7 @@ function clientShipping() {
                         getStorage("order_total"),
                         'page-paymentoption'
                     );
-                    var params = "merchant_id=" +  sessionStorage.getItem('merchant_id');
+                    var params = "merchant_id=" + sessionStorage.getItem('merchant_id');
                     params += "&street=" + $(".street").val();
                     params += "&city=" + $(".city").val();
                     params += "&state=" + $(".state").val();
@@ -3126,9 +3272,11 @@ function clientShipping() {
         }
     });
 }
+
 function showManualAddressInput() {
     $(".manual-address-input").toggle();
 }
+
 function showPageAdressSelection() {
     var options = {
         animation: 'slide',
@@ -3176,7 +3324,7 @@ function checkOut() {
         onsenAlert(getTrans("Your cart is empty", 'your_cart_is_empty'));
         return;
     }
-  
+
     if (validation_msg != "") {
         dump('d2');
         onsenAlert(validation_msg);
@@ -3215,8 +3363,9 @@ function checkOut() {
     //extra_params+="&transaction_type2=" + $(".transaction_type:checked").val();
     callAjax("checkout", "merchant_id=" + sessionStorage.getItem('merchant_id') + "&search_address=" +
         encodeURIComponent(sessionStorage.getItem("_address")) + "&transaction_type=" +
-        getStorage("transaction_type") + extra_params) ;
+        getStorage("transaction_type") + extra_params);
 }
+
 function setTips(tips) {
     removeStorage("remove_tips");
     setStorage("tips_percentage", tips);
@@ -3245,6 +3394,7 @@ function removeTips() {
     tipsDialog.hide();
     reloadCart();
 }
+
 function reloadCart() {
     var cart_params = JSON.stringify(cart);
     if (saveCartToDb()) {
@@ -3300,7 +3450,7 @@ function applyRedeem() {
     if (redeem_points != "") {
         var params = "redeem_points=" + redeem_points;
         params += "&client_token=" + getStorage("token");
-        params += "&merchant_id=" +  sessionStorage.getItem('merchant_id');
+        params += "&merchant_id=" + sessionStorage.getItem('merchant_id');
         params += "&voucher_amount=" + $(".voucher_amount").val();
         params += "&subtotal_order=" + getStorage("cart_sub_total");
 
@@ -3320,6 +3470,7 @@ function applyRedeem() {
         onsenAlert(getTrans('invalid redeem points', 'invalid_redeem_points'));
     }
 }
+
 function changeAddress() {
     $.validate({
         form: '#frm-adddresspopup',
@@ -3344,9 +3495,10 @@ function changeAddress() {
         }
     });
 }
+
 function MapInit_addressMap() {
 
-   /* loader.show();*/
+    /* loader.show();*/
 
     drag_marker_bounce = 1;
 
@@ -3424,7 +3576,7 @@ function MapInit_addressMap() {
 
 
     }, function (error) {
-       
+
     }, {
         timeout: 10000,
         enableHighAccuracy: getLocationAccuracy()
@@ -3498,6 +3650,7 @@ function placeOrder() {
         onsenAlert(getTrans("Please select payment method", 'please_select_payment_method'));
     }
 }
+
 function loadMap() {
 
 
@@ -3510,8 +3663,9 @@ function loadMap() {
         }
     };
     myNavigator.pushPage('map.html', options);
-    
+
 }
+
 function popUpAddressBook() {
     $(".manual-address-input").hide();
     callAjax('getAddressBookDialog',
@@ -3570,6 +3724,7 @@ function checkIfhasOfferDiscount() {
     }
     return false;
 }
+
 function cancelRedeem() {
     $(".pts_redeem_points").val('');
     $(".pts_redeem_amount").val('');
@@ -3620,53 +3775,63 @@ function cancelRedeem() {
 }*/
 
 
-function checkGPS(){
+function checkGPS() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
-        var directionsService = new google.maps.DirectionsService;
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 17,
-          center: {lat: 40.151994, lng: 44.542117}
-        });
-        directionsDisplay.setMap(map);
+    var directionsService = new google.maps.DirectionsService;
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 17,
+        center: {
+            lat: 40.151994,
+            lng: 44.542117
+        }
+    });
+    directionsDisplay.setMap(map);
 
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+    document.getElementById('mode').addEventListener('change', function () {
         calculateAndDisplayRoute(directionsService, directionsDisplay);
-        document.getElementById('mode').addEventListener('change', function() {
-          calculateAndDisplayRoute(directionsService, directionsDisplay);
-        });
-      }
+    });
+}
 
-      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-            var  merchant_latitude = sessionStorage.getItem("merchant_latitude");
-  var  merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
-          var  _lat = sessionStorage.getItem("_lat");
-  var  _long = sessionStorage.getItem("_long");
-        var selectedMode = document.getElementById('mode').value;
-        directionsService.route({
-          origin: {lat: parseFloat(merchant_latitude), lng: parseFloat(merchant_longtitude)},  // Haight.
-          destination: {lat: parseFloat(_lat), lng: parseFloat(_long)},  // Ocean Beach.
-          // Note that Javascript allows us to access the constant
-          // using square brackets and a string value as its
-          // "property."
-          travelMode: google.maps.TravelMode[selectedMode]
-        }, function(response, status) {
-          if (status == 'OK') {
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    var merchant_latitude = sessionStorage.getItem("merchant_latitude");
+    var merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
+    var _lat = sessionStorage.getItem("_lat");
+    var _long = sessionStorage.getItem("_long");
+    var selectedMode = document.getElementById('mode').value;
+    directionsService.route({
+        origin: {
+            lat: parseFloat(merchant_latitude),
+            lng: parseFloat(merchant_longtitude)
+        }, // Haight.
+        destination: {
+            lat: parseFloat(_lat),
+            lng: parseFloat(_long)
+        }, // Ocean Beach.
+        // Note that Javascript allows us to access the constant
+        // using square brackets and a string value as its
+        // "property."
+        travelMode: google.maps.TravelMode[selectedMode]
+    }, function (response, status) {
+        if (status == 'OK') {
             directionsDisplay.setDirections(response);
-          } else {
+        } else {
             window.alert('Directions request failed due to ' + status);
-          }
-        });
-      }
+        }
+    });
+}
+
 function onRequestSuccessMap(success) {
-   
+
     //alert("Successfully requested accuracy: "+success.message);
     viewTaskMapInit();
 }
 
 function onRequestFailureMap(error) {
-    
+
     //alert("Accuracy request failed: error code="+error.code+"; error message="+error.message);
     if (error.code == 4) {
-         
+
         toastMsg(getTrans("You have choosen not to turn on location accuracy", 'turn_off_location'));
         checkGPS();
     } else {
@@ -3677,15 +3842,15 @@ function onRequestFailureMap(error) {
 
 function viewTaskMapInit() {
 
-    
 
-  var  merchant_latitude = sessionStorage.getItem("merchant_latitude");
-  var  merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
- var   google_lat = new plugin.google.maps.LatLng(merchant_latitude, merchant_longtitude);
+
+    var merchant_latitude = sessionStorage.getItem("merchant_latitude");
+    var merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
+    var google_lat = new plugin.google.maps.LatLng(merchant_latitude, merchant_longtitude);
     setTimeout(function () {
-    
+
         var div = document.getElementById("map_canvas_div");
-    
+
 
         map = plugin.google.maps.Map.getMap(div, {
             'camera': {
@@ -3693,7 +3858,7 @@ function viewTaskMapInit() {
                 'zoom': 17
             }
         });
-        
+
         map.setBackgroundColor('white');
 
         map.on(plugin.google.maps.event.MAP_READY, onMapInit);
@@ -3703,9 +3868,9 @@ function viewTaskMapInit() {
 
 function onMapInit() {
 
-  var  merchant_latitude = sessionStorage.getItem("merchant_latitude");
-  var  merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
-  var  delivery_address = sessionStorage.getItem("merchant_address");
+    var merchant_latitude = sessionStorage.getItem("merchant_latitude");
+    var merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
+    var delivery_address = sessionStorage.getItem("merchant_address");
 
     var GOOGLE = new plugin.google.maps.LatLng(merchant_latitude, merchant_longtitude);
 
@@ -3797,8 +3962,8 @@ function addMarkers(data, callback) {
 
 
 function viewTaskDirection() {
-  var  merchant_latitude = sessionStorage.getItem("merchant_latitude");
-  var  merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
+    var merchant_latitude = sessionStorage.getItem("merchant_latitude");
+    var merchant_longtitude = sessionStorage.getItem("merchant_longtitude");
 
     navigator.geolocation.getCurrentPosition(function (position) {
 
@@ -4004,27 +4169,29 @@ jQuery(document).ready(function () {
                 break;
         }
     });
- 
+
 })
 
-function callAjaxx(url,params){
+function callAjaxx(url, params) {
     $.ajax({
-        url: "http://mealoop.com/mobileapp/api/"+url+"?"+params,
+        url: "http://mealoop.com/mobileapp/api/" + url + "?" + params,
         data: "&lang_id=&api_key=fed7b441b349bae8f146711fbd215e90",
         type: 'post',
         dataType: 'jsonp',
         crossDomain: true,
         success: function (dataa) {
-   
+
         }
-            })
+    })
 }
+
 function playNotification() {
     var sound_url = "file:///android_asset/www/audio/fb-alert.mp3";
     if (sound_url) {
         playAudio(sound_url);
     }
 }
+
 function getCurrentLocation() {
     /*alert( device.platform ); 
     alert( device.version );*/
@@ -4078,7 +4245,7 @@ function getCurrentLocation() {
 
 
 function onRequestSuccess() {
-   
+
     //  {enableHighAccuracy:false,maximumAge:Infinity, timeout:60000}
     navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError, {
         timeout: 10000,
@@ -4103,7 +4270,7 @@ function onRequestFailure(error) {
 function getCurrentLocationOld() {
     CheckGPS.check(function win() {
             //GPS is enabled! 
-           
+
             navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError, {
                 timeout: 10000,
                 enableHighAccuracy: getLocationAccuracy()
@@ -4149,7 +4316,7 @@ function geolocationSuccess(position) {
         type: 'post',
         dataType: 'jsonp',
         success: function (data) {
-     
+
             sessionStorage.removeItem("_new_address");
             sessionStorage.setItem("_new_address", data.details);
 
@@ -4161,8 +4328,8 @@ function geolocationSuccess(position) {
     sessionStorage.removeItem("changeLng");
     sessionStorage.setItem("_lat", position.coords.latitude);
     sessionStorage.setItem("_long", position.coords.longitude);
-    sessionStorage.setItem('changeLat',position.coords.latitude)
-    sessionStorage.setItem('changeLng',position.coords.longitude)
+    sessionStorage.setItem('changeLat', position.coords.latitude)
+    sessionStorage.setItem('changeLng', position.coords.longitude)
 }
 
 
@@ -4174,7 +4341,7 @@ function geolocationError(error) {
 }
 
 function saveSettings() {
-   
+
 
     var params = $("#frm-settings").serialize();
     params += "&client_token=" + sessionStorage.getItem("token");
@@ -4185,19 +4352,15 @@ function saveSettings() {
 function showLocationPopUp() {
     if (typeof locationDialog === "undefined" || locationDialog == null || locationDialog == "") {
         ons.createDialog('locationOptions.html').then(function (dialog) {
-           /* dialog.show();*/
+            /* dialog.show();*/
             translatePage();
         });
     } else {
-     /*   locationDialog.show();*/
+        /*   locationDialog.show();*/
         //translatePage();
     }
 }
-function myFunction() {
 
-    _update_location();
-
-}
 function getLocationAccuracy() {
     var networkState = navigator.connection.type;
     switch (networkState) {
@@ -4211,38 +4374,18 @@ function getLocationAccuracy() {
             break;
     }
 }
-function _update_location() {
-    var _lat = sessionStorage.getItem("_lat"),
-        _long = sessionStorage.getItem("_long"),
-        _address = sessionStorage.getItem("_new_address"),
-        _date = new Date(),
-        _time = _date.getTime(),
-        device_id = sessionStorage.getItem("device_id");
-    
-    if (_lat && _long && _address && device_id) {
-     
-        var address_for_update = "http://mealoop.com/mobileapp/api/MobilesRregistering?id=" + device_id + "&time=" + _time + "&lat=" + _lat + "&long=" + _long + "&country=" + _address + "";
-        $.ajax({
-            url: address_for_update,
-            type: 'post',
-            dataType: 'jsonp',
-            success: function (data) {
-                print_r(data)
-            }
-        })
-    }
-}
+
 function initFacebook() {
     dump('initFacebook');
-         var facebook_flag = getStorage("facebook_flag");
-        if (facebook_flag == 2) {
-            $(".fb-loginbutton").show();
-            openFB.init({
-                appId: '1785452871717052'
-            });
-        } else {
-            $(".fb-loginbutton").hide();
-        }
+    var facebook_flag = getStorage("facebook_flag");
+    if (facebook_flag == 2) {
+        $(".fb-loginbutton").show();
+        openFB.init({
+            appId: '1785452871717052'
+        });
+    } else {
+        $(".fb-loginbutton").hide();
+    }
 
 
     /*$.ajaxSetup({ cache: true });
@@ -4335,28 +4478,28 @@ function FBlogout() {
         fbErrorHandler);
 }
 var alertjs = function (material, message) {
-			ons.notification.alert({
-				message: message,
-				modifier: material ? 'material' : undefined
-			});
-		}
+    ons.notification.alert({
+        message: message,
+        modifier: material ? 'material' : undefined
+    });
+}
 
 
 /***************************Api With Country*****************************************************/
 function initAutocomplete(contentxx) {
-	input = contentxx;
-	
-	var options = {
-	
-		componentRestrictions: {
-			country: _country
-		}
-	};
+    input = contentxx;
 
-	if (input) {
-		autocomplete = new google.maps.places.Autocomplete(input, options);
-		
-	}
+    var options = {
+
+        componentRestrictions: {
+            country: _country
+        }
+    };
+
+    if (input) {
+        autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    }
 
 }
 
@@ -4364,158 +4507,163 @@ function initAutocomplete(contentxx) {
 
 document.addEventListener('pageinit', function (e) {
 
-	_country = sessionStorage.getItem('cauntry_code');
-    get_loc1();
-	if (e.target.querySelector('#autocomplete')) {
-		content = e.target.querySelector('#autocomplete');
-		initAutocomplete(content);
-	}
+    _country = sessionStorage.getItem('cauntry_code');
+
+    if (e.target.querySelector('#autocomplete')) {
+        content = e.target.querySelector('#autocomplete');
+        initAutocomplete(content);
+    }
     if (e.target.querySelector('#new_ss')) {
         content = e.target.querySelector('#new_ss');
         initAutocomplete(content);
     }
+    navigator.splashscreen.hide();
 });
 /***************************GPS*****************************************************/
 
 var geocoder = new google.maps.Geocoder();
 
 function get_loc() {
-	if (navigator.geolocation) {
+    if (navigator.geolocation) {
 
-		navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+        navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
 
-	}
+    }
 }
+
 function get_loc1() {
-	if (navigator.geolocation) {
+    if (navigator.geolocation) {
 
-		navigator.geolocation.getCurrentPosition(successFunction1, errorFunction1);
+        navigator.geolocation.getCurrentPosition(successFunction1, errorFunction1);
 
-	}
+    }
 }
 
 //Get the latitude and the longitude;
 function successFunction1(position) {
-	var lat = position.coords.latitude;
-	var lng = position.coords.longitude;
 
-	codeLatLng1(lat, lng)
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+
+    codeLatLng1(lat, lng)
 }
 
 function errorFunction1() {
-/*	alert("Geocoder failed");*/
+    /*	alert("Geocoder failed");*/
 }
-function successFunction(position) {
-	var lat = position.coords.latitude;
-	var lng = position.coords.longitude;
 
-	codeLatLng(lat, lng)
+function successFunction(position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+
+    codeLatLng(lat, lng)
 }
 
 function errorFunction() {
-/*	alert("Geocoder failed");*/
+    /*	alert("Geocoder failed");*/
 }
 
 
 
 function codeLatLng(lat, lng) {
-console.log(_country)
-	var latlng = new google.maps.LatLng(lat, lng);
-	geocoder.geocode({
-		'latLng': latlng
-	}, function (results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
 
-			if (results[1]) {
-				_arr = [];
-						arr = [];
-				for (var i = 0; i < results[1].address_components.length; i++) {
- console.log(i)
-					if (_country == results[1].address_components[i].short_name) {
-                        console.log(_arr)
-                        console.log(arr)
-                       
-						
-						_arr.push(_country);
-						arr.push(results[0].formatted_address);
-						
-					}
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({
+        'latLng': latlng
+    }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
 
-				}
+            if (results[1]) {
+                _arr = [];
+                arr = [];
+                for (var i = 0; i < results[1].address_components.length; i++) {
 
-			} else {
-				 /*js_alert(false,"No results found");*/
-			}
-		} else {
-			/*js_alert(false,"Geocoder failed due to: " + status);*/
-		}
-		
-	if (_arr.length != 1) {
-		toggleToast() ;
-	} else {
-       
-		$(document).find('#autocomplete').eq($(document).find('#autocomplete').length-1).val(arr[0]) 
-        
-	}
-	});
-	
+                    if (_country == results[1].address_components[i].short_name) {
+
+                        _arr.push(_country);
+                        arr.push(results[0].formatted_address);
+
+                    }
+
+                }
+
+            } else {
+                /*js_alert(false,"No results found");*/
+            }
+        } else {
+            /*js_alert(false,"Geocoder failed due to: " + status);*/
+        }
+
+        if (_arr.length != 1) {
+            toggleToast();
+        } else {
+
+            $(document).find('#autocomplete').eq($(document).find('#autocomplete').length - 1).val(arr[0])
+
+        }
+    });
+
 }
+
 function codeLatLng1(lat, lng) {
 
-	var latlng = new google.maps.LatLng(lat, lng);
-	geocoder.geocode({
-		'latLng': latlng
-	}, function (results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({
+        'latLng': latlng
+    }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
 
-			if (results[1]) {
-				_arr = [];
-						arr = [];
-				for (var i = 0; i < results[1].address_components.length; i++) {
 
-					if (_country == results[1].address_components[i].short_name) {
-						
-						_arr.push(_country);
-						arr.push(results[0].formatted_address);
-						
-					}
+            sessionStorage.removeItem('form_add');
+            sessionStorage.setItem('form_add', results[2].address_components[3].short_name);
+            if (results[1]) {
+                _arr = [];
+                arr = [];
+                for (var i = 0; i < results[1].address_components.length; i++) {
 
-				}
+                    if (_country == results[1].address_components[i].short_name) {
 
-			} else {
-				 /*js_alert(false,"No results found");*/
-			}
-		} else {
-			/*js_alert(false,"Geocoder failed due to: " + status);*/
-		}
-		
-	
-       
-		$(document).find('#loc_me_hid_but').eq($(document).find('#loc_me_hid_but').length-1).val(arr[0]) ;
-     
-        
-	
-	});
-	
+                        _arr.push(_country);
+                        arr.push(results[0].formatted_address);
+
+                    }
+
+                }
+
+            } else {
+                /*js_alert(false,"No results found");*/
+            }
+        } else {
+            /*js_alert(false,"Geocoder failed due to: " + status);*/
+        }
+
+
+
+        $(document).find('#loc_me_hid_but').eq($(document).find('#loc_me_hid_but').length - 1).val(arr[0]);
+
+
+
+    });
+
 }
 
 /***************************End GPS*****************************************************/
 /***************************Ons Toast Validation*****************************************************/
 
 function toggleToast() {
-	document.querySelector('ons-toast').show();
-	setTimeout(function () {
-		document.querySelector('ons-toast').hide();
-	}, 4000);
-	/***************************End Ons Toast Validation*****************************************************/
-	
+    document.querySelector('ons-toast').show();
+    setTimeout(function () {
+        document.querySelector('ons-toast').hide();
+    }, 4000);
+    /***************************End Ons Toast Validation*****************************************************/
+
 
 };
 /***************************Alert *****************************************************/
-	function js_alert (material, message) {
-			ons.notification.alert({
-				message: message,
-				modifier: material ? 'material' : undefined
-			});
-		}
-	/***************************End Alert*****************************************************/
+function js_alert(material, message) {
+    ons.notification.alert({
+        message: message,
+        modifier: material ? 'material' : undefined
+    });
+}
+/***************************End Alert*****************************************************/
