@@ -1,0 +1,41 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.pivotmobileapp.appytite"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.mealoop"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.mealoop"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "XXXXXXX",
+            "PACKAGE_NAME": "com.mealoop"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.mealoop"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.mealoop"
+        },
+        "cordova-plugin-request-location-accuracy": {
+            "PACKAGE_NAME": "com.mealoop"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.mealoop"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.mealoop"
+        }
+    }
+}

@@ -130,10 +130,14 @@ function onDeviceReady() {
                     "sound": "true",
                     "clearBadge": "true"
                 },
+                "browser":{
+                  pushServiceURL: 'http://mealoop.com/mobileapp/cron/processpush'  
+                },
                 "windows": {}
             });
 
             push.on('registration', function (data) {
+                
                 sessionStorage.removeItem('device_id');
                 sessionStorage.setItem("device_id", data.registrationId);
 
@@ -142,37 +146,40 @@ function onDeviceReady() {
                 params += "&device_platform=" + device.platform;
                 params += "&client_token=" + sessionStorage.getItem("token");
                 params += "&country=" + sessionStorage.getItem('form_add');
-                /* if(sessionStorage.getItem('form_add')=='GY'||sessionStorage.getItem('form_add')=='JM'||sessionStorage.getItem('form_add')=='LC'||sessionStorage.getItem('form_add')=='TT'||sessionStorage.getItem('form_add')=='AG'){*/
+               
+                /* 
+                if(sessionStorage.getItem('form_add')=='GY'||sessionStorage.getItem('form_add')=='JM'||sessionStorage.getItem('form_add')=='LC'||sessionStorage.getItem('form_add')=='TT'||sessionStorage.getItem('form_add')=='AG'){*/
                 callAjaxx("registerMobile", params);
                 /*}*/
 
 
             });
+      push.on('notification', function (data) {
+        
+            //alert(JSON.stringify(data));           
+            if (data.additionalData.foreground) {
+                //alert("when the app is active");
 
-            push.on('notification', function (data) {
-                //alert(JSON.stringify(data));           
-                if (data.additionalData.foreground) {
-                    //alert("when the app is active");
+                playNotification();
 
-                    playNotification();
-
-                    if (data.additionalData.additionalData.push_type == "order") {
-
-                    } else {
-
-                    }
+                if (data.additionalData.additionalData.push_type == "order") {
+                    showNotification(data.title, data.message);
                 } else {
-                    //alert("when the app is not active");
-                    if (data.additionalData.additionalData.push_type == "order") {
-
-                    } else {
-
-                    }
+                    showNotificationCampaign(data.title, data.message);
                 }
-                /*push.finish(function () {
-                    alert('finish successfully called');
-                }); */
-            });
+            } else {
+                //alert("when the app is not active");
+                if (data.additionalData.additionalData.push_type == "order") {
+                    showNotification(data.title, data.message);
+                } else {
+                    showNotificationCampaign(data.title, data.message);
+                }
+            }
+            /*push.finish(function () {
+	            alert('finish successfully called');
+	        }); */
+        });
+
 
             push.on('error', function (e) {
                 //onsenAlert("push error");
@@ -301,10 +308,12 @@ function onDeviceReady() {
                 "sound": "true",
                 "clearBadge": "true"
             },
+           
             "windows": {}
         });
 
         push.on('registration', function (data) {
+           
             sessionStorage.removeItem('device_id');
             sessionStorage.setItem("device_id", data.registrationId);
 
@@ -314,12 +323,14 @@ function onDeviceReady() {
             params += "&client_token=" + sessionStorage.getItem("token");
             params += "&country=" + sessionStorage.getItem('form_add');
             /* if(sessionStorage.getItem('form_add')=='GY'||sessionStorage.getItem('form_add')=='JM'||sessionStorage.getItem('form_add')=='LC'||sessionStorage.getItem('form_add')=='TT'||sessionStorage.getItem('form_add')=='AG'){*/
+          
             callAjaxx("registerMobile", params);
             /*  }
              */
         });
 
-        push.on('notification', function (data) {
+          push.on('notification', function (data) {
+            
             //alert(JSON.stringify(data));           
             if (data.additionalData.foreground) {
                 //alert("when the app is active");
@@ -327,22 +338,23 @@ function onDeviceReady() {
                 playNotification();
 
                 if (data.additionalData.additionalData.push_type == "order") {
-
+                    showNotification(data.title, data.message);
                 } else {
-
+                    showNotificationCampaign(data.title, data.message);
                 }
             } else {
                 //alert("when the app is not active");
                 if (data.additionalData.additionalData.push_type == "order") {
-
+                    showNotification(data.title, data.message);
                 } else {
-
+                    showNotificationCampaign(data.title, data.message);
                 }
             }
             /*push.finish(function () {
-                alert('finish successfully called');
-            }); */
+	            alert('finish successfully called');
+	        }); */
         });
+
 
         push.on('error', function (e) {
             //onsenAlert("push error");
@@ -353,7 +365,7 @@ function onDeviceReady() {
         });
 
     }
-
+ navigator.splashscreen.hide();
 }
 
 
@@ -535,7 +547,34 @@ function runTrackMap() {
         stopTrackMapInterval();
     }
 }
+function showNotification(title, message) {
 
+    if (typeof pushDialog === "undefined" || pushDialog == null || pushDialog == "") {
+        ons.createDialog('pushNotification.html').then(function (dialog) {
+            $(".push-title").html(title);
+            $(".push-message").html(message);
+            dialog.show();
+        });
+    } else {
+        $(".push-title").html(title);
+        $(".push-message").html(message);
+        pushDialog.show();
+    }
+}
+function showNotificationCampaign(title, message) {
+
+    if (typeof pushcampaignDialog === "undefined" || pushcampaignDialog == null || pushcampaignDialog == "") {
+        ons.createDialog('pushNotificationCampaign.html').then(function (dialog) {
+            $("#page-notificationcampaign .push-title").html(title);
+            $("#page-notificationcampaign .push-message").html(message);
+            dialog.show();
+        });
+    } else {
+        $("#page-notificationcampaign .push-title").html(title);
+        $("#page-notificationcampaign .push-message").html(message);
+        pushcampaignDialog.show();
+    }
+}
 function reInitTrackMap(data) {
     dump('reInitTrackMap');
     dump(data);
@@ -4192,6 +4231,31 @@ function playNotification() {
     }
 }
 
+
+var my_media;
+
+function playAudio(url) {
+    // Play the audio file at url    
+    my_media = new Media(url,
+        // success callback
+        function () {
+            dump("playAudio():Audio Success");
+            my_media.stop();
+            my_media.release();
+        },
+        // error callback
+        function (err) {
+            dump("playAudio():Audio Error: " + err);
+        }
+    );
+    // Play audio
+    my_media.play();
+}
+
+function stopNotification() {
+    my_media.stop();
+    my_media.release();
+}
 function getCurrentLocation() {
     /*alert( device.platform ); 
     alert( device.version );*/
@@ -4517,7 +4581,7 @@ document.addEventListener('pageinit', function (e) {
         content = e.target.querySelector('#new_ss');
         initAutocomplete(content);
     }
-    navigator.splashscreen.hide();
+   
 });
 /***************************GPS*****************************************************/
 
@@ -4614,13 +4678,15 @@ function codeLatLng1(lat, lng) {
         if (status == google.maps.GeocoderStatus.OK) {
 
 
-            sessionStorage.removeItem('form_add');
-            sessionStorage.setItem('form_add', results[2].address_components[3].short_name);
+           
             if (results[1]) {
                 _arr = [];
                 arr = [];
                 for (var i = 0; i < results[1].address_components.length; i++) {
-
+if(results[1].address_components[i].short_name.length==2){
+  sessionStorage.removeItem('form_add');
+            sessionStorage.setItem('form_add', results[1].address_components[i].short_name);
+}
                     if (_country == results[1].address_components[i].short_name) {
 
                         _arr.push(_country);

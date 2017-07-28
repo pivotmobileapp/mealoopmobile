@@ -112,7 +112,7 @@
 	min-height:300px;
     background-repeat: no-repeat;
     background-size: 100% 300px;
-	background-image:url(../img/food1.jpg);
+	background-image:url(../img/spageti.jpeg);
 }
 .tab_mine{
 	    width: 15px;
@@ -146,7 +146,7 @@
 	margin:0 auto
 }
 .bgcolor_purple{
-	background-color:#dc0000;
+	background-color:#B1347C;
 }
 .white{
 	color:#fff;
@@ -537,8 +537,8 @@
     left: 12px;
 }
 .menu_pics{
- height: 150px;
-    background-size: contain;
+ height: 120px;
+    background-size: cover;
     border-bottom: 5px solid transparent;
     background-repeat: no-repeat;
 }
@@ -628,7 +628,7 @@
 }
 #page-shipping .toolbar{
     padding-top:0px;
-    background-color:#f10008;
+    background-color:#B1347C;
 }
 .small-red-text{
     color:red;
@@ -965,17 +965,17 @@ price, .onsen-display price {
 }
 .text_sort_menu{
     font-size:64%;    
-    color: #6fb923;
+    color: #02b07a;
 }
 .menu_sort_icons{
     padding: 0 0 10px;
     width: 100%;
     margin: 0 auto;
     margin-top: 10px;
-    border-bottom:1px solid #6fb923;
+    border-bottom:1px solid #02b07a;
 }
 .icons_menu_part{
-    border: 1px solid #6fb923;
+    border: 1px solid #02b07a;
     text-align: center;
     border-radius: 50%;
     width: 45px;
@@ -984,14 +984,14 @@ price, .onsen-display price {
     line-height: 45px;
 }
 .icons_menu_part:hover{
-    background-color: #6fb923
+    background-color: #02b07a
 }
 
 .icons_menu_part:hover ons-icon{
     color: #fff
 }
 .icons_menu_part ons-icon{
-    color: #6fb923;
+    color: #02b07a;
     font-size:20px;
 }
 .filter_by{
@@ -1001,8 +1001,8 @@ price, .onsen-display price {
 
 }
 .dollar_menu_part li:not(.clearfix){
-    color: #6fb923;
-    border-right: 1px solid #6fb923;
+    color: #02b07a;
+    border-right: 1px solid #02b07a;
     float: left;
     width: 32.69%;
     text-align: center;
@@ -1015,14 +1015,14 @@ price, .onsen-display price {
     width: 98%;
     margin: 0 auto;
     padding: 0px;
-    border: 1px solid #6fb923;
+    border: 1px solid #02b07a;
     border-radius: 5px;
 }
 .about_menus_part li:not(.clearfix){
-    border: 1px solid #6fb923;
+    border: 1px solid #02b07a;
     border-radius: 5px;
     float: left;
-    color: #6fb923;
+    color: #02b07a;
     padding: 4px 7px;
     margin: 7px;
 }
@@ -1058,7 +1058,7 @@ price, .onsen-display price {
     width:68%;
 }
 .green_color_inp{
-    color: #6fb923;
+    color: #02b07a;
     margin-top: 6px;
     margin-left: 26px;
     display: inline-block;
@@ -1085,7 +1085,7 @@ price, .onsen-display price {
     margin: 0px auto;
     width: 99px;
     top: -3px;
-    background: #6fb923;
+    background: #02b07a;
     z-index: 1;
     padding: 6px 7px;
     border-radius: 5px;
@@ -1102,7 +1102,7 @@ price, .onsen-display price {
     padding:0px;
 }
 .searching_menu_items li{
-    color: #6fb923;
+    color: #02b07a;
     text-align: center;
     padding: 11px 3px;
     list-style-type: none;
@@ -1153,7 +1153,7 @@ price, .onsen-display price {
     padding:10px 5px;
 }
 .cash_dollar{
-    color: #6fb923  ;
+    color: #02b07a  ;
     float:right;
     margin-right:10px;
 }
@@ -1234,7 +1234,7 @@ price, .onsen-display price {
 }
 .red_close{
     color: white;
-    background: #dc0000;
+    background: #dc5236;
     padding: 4px 7px;
     border-radius: 8px;
 }
@@ -1250,7 +1250,6 @@ price, .onsen-display price {
 }
 .rest_name{
     margin:0px 10px;
-	color: #37A357;
 }
 .menu_search_stars{
     margin-left:36px;
@@ -1357,7 +1356,7 @@ price, .onsen-display price {
 
 .myorange {
     max-width: 100%;
-    background: #f10008;
+    background: #B1347C;
     color: #fff;
     padding-top: 10px;
     padding-bottom: 5px;
@@ -1375,7 +1374,7 @@ price, .onsen-display price {
     padding-top: 63px;
 }
  .toolbarColor {
-    background: #f10008;
+    background: #B1347C;
     color: #fff;
     border: none;
 }
@@ -1482,7 +1481,7 @@ price, .onsen-display price {
  }
 #page-paymentoption .toolbar {
     padding-top: 0px;
-    background-color: #f10008;
+    background-color: #B1347C;
 }
 .center {
     text-align: center;
@@ -1589,7 +1588,7 @@ price, .onsen-display price {
     text-align: right;
 }
 .actibveIcons {
-    background-color: #6fb923!important;
+    background-color: #02b07a!important;
 }
 .whiteIcon{
     color: white!important;
@@ -1598,7 +1597,7 @@ price, .onsen-display price {
     background-color: transparent!important;
 }
 .iconsa {
-    color: #6fb923!important;
+    color: #02b07a!important;
 }
 .iconsa:before {
     content: "\f161"!important;
@@ -1614,10 +1613,10 @@ price, .onsen-display price {
     margin: 10px auto;
 }
 .spons{
-    font-size: 19px;
+    font-size: 29px;
     color: #32b66a;
     cursor: pointer;
-    
+    font-style: italic;
 }
 .margin_left10{
     margin-left:10px;
@@ -1674,7 +1673,7 @@ color:#333;
     margin-left:10px;
 }
 .about_menus_part li.activeli{
-    background-color: #6fb923;
+    background-color: #02b07a;
     color: #fff;
 }
 .filter_icon_new{
