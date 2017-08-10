@@ -109,9 +109,9 @@
 }
 .spaheti_pic,.pizza_pic{
 	text-align: center;
-	min-height:388px;
+	min-height:230px;
     background-repeat: no-repeat;
-    background-size: 100% 388px;
+    background-size: 100% 230px;
 	background-image:url(../img/food4.jpg);
 }
 .tab_mine{
@@ -124,9 +124,9 @@
 }
 .pizza_pic{
 	text-align: center;
-	min-height:388px;
+	min-height:230px;
     background-repeat: no-repeat;
-    background-size: 100% 388px;
+    background-size: 100% 230px;
 	background-image:url(../img/couple.jpg);
 }
 .manually_button{
@@ -654,7 +654,7 @@
     width:100%;
 }
 .toolbar,.page[status-bar-fill] > .toolbar{
-    padding-top:2px;
+    padding-top:auto;
 }
 .check .radio-button__checkmark {
  border: 1px solid #ddd;
