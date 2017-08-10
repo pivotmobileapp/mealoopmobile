@@ -109,9 +109,9 @@
 }
 .spaheti_pic,.pizza_pic{
 	text-align: center;
-	min-height:230px;
+	min-height:229px;
     background-repeat: no-repeat;
-    background-size: 100% 230px;
+    background-size: 100% 229px;
 	background-image:url(../img/food4.jpg);
 }
 .tab_mine{
@@ -124,9 +124,9 @@
 }
 .pizza_pic{
 	text-align: center;
-	min-height:230px;
+	min-height:229px;
     background-repeat: no-repeat;
-    background-size: 100% 230px;
+    background-size: 100% 229px;
 	background-image:url(../img/couple.jpg);
 }
 .manually_button{
