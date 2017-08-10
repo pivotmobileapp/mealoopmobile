@@ -109,10 +109,10 @@
 }
 .spaheti_pic,.pizza_pic{
 	text-align: center;
-	min-height:300px;
+	min-height:388px;
     background-repeat: no-repeat;
-    background-size: 100% 300px;
-	background-image:url(../img/spageti.jpeg);
+    background-size: 100% 388px;
+	background-image:url(../img/food4.jpg);
 }
 .tab_mine{
 	    width: 15px;
@@ -123,7 +123,11 @@
     top: 5px;
 }
 .pizza_pic{
-	background-image:url(../img/pizza.jpg);
+	text-align: center;
+	min-height:388px;
+    background-repeat: no-repeat;
+    background-size: 100% 388px;
+	background-image:url(../img/couple.jpg);
 }
 .manually_button{
 	color: #01b17a;
