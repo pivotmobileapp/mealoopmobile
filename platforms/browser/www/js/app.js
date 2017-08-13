@@ -186,7 +186,7 @@ $scope.reviewsPage = function(id){
  $http.jsonp(" http://mealoop.com/mobileapp/api/getMerchantInfo?merchant_id="+id+"&lang_id=&api_key=fed7b441b349bae8f146711fbd215e90&_=1498663326854&callback=JSON_CALLBACK")
   .success(function successCallback(response) {
   $scope.rest_info = response;
-  document.getElementById('days').innerHTML = response.details.opening_hours.replace('&nbsp; &nbsp;','') 
+  document.getElementById('days').innerHTML = response.details.opening_hours.replace('   ','') 
  }).error(function (err) {
 
 
@@ -509,7 +509,7 @@ $scope.bookNow = function(d){
     if (response.msg == "Successful") {
      myNavigator.pushPage('restaurantLocation.html');
     } else {
-     $scope.alert(false, 'Not Found Restaurants');
+     $scope.alert(false, ';( Oops! Please make sure you have internet and your GPS/Location is turned on.');
     }
    }).finally(function () {
 

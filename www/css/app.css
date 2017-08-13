@@ -150,7 +150,7 @@
 	margin:0 auto
 }
 .bgcolor_purple{
-	background-color:#B1347C;
+	background-color:#CD0000;
 }
 .white{
 	color:#fff;
@@ -632,7 +632,7 @@
 }
 #page-shipping .toolbar{
     padding-top:0px;
-    background-color:#B1347C;
+    background-color:CD0000;
 }
 .small-red-text{
     color:red;
@@ -1360,7 +1360,7 @@ price, .onsen-display price {
 
 .myorange {
     max-width: 100%;
-    background: #B1347C;
+    background: CD0000;
     color: #fff;
     padding-top: 10px;
     padding-bottom: 5px;
@@ -1378,7 +1378,7 @@ price, .onsen-display price {
     padding-top: 63px;
 }
  .toolbarColor {
-    background: #B1347C;
+    background: CD0000;
     color: #fff;
     border: none;
 }
@@ -1485,7 +1485,7 @@ price, .onsen-display price {
  }
 #page-paymentoption .toolbar {
     padding-top: 0px;
-    background-color: #B1347C;
+    background-color: CD0000;
 }
 .center {
     text-align: center;
