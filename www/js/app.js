@@ -509,7 +509,7 @@ $scope.bookNow = function(d){
     if (response.msg == "Successful") {
      myNavigator.pushPage('restaurantLocation.html');
     } else {
-     $scope.alert(false, ';( Oops! Please make sure you have internet and your GPS/Location is turned on.');
+     $scope.alert(false, 'Oops! Three things could be wrong here! 1) Your Internet Connect. 2) GPS/Location is off. 3)Your Country is not Supported');
     }
    }).finally(function () {
 

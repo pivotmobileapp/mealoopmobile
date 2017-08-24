@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mealoop" version="4.0.8" versionCode="40.8" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.mealoop" version="4.1.0" versionCode="41.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
@@ -52,7 +52,6 @@
     <splash platform="android" qualifier="land-hdpi" src="screen-hdpi-landscape.png" />
     <splash platform="android" qualifier="xhdpi" src="screen-xhdpi-portrait.png" />
     <splash platform="android" qualifier="land-xhdpi" src="screen-xhdpi-landscape.png" />
-    <splash platform="android" qualifier="port-xxhdpi" src="screen-xxhdpi-portrait.png" />
     <content src="index.html" />
     <gap:plugin name="onesignal-cordova-plugin" source="npm" spec="^2.0.10" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
@@ -83,8 +82,8 @@
         <application android:theme="@android:style/Theme.NoTitleBar">
         </application>
     </gap:config-file>
-    <preference name="phonegap-version" value="cli-7.0.1" />
-    <preference name="pgb-builder-version" value="1" />
+    <preference name="phonegap-version" value="cli-6.5.0" />
+    <preference name="pgb-builder-version" value="2" />
     <preference name="orientation" value="portrait" />
     <preference name="android-build-tool" value="gradle" />
     <preference name="AutoHideSplashScreen" value="false" />
