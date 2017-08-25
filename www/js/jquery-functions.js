@@ -4404,9 +4404,16 @@ function errorFunction() {
          
                } 
                   $(".delivery-address-text").html(complete_address);
-            myNavigator.popPage({
+             console.log( myNavigator);
+              myNavigator.popPage({
+                  callback : function() {
+                      myNavigator.popPage()
+              }})
+       /*       myNavigator.popPage({
+                page:'shipping.html',
                 cancelIfRunning: true
             });
+              {refresh: true}*/
             return false;
           }
       }
