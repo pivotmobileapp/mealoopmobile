@@ -111,7 +111,7 @@
 	text-align: center;
 	min-height:50%;
 	background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: 100% 95%;
 	background-image:url(../img/food4.jpg);
 }
 .tab_mine{
@@ -126,7 +126,7 @@
 	text-align: center;
 	min-height:50%;
 	background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: 100% 95%;
 	background-image:url(../img/couple.jpg);
 }
 .manually_button{

@@ -2808,95 +2808,30 @@ function newFuncChange(){
         });
         map.fitBounds(bounds);
     });
-    google.maps.event.addListener(map, 'click', function (e) {
-        // alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
-        sessionStorage.removeItem('changeLat')
-        sessionStorage.removeItem('changeLng')
-        sessionStorage.setItem('changeLat',e.latLng.lat())
-        sessionStorage.setItem('changeLng',e.latLng.lng())
-        markers.forEach(function(marker) {
-            marker.setMap(null);
-        });
-        markers= [];
-        markers.push(new google.maps.Marker({
-            map: map,
-            position: new google.maps.LatLng( parseFloat(sessionStorage.getItem("changeLat")), parseFloat(sessionStorage.getItem("changeLng"))),
-        }));
 
-    });
+
+        google.maps.event.addListener(map, 'click', function (e) {
+            console.log('e', e);
+            // alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
+            sessionStorage.removeItem('changeLat')
+            sessionStorage.removeItem('changeLng')
+            sessionStorage.setItem('changeLat', e.latLng.lat())
+            sessionStorage.setItem('changeLng', e.latLng.lng())
+            markers.forEach(function (marker) {
+                marker.setMap(null);
+            });
+            markers = [];
+            markers.push(new google.maps.Marker({
+                map: map,
+                position: new google.maps.LatLng(parseFloat(sessionStorage.getItem("changeLat")), parseFloat(sessionStorage.getItem("changeLng"))),
+            }));
+        });
 
 }
 function useThisLocation() {
-
-    var data_action = $(".change_cemara_action").val();
-    //toastMsg(data_action);
-    if (data_action == "getAddress") {
-        var lat = $(".change_cemara_lat").val();
-        var lng = $(".change_cemara_lng").val();
-        //toastMsg( lat + "=>"+ lng );
-        $(".change_cemara_action").val('');
-        $(".use-location").html(getTrans("Use this address", 'use_this_address'));
-        callAjax("dragMarker", "lat=" + lat + "&lng=" + lng);
-        return;
-    }
-
-    var map_address_action = getStorage("map_address_action");
-    //alert(map_address_action);
-    dump(map_address_action);
-
-    switch (map_address_action) {
-        case "mapaddress":
-
-            $(".street").val(getStorage("map_address_result_address"));
-            $(".city").val(getStorage("map_address_result_city"));
-            $(".state").val(getStorage("map_address_result_state"));
-            $(".zipcode").val(getStorage("map_address_result_zip"));
-
-            $(".google_lat").val(getStorage("google_lat"));
-            $(".google_lng").val(getStorage("google_lng"));
-            $(".formatted_address").val(getStorage("map_address_result_formatted_address"));
-
-            $(".delivery-address-text").html(getStorage("map_address_result_formatted_address"));
-
-            myNavigator.popPage({
-                cancelIfRunning: true
-            }); //back button
-            myNavigator.popPage({
-                cancelIfRunning: true
-            }); //back button
-            break;
-
-        case "changeaddress":
-
-            myNavigator.popPage({
-                cancelIfRunning: true
-            }); //back button
-            setStorage("search_address", getStorage("map_address_result_formatted_address"));
-
-            var cart_params = JSON.stringify(cart);
-            if (saveCartToDb()) {
-                var cart_params = '';
-            }
-
-            callAjax("loadCart", "merchant_id=" + getStorage('merchant_id') + "&search_address=" +
-                encodeURIComponent(getStorage("search_address")) + "&cart=" + cart_params + "&transaction_type=" +
-                getStorage("transaction_type") + "&device_id=" + getStorage("device_id"));
-
-            myNavigator.popPage({
-                cancelIfRunning: true
-            }); //back button
-            myNavigator.popPage({
-                cancelIfRunning: true
-            }); //back button
-
-            break;
-
-        default:
-            myNavigator.popPage({
-                cancelIfRunning: true
-            }); //back button
-            break;
-    }
+        codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng"))
+   
+ 
 }
 function checkGPS_AddressMap() {
     //puta
@@ -3143,7 +3078,7 @@ function setManualAddress() {
         borderColorOnError: "#FF0000",
         onError: function () {},
         onSuccess: function () {
-            $(".street").val($(".stree_1").val());
+            $(".street").val($(".stree_1").val() );
             $(".city").val($(".city_1").val());
             $(".state").val($(".state_1").val());
             $(".zipcode").val($(".zipcode_1").val());
@@ -4416,48 +4351,66 @@ function errorFunction() {
 /*	alert("Geocoder failed");*/
 }
 
+  function codeLatLng3(lat, lng) {
+
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+      //console.log(results);
+                   console.log(results[0].address_components)
+   var   region,street, city,postal_code;
+       for (var i=0; i<results[0].address_components.length; i++)
+        {
+            console.log(i)
+            if (results[0].address_components[i].types[0] == "administrative_area_level_1") {
+                                          region = results[0].address_components[i].long_name;
+
+            } 
+            if (results[0].address_components[i].types[0] == "route") {
+                                         street = results[0].address_components[i].long_name;
+
+            }  
+            if (results[0].address_components[i].types[0] == "locality") {
+                                         city = results[0].address_components[i].long_name;
+
+            }
+            if (results[0].address_components[i].types[0] == "postal_code") {
+                                        postal_code = results[0].address_components[i].long_name;
+
+            }
+                   
+
+        }
+          if(region&&street&&city){
+            $(".street").val(street);
+            $(".city").val(city);
+            $(".state").val(region);
+            $(".zipcode").val(postal_code);
+
+            var complete_address = street;
+            complete_address += " " + city;
+            complete_address += " " +region;
+
+            $(".google_lat").val('');
+            $(".google_lng").val('');
+            $(".formatted_address").val('');
 
 
-function codeLatLng(lat, lng) {
-console.log(_country)
-	var latlng = new google.maps.LatLng(lat, lng);
-	geocoder.geocode({
-		'latLng': latlng
-	}, function (results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-
-			if (results[1]) {
-				_arr = [];
-						arr = [];
-				for (var i = 0; i < results[1].address_components.length; i++) {
- console.log(i)
-					if (_country == results[1].address_components[i].short_name) {
-                        console.log(_arr)
-                        console.log(arr)
-                       
-						
-						_arr.push(_country);
-						arr.push(results[0].formatted_address);
-						
-					}
-
-				}
-
-			} else {
-				 /*js_alert(false,"No results found");*/
-			}
-		} else {
-			/*js_alert(false,"Geocoder failed due to: " + status);*/
-		}
-		
-	if (_arr.length != 1) {
-		toggleToast() ;
-	} else {
-       
-		$(document).find('#autocomplete').eq($(document).find('#autocomplete').length-1).val(arr[0]) 
-        
-	}
-	});
+              if(postal_code){
+                $(".zipcode").val(postal_code);
+                complete_address += " " + postal_code;
+         
+               } 
+                  $(".delivery-address-text").html(complete_address);
+            myNavigator.popPage({
+                cancelIfRunning: true
+            });
+            return false;
+          }
+      }
+  
+    });
+   
 	
 }
 function codeLatLng1(lat, lng) {
