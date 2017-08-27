@@ -4707,7 +4707,7 @@ function toggleToast() {
           });
         */
         var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {lat:parseFloat(sessionStorage.getItem('changeLat')) , lng: parseFloat(sessionStorage.getItem('changeLng'))},
+            center: {lat:latitude , lng: longitude},
             zoom: 13,
             mapTypeId: 'roadmap'
         });
