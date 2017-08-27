@@ -70,7 +70,105 @@ function loadBookingForm() {
     };
     myNavigator.pushPage("booking.html", options);
 }
+function fillExpirationYear() {
+    var d = new Date();
+    var current_year = d.getFullYear();
 
+    var htm = '';
+    htm += '<ons-list>';
+    htm += '<ons-list-header class="list-header trn" data-trn-key="expiration_year">Expiration Year</ons-list-header>';
+    for (i = 0; i < 15; i++) {
+
+        years = parseInt(current_year) + i;
+
+        htm += '<ons-list-item modifier="tappable" onclick="setExpirationYear(' + "'" + years + "'" + ');">';
+        htm += '<label class="radio-button checkbox--list-item">';
+        htm += '<input type="radio" name="expiration_m" class="expiration_m" value="' + years + '"  >';
+        htm += '<div class="radio-button__checkmark checkbox--list-item__checkmark"></div>';
+        htm += ' ' + years;
+        htm += '</label>';
+        htm += '</ons-list-item>';
+    }
+    htm += '</ons-list>';
+    createElement('expiration-year-options-list', htm);
+    translatePage();
+}
+function fillExpirationMonth() {
+    var htm = '';
+    htm += '<ons-list>';
+    htm += '<ons-list-header class="list-header trn" data-trn-key="expiration_month">Expiration Month</ons-list-header>';
+    for (i = 1; i < 13; i++) {
+        if (i <= 9) {
+            i = "0" + i;
+        }
+        htm += '<ons-list-item modifier="tappable" onclick="setExpirationMonth(' + "'" + i + "'" + ');">';
+        htm += '<label class="radio-button checkbox--list-item">';
+        htm += '<input type="radio" name="expiration_m" class="expiration_m" value="' + i + '"  >';
+        htm += '<div class="radio-button__checkmark checkbox--list-item__checkmark"></div>';
+        htm += ' ' + i;
+        htm += '</label>';
+        htm += '</ons-list-item>';
+    }
+    htm += '</ons-list>';
+    createElement('expiration-options-list', htm);
+    translatePage();
+}
+function stripePayNow() {
+    console.log( getStorage('stripe_publish_key'));
+    var stripe_publish_key = getStorage('stripe_publish_key');
+    dump(stripe_publish_key);
+    $.validate({
+        form: '#frm-stp',
+        borderColorOnError: "#FF0000",
+        onError: function () {},
+        onSuccess: function () {
+
+            modalShow();
+
+            var cards = $(".cc_number").val();
+            var cvv = $(".cvv").val();
+            var expiration_month = $(".expiration_month").val();
+            var expiration_yr = $(".expiration_yr").val();
+
+            Stripe.setPublishableKey(stripe_publish_key);
+            Stripe.card.createToken({
+                number: cards,
+                cvc: cvv,
+                exp_month: expiration_month,
+                exp_year: expiration_yr
+            }, stripeResponseHandler);
+
+            return false;
+        }
+    });
+}
+function stripeResponseHandler(status, response) {
+    dump('stripe response');
+    console.log(status);
+    console.log(response);
+    if (response.error) {
+        hideAllModal();
+        onsenAlert(response.error.message);
+    } else {
+        $(".stripe_token").val(response.id);
+
+        var params = $("#frm-stp").serialize();
+        params += "&client_token=" + getStorage("token");
+        params += "&merchant_id=" + getStorage("merchant_id");
+        callAjax("PayStp", params);
+    }
+}
+function setExpirationMonth(month) {
+    $(".expiration_month").val(month);
+    $(".expiration_month_label").html(month);
+    ExpirationMonthDialog.hide();
+}
+function setExpirationYear(year_value) {
+    dump(year_value);
+    $(".expiration_yr").val(year_value);
+    $(".expiration_year").html(year_value);
+    showExpirationYearDialog.hide();
+}
 //gisher
 //new Jor
 
@@ -1209,6 +1307,48 @@ function callAjax(action, params) {
                         }
 
                         displayPaymentOptions(data);
+                        break;
+                    case "PayStp":
+                    case "razorPaymentSuccessfull":
+
+                        var amount_to_pay = data.details.amount_to_pay;
+                        if (amount_to_pay == 0) {
+                            amount_to_pay = getStorage("order_total");
+                        }
+                        var options = {
+                            animation: 'slide',
+                            onTransitionEnd: function () {
+                                displayMerchantLogo2(getStorage("merchant_logo"),
+                                    prettyPrice(amount_to_pay),
+                                    'page-receipt');
+                                $(".receipt-msg").html(data.msg);
+                            }
+                        };
+                        sNavigator.pushPage("receipt.html", options);
+                        break;
+
+                    case "getMerchantInfo":
+                        showMerchantInfo(data.details)
+                        break;
+
+                    case "bookTable":
+                        var options = {
+                            animation: 'slide',
+                            onTransitionEnd: function () {
+                                displayMerchantLogo2(
+                                    getStorage("merchant_logo"),
+                                    '',
+                                    'page-booking-ty'
+                                );
+
+                                $(".book-ty-msg").html(data.msg);
+                            }
+                        };
+                        sNavigator.pushPage("bookingTY.html", options);
+                        break;
+
+                    case "merchantReviews":
+                        displayReviews(data.details);
                         break;
 
                     case "checkout":
@@ -2831,8 +2971,9 @@ function newFuncChange(){
 app.initialize();
 }
 function useThisLocation() {
-        codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng"))
-   
+      codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng"))
+      console.log(codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng")));
+
  
 }
 function checkGPS_AddressMap() {
@@ -3923,7 +4064,7 @@ jQuery(document).ready(function () {
                     animation: 'slide',
                     callback: function () {
                         var params = "merchant_id=" + getStorage("merchant_id");
-                        params += "&client_token=" + getStorage("client_token");
+                        params += "&client_token=" + getStorage("token");
                         callAjax("getMerchantCClist", params);
                         translatePage();
                     }
@@ -4300,7 +4441,25 @@ function initAutocomplete(contentxx) {
 /***************************End Api With Country*****************************************************/
 
 document.addEventListener('pageinit', function (e) {
+    switch (e.target.id) {
+        case "page-expirationmonth":
+            fillExpirationMonth();
+            break;
 
+        case "page-expiration-year":
+            fillExpirationYear();
+            break;
+        case "page-stripe-form":
+            translatePage();
+            translateValidationForm();
+
+            $(".cc_number").attr("placeholder", getTrans("Credit Card Number", 'cc_number'));
+            $(".cvv").attr("placeholder", getTrans("CVV", 'cvv'));
+
+            break;
+        default:
+            break;
+    }
 	_country = sessionStorage.getItem('cauntry_code');
     get_loc1();
 	if (e.target.querySelector('#autocomplete')) {
@@ -4354,7 +4513,7 @@ function errorFunction() {
 }
 
   function codeLatLng3(lat, lng) {
-
+console.log(lat, lng)
     var latlng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({'latLng': latlng}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
@@ -4384,6 +4543,7 @@ function errorFunction() {
 
         }
           if(region&&street&&city){
+
             $(".street").val(street);
             $(".city").val(city);
             $(".state").val(region);
@@ -4421,6 +4581,31 @@ function errorFunction() {
     });
    
 	
+}
+function showExpirationYear() {
+    $('#dialog-year').show();
+
+
+   /* if (typeof showExpirationYearDialog === "undefined" || showExpirationYearDialog == null || showExpirationYearDialog == "") {
+        ons.createDialog('showExpirationYearDialog.html').then(function (dialog) {
+            dialog.show();
+            translatePage();
+        });
+    } else {
+        showExpirationYearDialog.show();
+    }*/
+}
+function showExpirationMonth() {
+    $('#dialog-month').show();
+   /* if (typeof ExpirationMonthDialog === "undefined" || ExpirationMonthDialog == null || ExpirationMonthDialog == "") {
+        ons.createDialog('ExpirationMonth.html').then(function (dialog) {
+            dialog.show();
+            translatePage();
+        });
+    } else {
+        ExpirationMonthDialog.show();
+        //translatePage();
+    }*/
 }
 function codeLatLng1(lat, lng) {
 
@@ -4521,13 +4706,16 @@ function toggleToast() {
               title: 'my location'
           });
         */
-        
-        
-    var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-        center: {lat:latitude , lng: longitude},
-        zoom: 13,
-        mapTypeId: 'roadmap'
-    });
+
+
+        var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
+            center: {
+                lat: parseFloat(sessionStorage.getItem('changeLat')),
+                lng: parseFloat(sessionStorage.getItem('changeLng'))
+            },
+            zoom: 13,
+            mapTypeId: 'roadmap'
+        });
     var input = document.getElementById('search_address_geo');
     var latlngbounds = new google.maps.LatLngBounds();
 
@@ -4598,8 +4786,7 @@ function toggleToast() {
     });
     google.maps.event.addListener(map, 'click', function (e) {
         console.log('e',e);
-        // alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
-        sessionStorage.removeItem('changeLat')
+         sessionStorage.removeItem('changeLat')
         sessionStorage.removeItem('changeLng')
         sessionStorage.setItem('changeLat',e.latLng.lat())
         sessionStorage.setItem('changeLng',e.latLng.lng())

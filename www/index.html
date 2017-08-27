@@ -92,7 +92,96 @@
 
 		</ons-page>
 	</ons-template>
-<!-- Tab page 1 -->
+
+
+	<!-- Tab page 1 -->
+	<script type="text/ons-template" id="stripePaymentForm.html">
+		<ons-page id="page-stripe-form">
+			<ons-toolbar class="bgcolor_purple toolbar toolbar--material">
+				<div class="left"><ons-back-button></ons-back-button></div>
+				<div class="center white"><span class="trn" data-trn-key="pay_stripe">
+     Pay using Stripe</span></div>
+			</ons-toolbar>
+			<ons-dialog id="dialog-month" var="ExpirationMonthDialog" style="width:100% " cancelable  >
+
+				<ons-page id="page-expirationmonth" >
+					<ons-toolbar class="bgcolor_purple toolbar toolbar--material">
+
+						<div class="right">
+							<ons-toolbar-button onclick="ExpirationMonthDialog.hide();" >
+								<ons-icon icon="ion-checkmark-round"></ons-toolbar-button>
+						</div>
+
+					</ons-toolbar>
+
+					<ons-scroller class="expiration-options" id="expiration-options-list">
+					</ons-scroller>
+
+				</ons-page>
+			</ons-dialog>
+			<ons-dialog id="dialog-year" var="showExpirationYearDialog" style="width:100%; " cancelable  >
+
+				<ons-page id="page-expiration-year" >
+					<ons-toolbar class="bgcolor_purple toolbar toolbar--material">
+
+						<div class="right">
+							<ons-toolbar-button onclick="showExpirationYearDialog.hide();" >
+								<ons-icon icon="ion-checkmark-round"></ons-toolbar-button>
+						</div>
+
+					</ons-toolbar>
+
+					<ons-scroller class="expiration-year-options-list" id="expiration-year-options-list">
+					</ons-scroller>
+
+				</ons-page>
+			</ons-dialog>
+			<form id="frm-stp" class="frm-stp" method="post">
+				<input type="hidden" id="order_id" name="order_id" class="order_id" value="">
+				<input type="hidden" id="currency_code" name="currency_code" class="currency_code" value="">
+				<input type="hidden" id="paymet_desc" name="paymet_desc" class="paymet_desc" value="">
+				<input type="hidden" id="total_w_tax" name="total_w_tax" class="total_w_tax" value="">
+
+				<input type="hidden" id="expiration_month" name="expiration_month" class="expiration_month" value="">
+				<input type="hidden" id="expiration_yr" name="expiration_yr" class="expiration_yr" value="">
+
+				<input type="hidden" id="stripe_token" name="stripe_token" class="stripe_token" value="">
+
+				<div class="wrapper">
+
+					<div class="field-wrapper">
+						<input type="text" name="cc_number"  class="cc_number limit_char numeric_only text-input text-input--underbar has_validation"
+							   placeholder="Credit Card Number" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" maxlength="16"  data-maxl="16" >
+					</div>
+
+					<ons-list modifier="inset" class="settings-list">
+						<ons-list-item modifier="chevron" onclick="showExpirationMonth();" class="trn expiration_month_label" data-trn-key="expiration_month">
+							Expiration Month
+						</ons-list-item>
+					</ons-list>
+
+					<ons-list modifier="inset" class="settings-list">
+						<ons-list-item modifier="chevron" onclick="showExpirationYear();" class="trn expiration_year" data-trn-key="expiration_year">
+							Expiration Year
+						</ons-list-item>
+					</ons-list>
+
+					<div class="field-wrapper">
+						<input type="text" name="cvv"  class="cvv limit_char numeric_only text-input text-input--underbar has_validation"
+							   placeholder="CVV" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" maxlength="4" data-maxl="4" >
+					</div>
+
+					<button class="trn button green-btn button--large" onclick="stripePayNow();" data-trn-key="pay_now">
+						Pay Now
+						<div class="search-btn"><ons-icon icon="ion-checkmark-round"></ons-icon></div>
+					</button>
+
+			</form>
+
+		</ons-page>
+	</script>
+
+
 	<ons-template id="readyToEat.html">
 		<ons-page>
 			<div class="spaheti_pic">
@@ -1859,7 +1948,7 @@
 <!-- shipping -->
  <script type="text/ons-template" id="shipping.html">
  <ons-page id="page-shipping" class="onsen-display  ">
-  <ons-toolbar>
+  <ons-toolbar class="bgcolor_purple toolbar toolbar--material">
    <div class="left"><ons-back-button class="white"></ons-back-button></div>
    <div class="center white"><span id="search-text" class="trn" data-trn-key="cart">Cart</span></div>
   </ons-toolbar>
@@ -2070,7 +2159,7 @@
 <!-- payment -->
 <script type="text/ons-template" id="paymentOption.html">
     <ons-page id="page-paymentoption" class="onsen-display">
-        <ons-toolbar>
+        <ons-toolbar class="bgcolor_purple toolbar toolbar--material">
             <div class="left"><ons-back-button class="white"></ons-back-button></div>
             <div class="center white"><span id="search-text" class="trn" data-trn-key="cart">Cart</span></div>
             <div class="right">
