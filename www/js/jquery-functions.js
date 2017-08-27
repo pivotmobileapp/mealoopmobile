@@ -4706,18 +4706,14 @@ function toggleToast() {
               title: 'my location'
           });
         */
-
-
         var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {
-                lat: parseFloat(sessionStorage.getItem('changeLat')),
-                lng: parseFloat(sessionStorage.getItem('changeLng'))
-            },
+            center: {lat:parseFloat(sessionStorage.getItem('changeLat')) , lng: parseFloat(sessionStorage.getItem('changeLng'))},
             zoom: 13,
             mapTypeId: 'roadmap'
         });
-    var input = document.getElementById('search_address_geo');
-    var latlngbounds = new google.maps.LatLngBounds();
+        var input = document.getElementById('search_address_geo');
+        var latlngbounds = new google.maps.LatLngBounds();
+
 
     var searchBox = new google.maps.places.SearchBox(input);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
