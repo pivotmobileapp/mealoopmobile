@@ -117,10 +117,10 @@
     <allow-intent href="*" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
-    <gap:config-file parent="/manifest" platform="android">
+    <!--<gap:config-file parent="/manifest" platform="android">
         <supports-screens android:largeScreens="true" android:smallScreens="true" android:xlargeScreens="true" />
         <application android:theme="@android:style/Theme.NoTitleBar">
         </application>
-    </gap:config-file>
-    <!--<plugin name="cordova-plugin-request-location-accuracy" spec="~2.2.0" />-->
+    </gap:config-file>-->
+    <plugin name="cordova-plugin-request-location-accuracy" spec="~2.2.0" />
 </widget>
