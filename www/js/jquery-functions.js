@@ -4691,7 +4691,7 @@ function toggleToast() {
          var longitude = position.coords.longitude;
         var latitude = position.coords.latitude;
         var latLong = new google.maps.LatLng(latitude, longitude);
-/*
+         /*
         var mapOptions = {
             center: latLong,
             zoom: 13,
@@ -4707,9 +4707,16 @@ function toggleToast() {
           });
         */
         var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {lat:Number(localStorage.getItem('changeLat')) , lng: Number(localStorage.getItem('changeLng'))},
+            center: {lat:parseFloat(localStorage.getItem('changeLat')) , lng: parseFloat(localStorage.getItem('changeLng'))},
             zoom: 13,
-            mapTypeId: 'roadmap'
+            mapTypeId: 'roadmap',
+            mapTypeControl: true,
+            fullscreenControl:false,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+
         });
         var input = document.getElementById('search_address_geo');
         var latlngbounds = new google.maps.LatLngBounds();
@@ -4725,7 +4732,7 @@ function toggleToast() {
     markers= [];
     markers.push(new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng( Number(localStorage.getItem('changeLat')), Number(localStorage.getItem('changeLng'))),
+        position: new google.maps.LatLng( parseFloat(localStorage.getItem('changeLat')), parseFloat(localStorage.getItem('changeLng'))),
     }));
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
