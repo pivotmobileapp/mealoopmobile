@@ -1,13 +1,18 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mealoop" version="4.4.0" versionCode="44.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<?xml version="1.0" encoding="utf-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    id        = "com.mealoop.orders"
+    versionCode = "4.5"
+    version   = "45.1.0">
     <name>Mealoop</name>
     <description>
         Mealoop
     </description>
     <author email="jupiter@pivotmobileapp.com" href="http://mealoop.com">
-        mealoop.com
+        Mealoop.com
     </author>
-    
+   
      <icon src="icon.png" />       
     <icon src="Icon-App-60x60@3x.png" platform="ios" width="180" height="180" />
     <icon src="ldpi.png" platform="android" qualifier="ldpi" />
@@ -117,10 +122,10 @@
     <allow-intent href="*" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
-    <!--<gap:config-file parent="/manifest" platform="android">
+    <gap:config-file parent="/manifest" platform="android">
         <supports-screens android:largeScreens="true" android:smallScreens="true" android:xlargeScreens="true" />
         <application android:theme="@android:style/Theme.NoTitleBar">
         </application>
-    </gap:config-file>-->
+    </gap:config-file>
     <plugin name="cordova-plugin-request-location-accuracy" spec="~2.2.0" />
 </widget>

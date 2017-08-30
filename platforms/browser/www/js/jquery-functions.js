@@ -2971,8 +2971,8 @@ function newFuncChange(){
 app.initialize();
 }
 function useThisLocation() {
-      codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng"))
-      console.log(codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng")));
+      codeLatLng3(localStorage.getItem("changeLat"),localStorage.getItem("changeLng"))
+      console.log(codeLatLng3(localStorage.getItem("changeLat"),localStorage.getItem("changeLng")));
 
  
 }
@@ -4235,12 +4235,12 @@ function geolocationSuccess(position) {
     })
     sessionStorage.removeItem("_lat");
     sessionStorage.removeItem("_long");
-    sessionStorage.removeItem("changeLat");
-    sessionStorage.removeItem("changeLng");
+    localStorage.removeItem("changeLat");
+    localStorage.removeItem("changeLng");
     sessionStorage.setItem("_lat", position.coords.latitude);
     sessionStorage.setItem("_long", position.coords.longitude);
-    sessionStorage.setItem('changeLat',position.coords.latitude)
-    sessionStorage.setItem('changeLng',position.coords.longitude)
+    localStorage.setItem('changeLat',position.coords.latitude)
+    localStorage.setItem('changeLng',position.coords.longitude)
 }
 
 
@@ -4691,7 +4691,7 @@ function toggleToast() {
          var longitude = position.coords.longitude;
         var latitude = position.coords.latitude;
         var latLong = new google.maps.LatLng(latitude, longitude);
-/*
+         /*
         var mapOptions = {
             center: latLong,
             zoom: 13,
@@ -4707,9 +4707,16 @@ function toggleToast() {
           });
         */
         var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {lat:latitude , lng: longitude},
+            center: {lat:parseFloat(localStorage.getItem('changeLat')) , lng: parseFloat(localStorage.getItem('changeLng'))},
             zoom: 13,
-            mapTypeId: 'roadmap'
+            mapTypeId: 'roadmap',
+            mapTypeControl: true,
+            fullscreenControl:false,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+
         });
         var input = document.getElementById('search_address_geo');
         var latlngbounds = new google.maps.LatLngBounds();
@@ -4725,7 +4732,7 @@ function toggleToast() {
     markers= [];
     markers.push(new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng( parseFloat(sessionStorage.getItem('changeLat')), parseFloat(sessionStorage.getItem('changeLng'))),
+        position: new google.maps.LatLng( parseFloat(localStorage.getItem('changeLat')), parseFloat(localStorage.getItem('changeLng'))),
     }));
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
@@ -4761,10 +4768,10 @@ function toggleToast() {
             };
 
             // Create a marker for each place.
-            sessionStorage.removeItem('changeLat')
-            sessionStorage.removeItem('changeLng')
-            sessionStorage.setItem('changeLat',place.geometry.location.lat())
-            sessionStorage.setItem('changeLng',place.geometry.location.lng())
+            localStorage.removeItem('changeLat')
+            localStorage.removeItem('changeLng')
+            localStorage.setItem('changeLat',place.geometry.location.lat())
+            localStorage.setItem('changeLng',place.geometry.location.lng())
             markers.push(new google.maps.Marker({
                 map: map,
                 title: place.name,
@@ -4782,17 +4789,17 @@ function toggleToast() {
     });
     google.maps.event.addListener(map, 'click', function (e) {
         console.log('e',e);
-         sessionStorage.removeItem('changeLat')
-        sessionStorage.removeItem('changeLng')
-        sessionStorage.setItem('changeLat',e.latLng.lat())
-        sessionStorage.setItem('changeLng',e.latLng.lng())
+         localStorage.removeItem('changeLat')
+        localStorage.removeItem('changeLng')
+        localStorage.setItem('changeLat',e.latLng.lat())
+        localStorage.setItem('changeLng',e.latLng.lng())
         markers.forEach(function(marker) {
             marker.setMap(null);
         });
         markers= [];
         markers.push(new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng( parseFloat(sessionStorage.getItem("changeLat")), parseFloat(sessionStorage.getItem("changeLng"))),
+            position: new google.maps.LatLng( parseFloat(localStorage.getItem("changeLat")), parseFloat(localStorage.getItem("changeLng"))),
         }));
     });
  
