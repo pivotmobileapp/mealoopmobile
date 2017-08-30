@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mealoop" version="4.3.0" versionCode="43.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.mealoop" version="4.4.0" versionCode="44.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Mealoop</name>
     <description>
         Mealoop
@@ -103,8 +103,8 @@
     <gap:plugin source="git" spec="https://github.com/razorpay/razorpay-cordova.git" />
     <gap:plugin name="cordova-plugin-media" source="npm" />
     <gap:plugin name="cordova.plugins.diagnostic" source="npm" />
-       <gap:plugin name="cordova-plugin-googlemaps"  source="npm" spec="1.3.9" >
- <!--   <gap:plugin name="cordova-plugin-googlemaps" source="npm">-->
+<!--       <gap:plugin name="cordova-plugin-googlemaps"  source="npm" spec="1.3.9" >-->
+    <gap:plugin name="cordova-plugin-googlemaps" source="npm">
         <param name="API_KEY_FOR_ANDROID" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
         <param name="API_KEY_FOR_IOS" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
     </gap:plugin>
@@ -122,5 +122,5 @@
         <application android:theme="@android:style/Theme.NoTitleBar">
         </application>
     </gap:config-file>
-    <plugin name="cordova-plugin-request-location-accuracy" spec="~2.2.0" />
+    <!--<plugin name="cordova-plugin-request-location-accuracy" spec="~2.2.0" />-->
 </widget>
