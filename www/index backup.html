@@ -18,13 +18,6 @@
 <link href="lib/mobiscroll/css/mobiscroll.scroller.ios.css" rel="stylesheet" type="text/css" />
 <link href="lib/mobiscroll/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
 
-
-<link rel="stylesheet" type="text/css" href="dist/css/accordion-slider.min.css" media="screen"/>
-<link rel="stylesheet" type="text/css" href="css/examples.css" media="screen"/>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
-
-
-
 <script src="lib/angular/angular.js"></script>
 <script src="lib/onsen/js/onsenui.js"></script>
 <script src="lib/jquery-1.11.3.min.js"></script>
@@ -62,14 +55,7 @@
 <script src="js/googlemap.js?ver=1.0"></script>
 <script src="js/tpl.js?ver=1.0"></script>
 <script src="js/countries.js?ver=1.0"></script>
-
 <script src="js/app.js?ver=1.0"></script>
-
-
-
-<script type="text/javascript" src="dist/js/jquery.accordionSlider.js"></script>
-
-<script type="text/javascript"> </script>
 
 
 </head>
@@ -149,17 +135,16 @@
       <span class="trn" data-trn-key="settings">Settings</span>
     </ons-list-item>    
     
- 
+    <ons-list-item onclick="logout();" class="bottom-menu-item logout-menu">
+      <ons-icon icon="ion-log-out"></ons-icon> 
+      <span class="trn" data-trn-key="logout">Logout</span>
+    </ons-list-item>    
+     
 	
 	<ons-list-item onclick="showSupport();" class="bottom-menu-item">
       <ons-icon icon="ion-settings"></ons-icon> 
       <span class="trn" data-trn-key="support">Live Support</span>
     </ons-list-item>  
-	
-	    <ons-list-item onclick="logout();" class="bottom-menu-item logout-menu">
-      <ons-icon icon="ion-log-out"></ons-icon> 
-      <span class="trn" data-trn-key="logout">Logout</span>
-    </ons-list-item>   
 	
   </ons-list>
   </ons-page> 
@@ -176,9 +161,9 @@
 	  
 	   <div id="navlinks" class="center white">
 		<ul>
-			<a onclick="showNews();">News &nbsp; </a>
-			<a > | &nbsp;  </a>
-			<a onclick="showOrders();"> My Orders</a>
+			<a onclick="showNews();">News &nbsp; &nbsp;&nbsp; &nbsp;</a>
+			<a > | &nbsp; &nbsp; </a>
+			<a onclick="showOrders();">&nbsp; &nbsp; My Orders</a>
 		
 		</ul>
 	  </div>
@@ -208,23 +193,26 @@
        </button>       
        </div>
        
-  <button class="firstbutton" onclick="Localtion();">  &nbsp;&nbsp;  Search Food  &nbsp;&nbsp;<ons-icon icon="fa-chevron-right"></ons-icon></button>
-  <button class="secondbutton" data-trn-key="search_restaurant" onclick="kUz();"> &nbsp; Nearby Kitchen &nbsp;  <ons-icon icon="fa-chevron-right"></ons-icon> </button>
+  <button class="firstbutton" onclick="Localtion();"> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  Search Food  &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</button>
+  <button class="secondbutton" data-trn-key="search_restaurant" onclick="kUz();"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Nearby Restaurant &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</button>
    
     
     	
-	  
-	
+	 
+	   
+	 <div class="padtop10">
+
+  
+	 </div> 
 	   
 
     </div>  
 	
-	
-<div id="example-json" class="accordion-slider"></div>	
+
 	   
-<!--	<div class="bottombanner">
+<div class="bottombanner">
 	   	                
-    </div>-->
+    </div>
 
     <div class="wrapper no-connection">
       <ons-icon icon="ion-wifi" id="ion-wifi"></ons-icon>
@@ -269,7 +257,7 @@
 				</div>
 					
 				<div class="center white">
-					<span id="search-text" class="trn" data-trn-key="browse_resto">Live Support</span>
+					<span id="search-text" class="trn" data-trn-key="browse_resto">Support</span>
 				</div>
 			</ons-toolbar>
 
@@ -1197,9 +1185,7 @@
    
    <ons-scroller>
      <ons-list class="restaurant-list"  id="browse-results" >
-    
      </ons-list>
-        
    </ons-scroller>
       
 </ons-page>
