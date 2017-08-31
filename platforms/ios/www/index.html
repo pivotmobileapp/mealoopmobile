@@ -1,0 +1,3022 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+<link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+<link rel="stylesheet" href="lib/raty/jquery.raty.css">
+
+<link href="lib/mobiscroll/css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.frame.android.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.frame.ios-classic.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.frame.ios.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.android.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.ios-classic.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.scroller.ios.css" rel="stylesheet" type="text/css" />
+<link href="lib/mobiscroll/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
+<script src="lib/angular/angular.min.js"></script>
+	<script src="lib/onsenui/js/onsenui.min.js"></script>
+	<script src="lib/onsenui/js/angular-onsenui.min.js"></script>
+<script src="lib/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+
+<script src="lib/raty/jquery.raty.js"></script>
+<script src="lib/jquery.form-validator.min.js"></script>
+
+<script src="lib/mobiscroll/js/mobiscroll.core.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.frame.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.scroller.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.util.datetime.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.datetimebase.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.datetime.js"></script>
+<script src="lib/mobiscroll/js/mobiscroll.frame.android-holo.js"></script>
+
+<script type="text/javascript" src="lib/paypal-mobile-js-helper.js"></script>
+<script src="lib/jquery.translate.js"></script>
+<script src="lib/jquery.mask.min.js"></script>
+
+<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCHBqHExBh8UgSaAnX1NgNZikZtH2aMk0o&libraries=places"></script>
+<script src="js/jquery.geocomplete.min.js"></script>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="lib/imagesloaded.pkgd.min.js"></script>
+
+<link href="lib/intel/build/css/intlTelInput.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="lib/intel/build/js/intlTelInput.js"></script>
+
+<script src="js/config.js?ver=1.0"></script>
+<script src="js/paypal.js?ver=1.0"></script>
+<script src="js/old-openfb.js?ver=1.0"></script>
+<script src="js/googlemap.js?ver=1.0"></script>
+<script src="js/tpl.js?ver=1.0"></script>
+<script src="js/countries.js?ver=1.0"></script>
+
+<script src="js/app.js"></script>
+
+<script src="js/jquery-functions.js"></script>
+
+
+</head>
+<body ng-controller="PageController as page">
+	<ons-navigator var="myNavigator" page="country.html"></ons-navigator>
+	<ons-toast>
+		Looks like your country is not supported
+	</ons-toast>
+	<ons-template id="country.html">
+		<ons-page>
+<!----------------------------Select Country---------------------------------------->
+			<ons-list-title>
+				<h2 class="newcenter">Hello, please select <br> your country</h2></ons-list-title>
+
+			<ons-list>
+				<ons-list-item ng-repeat="_country in country" tappable>
+					<label class="left">
+					
+						<ons-input type="radio"  name="color" class="country_list" ng-click="get_country_value($event)" input-id="" value="{{_country.value}}"></ons-input>
+					</label>
+					<label for="" class="center">
+						{{ _country.name }}
+					</label>
+					<label for="" class="right">
+						<img ng-src={{_country.img}} alt="" class="flags">
+					</label>
+				</ons-list-item>
+			</ons-list>
+<!----------------------------End Select Country---------------------------------------->
+
+
+		</ons-page>
+	</ons-template>
+
+
+	<!-- Tab page 1 -->
+	<script type="text/ons-template" id="stripePaymentForm.html">
+		<ons-page id="page-stripe-form">
+			<ons-toolbar class="bgcolor_purple toolbar toolbar--material">
+				<div class="left"><ons-back-button></ons-back-button></div>
+				<div class="center white"><span class="trn" data-trn-key="pay_stripe">
+     Pay using Stripe</span></div>
+			</ons-toolbar>
+			<ons-dialog id="dialog-month" var="ExpirationMonthDialog" style="width:100% " cancelable  >
+
+				<ons-page id="page-expirationmonth" >
+					<ons-toolbar class="bgcolor_purple toolbar toolbar--material">
+
+						<div class="right">
+							<ons-toolbar-button onclick="ExpirationMonthDialog.hide();" >
+								<ons-icon icon="ion-checkmark-round"></ons-toolbar-button>
+						</div>
+
+					</ons-toolbar>
+
+					<ons-scroller class="expiration-options" id="expiration-options-list">
+					</ons-scroller>
+
+				</ons-page>
+			</ons-dialog>
+			<ons-dialog id="dialog-year" var="showExpirationYearDialog" style="width:100%; " cancelable  >
+
+				<ons-page id="page-expiration-year" >
+					<ons-toolbar class="bgcolor_purple toolbar toolbar--material">
+
+						<div class="right">
+							<ons-toolbar-button onclick="showExpirationYearDialog.hide();" >
+								<ons-icon icon="ion-checkmark-round"></ons-toolbar-button>
+						</div>
+
+					</ons-toolbar>
+
+					<ons-scroller class="expiration-year-options-list" id="expiration-year-options-list">
+					</ons-scroller>
+
+				</ons-page>
+			</ons-dialog>
+			<form id="frm-stp" class="frm-stp" method="post">
+				<input type="hidden" id="order_id" name="order_id" class="order_id" value="">
+				<input type="hidden" id="currency_code" name="currency_code" class="currency_code" value="">
+				<input type="hidden" id="paymet_desc" name="paymet_desc" class="paymet_desc" value="">
+				<input type="hidden" id="total_w_tax" name="total_w_tax" class="total_w_tax" value="">
+
+				<input type="hidden" id="expiration_month" name="expiration_month" class="expiration_month" value="">
+				<input type="hidden" id="expiration_yr" name="expiration_yr" class="expiration_yr" value="">
+
+				<input type="hidden" id="stripe_token" name="stripe_token" class="stripe_token" value="">
+
+				<div class="wrapper">
+
+					<div class="field-wrapper">
+						<input type="text" name="cc_number"  class="cc_number limit_char numeric_only text-input text-input--underbar has_validation"
+							   placeholder="Credit Card Number" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" maxlength="16"  data-maxl="16" >
+					</div>
+
+					<ons-list modifier="inset" class="settings-list">
+						<ons-list-item modifier="chevron" onclick="showExpirationMonth();" class="trn expiration_month_label" data-trn-key="expiration_month">
+							Expiration Month
+						</ons-list-item>
+					</ons-list>
+
+					<ons-list modifier="inset" class="settings-list">
+						<ons-list-item modifier="chevron" onclick="showExpirationYear();" class="trn expiration_year" data-trn-key="expiration_year">
+							Expiration Year
+						</ons-list-item>
+					</ons-list>
+
+					<div class="field-wrapper">
+						<input type="text" name="cvv"  class="cvv limit_char numeric_only text-input text-input--underbar has_validation"
+							   placeholder="CVV" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" maxlength="4" data-maxl="4" >
+					</div>
+
+					<button class="trn button green-btn button--large" onclick="stripePayNow();" data-trn-key="pay_now">
+						Pay Now
+						<div class="search-btn"><ons-icon icon="ion-checkmark-round"></ons-icon></div>
+					</button>
+
+			</form>
+
+		</ons-page>
+	</script>
+
+
+	<ons-template id="readyToEat.html">
+		<ons-page>
+			<div class="spaheti_pic">
+			</div>
+			<div class="about_part">
+				<p class='header'><strong>Ready to eat?</strong></p>
+				<p class="about_part_p">Select from the best rated restaurants and payment methods - Credit card or Cash on Devilery</p>
+				<div class="line line1"></div>
+				<span class="tab_mine active"></span>
+				<span ng-click="tabs_change(2)" class="tab_mine"></span>
+				<div class="line line2"></div>
+			</div>
+
+
+			<button ng-click="tabs_change(2)" page="doItFaster.html" class="tab3">
+				Let's Start
+			</button>
+
+		</ons-page>
+	</ons-template>
+<!-- TAb page 1  end-->
+
+<!-- TAb page 2 -->
+	<ons-template id="doItFaster.html">
+		<ons-page>
+			<div class="pizza_pic">
+			</div>
+			<div class="about_part">
+				<p class="header"><strong>Let's do it faster</strong></p>
+				<p class="about_part_p">
+					Tell us where you are, and we'll find the resaurants that deliver right to your doorstep
+				</p>
+				<div class="line line1"></div>
+				<span ng-click="tabs_change(1)" class="tab_mine"> </span>
+				<span class="tab_mine active"></span>
+				<div class="line line2"></div>
+				<div class="locate_munal">
+<input type="hidden" id="loc_me_hid_but">
+					<ons-button id="push-button" ng-click="manualy()" class="manually_button">Manually</ons-button>
+
+
+					<ons-button class="locate_button" ng-click="restaurant1()">Locate Me</ons-button>
+
+			<!--		<ons-button id="push-button" class="locate_button" ng-click="manualy()">Locate Me</ons-button>-->
+				</div>
+			</div>
+
+
+		</ons-page>
+	</ons-template>
+<!-- TAb page 2 end-->
+
+<!-- Tabs part -->
+	<ons-template id="tabs.html">
+		<ons-page>
+
+			<div class="for_tabs">
+				<ons-tabbar var="tabbar" hide-tabs="true" setTabbarVisibility(visible)>
+					<div class="line line1"></div>
+					<ons-tab page="readyToEat.html" active>
+					</ons-tab>
+					<ons-tab page="doItFaster.html">
+					</ons-tab>
+					<div class="line line2"></div>
+
+				</ons-tabbar>
+			</div>
+
+		</ons-page>
+	</ons-template>
+<!-- Tabs part end -->
+
+<!-- Your location home page  -->
+	<ons-template id="home.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+
+				<div class="center white">
+					Your location
+				</div>
+			</ons-toolbar>
+			<p class="welcome">
+				Welcome! Where should
+				<br>we deliver to?
+			</p>
+			<div class="city_input_div">
+				<p>
+					<ons-input input-id="autocomplete" modifier="underbar"  placeholder=""   float></ons-input>
+				</p>
+				<ons-button modifier="quiet" class="current_loc" onclick="get_loc()">
+					<span class="current_loc">Use my current location</span>
+					<ons-icon icon="fa-location-arrow" class="loc_icon ons-icon fa-location-arrow fa fa-lg"></ons-icon>
+				</ons-button>
+				<ons-button modifier="large" class="start_but" ng-click="restaurant()">Show Restaurants</ons-button>
+			</div>
+			
+		</ons-page>
+	</ons-template>
+<!-- Your location home page end -->
+
+
+<!-- profile page -->
+	<ons-template id="profile.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center white">
+					Log in or Register
+				</div>
+			</ons-toolbar>
+			<p class="welcome">
+				Please log in or
+				<br> register to continue with
+			</p>
+			 <div class="wrapper center wrapper-white fb-login-wrap">
+                <button class="button blue-btn button--large fb-loginbutton" id="fb-loginbutton" onclick="myFacebookLogin();">
+                    <ons-icon icon="fa-facebook"></ons-icon> <span class="trn" data-trn-key="sigin_fb">Sign in with Facebook</span>
+                </button>
+            </div>
+			<p class="welcome use_email">or use your email address</p>
+			<div class="for_log_in_page">
+			<ons-button modifier="large" class="log_in_but but_width" ng-click="gologin()">Log In</ons-button>
+				<p class="for_account">You dont have account?</p>
+				<ons-button modifier="quiet" class="create_account" ng-click="gocreate_account()">
+					Create Account
+				</ons-button>
+				<p class="or">Or</p>
+				<ons-button modifier="quiet" class="create_account" ng-click="goverify()">
+					Verify your account
+				</ons-button>
+			</div>
+		</ons-page>
+	</ons-template>
+<!-- profile page end -->
+<!-- map page -->
+<script type="text/ons-template" id="map.html"> 
+		<ons-page id="page-map" modifier="transparent" >
+
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left"><ons-back-button class="white"></ons-back-button></div>
+				<div class="center white"><span class="trn" data-trn-key="map" >Map</span></div>
+			</ons-toolbar>
+  <div id="floating-panel">
+    <b>Start: </b>
+    <select id="mode">
+      <option value="DRIVING">Driving</option>
+      <option value="WALKING">Walking</option>
+      <option value="BICYCLING">Bicycling</option>
+      <option value="TRANSIT">Transit</option>
+    </select>
+    </div>
+    <div id="map"></div>
+       <div class="list-wrapper" id="direction-wrap">
+         <ons-list>
+           <ons-list-item  modifier="task-list"  >
+                       
+            <ons-row>
+            <ons-button class="button green-btn button--large" onclick="viewTaskDirection()" >
+              <span class="trn" data-trn-key="view_direction">View Direction</span>
+             </ons-button>          
+            </ons-row>
+           
+           </ons-list-item>
+         </ons-list>
+        </div>
+		</ons-page>
+</script>
+
+<!-- map page end -->
+<!-- bookPage -->
+	<script type="text/ons-template" id="bookingTY.html">
+		<ons-page id="page-booking-ty" class="onsen-display">
+			<ons-toolbar class="bgcolor_purple toolbar">
+				<div class="left"><ons-back-button class="white"></ons-back-button></div>
+				<div class="center white"><span id="search-text">Booking</span></div>
+				<div class="right">
+				</div>
+			</ons-toolbar>
+
+			<div class="orange-header">
+				<ons-row >
+					<ons-col width="40%">
+						<div class="logo-wrap logo-non-auto" >
+						</div>
+					</ons-col>
+					<ons-col class="text-right">
+						<p class="restauran-title concat-text white"></p>
+					</ons-col>
+				</ons-row>
+			</div>
+
+			<div class="wrapper center">
+				<h2>Thank You</h2>
+				<p class="book-ty-msg"></p>
+				<ons-icon icon="fa-check-circle" class="myfa-check">
+					<br/>
+					<button class="button button--quiet green" ng-click="restaurant()" >
+						back to home <ons-icon icon="fa-long-arrow-right"></ons-icon>
+					</button>
+			</div>
+
+		</ons-page>
+	</script>
+
+	       <script type="text/ons-template" id="booking.html">
+		<ons-page id="page-booking" class="onsen-display">
+			<ons-toolbar class="bgcolor_purple toolbar">
+				<div class="left"><ons-back-button class="white"></ons-back-button></div>
+				<div class="center white"><span id="search-text" class="trn" data-trn-key="book_a_table">Book a table</span></div>
+				<div class="right">
+				</div>
+			</ons-toolbar>
+
+			<div class="orange-header">
+				<ons-row >
+					<ons-col width="40%">
+						<div class="logo-wrap logo-non-auto" >
+						</div>
+					</ons-col>
+					<ons-col class="text-right">
+						<p class="restauran-title concat-text white"></p>
+					</ons-col>
+				</ons-row>
+			</div>
+
+			<form id="frm-booking" class="frm-booking" method="post">
+				<div class="wrapper">
+					<div class="field-wrapper">
+						<input type="number" name="number_guest"  class="validation number_guest numeric_only text-input text-input--underbar has_validation"
+							   placeholder="Number Of Guests" value="" data-validation="number"  data-validation-allowing="range[1;1000]" data-validation-error-msg="The input value was not a correct number" >
+					</div>
+
+					<div class="field-wrapper">
+						<input type="text" name="date_booking"  class="date_booking text-input text-input--underbar has_validation"
+							   placeholder="Date Of Booking" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+					</div>
+
+					<div class="field-wrapper">
+						<input type="text" name="booking_time"  class="booking_time text-input text-input--underbar has_validation"
+							   placeholder="Time Of Booking" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+					</div>
+
+					<div class="field-wrapper">
+						<input type="text" name="booking_name"  class="booking_name text-input text-input--underbar has_validation"
+							   placeholder="Name" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+					</div>
+
+					<div class="field-wrapper">
+						<input type="text" name="email"  class="email book_email text-input text-input--underbar has_validation"
+							   placeholder="Email Address" value="" data-validation="email" data-validation-error-msg="You have not given a correct e-mail address!" >
+					</div>
+
+					<div class="field-wrapper">
+						<input type="tel" name="mobile" id="mob_num"   class="mobile_inputs book_mobile mobile text-input text-input--underbar has_validation"
+							   placeholder="Mobile Number" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+					</div>
+
+					<div class="field-wrapper">
+						<input type="text" name="booking_notes"  class="booking_notes text-input text-input--underbar"
+							   placeholder="Your Instructions" value="" >
+					</div>
+				</div>
+
+
+				<button class="button green-btn button--large trn" onclick="submitBooking();" data-trn-key="book_now">
+					Book Now!
+					<div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
+				</button>
+
+			</form>
+
+		</ons-page>
+	</script>
+
+
+<!-- bookPage end -->
+ 
+<!-- reviewsPage -->
+	<ons-template id="reviewsPage.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="white center">
+					Restaurant Info
+				</div>
+			</ons-toolbar>
+			<div class="rest_all_about">
+				<img ng-src="{{menu_category.details.logo}}" class="book_img_page">
+				<span class="center rest_name_book"> {{menu_category.details.restaurant_name}}</span>
+			</div>
+			<div class="all_about_rest">
+				<p>{{menu_category.details.restaurant_name}}</p>
+				<p>{{rest_info.details.merchant_info.cuisine}}</p>
+				<div class="rest_start" ng-switch="round(menu_category.details.ratings.ratings)">
+			        <p ng-switch-when="0" class="comment_stars">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			        </p>
+			        <p ng-switch-when="1" class="comment_stars">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			        </p>
+			        <p ng-switch-when="2" class="comment_stars">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			        </p>
+			        <p ng-switch-when="3" class="comment_stars">
+
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			        </p>
+			        <p ng-switch-when="4" class="comment_stars">
+
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-off.png">
+			        </p>
+			        <p ng-switch-when="5" class="comment_stars">
+
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			        </p>
+			    </div>
+				<p>{{rest_info.details.reviews.total_review}} reviews</p>
+				<p>{{rest_info.details.merchant_info.address}}</p>
+				<div>
+					<ul class="gray_part_row opening_header"><li>Opening Hours</li></ul>
+					<ul class="open_hours">
+						<li id="days"></li>
+					</ul>
+					<ul class="gray_part_row opening_header"><li>Payment Methods</li></ul>
+					<ul class="open_hours cash_parts">
+						<li>
+							<span class="left">{{rest_info.details.payment_method[0].label}}</span>
+							<ons-icon icon="{{rest_info.details.payment_method[0].icon}}" class="cash_dollar"></ons-icon>
+							<div class="clearfix"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</ons-page>
+	</ons-template>
+
+
+<!-- reviewsPage end -->
+<!-- Photos -->
+
+<ons-template id="photos.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="white center">
+					Photos
+				</div>
+			</ons-toolbar>
+	<ons-row >
+
+       	   <img ng-repeat="gal_images in gal_image" ng-click="onepohoto(gal_images)" ng-src="http://mealoop.com/upload/{{gal_images}}" style="width:50%;height:198px;float:left" alt="">
+
+   
+	</ons-row>
+
+	
+		</ons-page>
+	</ons-template>
+<ons-template id="onephoto.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="white center">
+					Photos
+				</div>
+			</ons-toolbar>
+	
+
+<img ng-src="http://mealoop.com/upload/{{one_pohoto}}" style="width:100%" alt="">
+
+   
+	
+
+	
+		</ons-page>
+	</ons-template>
+<!-- End Photos -->
+ 
+<!-- addReviewsPage -->
+	<ons-template id="addReviewsPage.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="white center">
+					Reviews
+				</div>
+				<div class="right">
+					<ons-icon icon="ion-plus-round" class="plus_review" ng-click="addNewReview()"></ons-icon>
+				</div>
+			</ons-toolbar>
+			<div class="rest_all_about">
+				<img ng-src="{{menu_category.details.logo}}" class="book_img_page">
+				<span class="center rest_name_book"> {{menu_category.details.restaurant_name}}</span>
+			</div>
+			<div class="user_review_part" ng-repeat = "review in rest_review.details">
+				<div class="float_left avatan_review">
+					<ons-icon icon="user"></ons-icon>
+				</div>
+				<div class="float_left avatan_comment">
+				<div class="rest_start_review stars_div" ng-switch="round(review.rating)">
+			        <p ng-switch-when="0" class="comment_stars">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+			        </p>
+			        <p ng-switch-when="1" class="comment_stars">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			        </p>
+			        <p ng-switch-when="2" class="comment_stars">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			        </p>
+			        <p ng-switch-when="3" class="comment_stars">
+
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-off.png">
+			         <img alt="1" src="img/star-off.png">
+			        </p>
+			        <p ng-switch-when="4" class="comment_stars">
+
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-off.png">
+			        </p>
+			        <p ng-switch-when="5" class="comment_stars">
+
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			         <img alt="1" src="img/star-on.png">
+			        </p>
+			    </div>
+					<p class="user_review_name">{{review.client_name}}</p>
+					<p class="user_review_date">{{review.date_created}}</p>
+					<p class="user_review_text">
+						{{review.review}}
+					</p>
+
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</ons-page>
+	</ons-template>
+
+
+<!-- addReviewsPage end -->
+<!-- new review -->
+	<ons-template id="addNewReview.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="white center ">
+					Add Reviews	
+      			</div>
+			</ons-toolbar>
+	   		<div class="rest_all_about">
+				<img ng-src="{{menu_category.details.logo}}" class="book_img_page">
+				<span class="center rest_name_book"> {{menu_category.details.restaurant_name}}</span>
+			</div>
+					<p class="comment_stars">
+						<img alt="1"  class="star_add" src="img/star-off.png" tappable ng-click="starsOn($event)">
+				        <img alt="2" class="star_add"  src="img/star-off.png" tappable ng-click="starsOn($event)">
+				        <img alt="3" class="star_add"  src="img/star-off.png" tappable ng-click="starsOn($event)">
+				        <img alt="4" class="star_add"  src="img/star-off.png" tappable ng-click="starsOn($event)">
+				        <img alt="5"  class="star_add" src="img/star-off.png" tappable ng-click="starsOn($event)">
+					</p>
+			<div class="book_inputs">
+    			<p>
+      				<ons-input  modifier="underbar" placeholder="Your reviews" ng-model='input_val'></ons-input>
+    			</p>
+
+                <ons-button  class="button green-btn " modifier="large" ng-click="reviewadd(menu_category.details.merchant_id,input_val)">
+                    Publish Review
+                    <span class="search-btn"><ons-icon icon="ion-checkmark-round" class="login_icon"></ons-icon></span>
+                </ons-button>
+			</div>
+   		 
+		</ons-page>
+	</ons-template>
+<!-- new review  end-->
+<!-- popover -->
+<ons-popover direction="down" var="popover" cancelable>
+  <div >
+    <ons-list ng-repeat="_name in menu_category">
+     	<ons-list-item class="menu_list_part" ng-repeat="menu in _name.menu_category" modifier="tappable" ng-click="foods_menu(menu.cat_id,menu.merchant_id)"><span ng-click="popover.hide()">{{menu.category_name}}</span></ons-list-item>
+     	
+    </ons-list>
+  </div>
+</ons-popover>
+<!-- verify page -->
+	<ons-template id="verify.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center white">
+					Verify your account
+				</div>
+			</ons-toolbar>
+			<div class="for_log_in_page">
+				<p>
+					<ons-input id="ver_email" class="registr_input" modifier="underbar" placeholder="Email" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="ver_code" class="registr_input" modifier="underbar" placeholder="Code" float></ons-input>
+				</p>
+				<p class="text_red">{{ver_valid}}</p>
+				<ons-button modifier="large" class="log_in_but " ng-click="verify()">Submit</ons-button>
+			</div>
+		</ons-page>
+	</ons-template>
+<!-- verify page end -->
+
+
+
+
+
+<!-- create account page -->
+
+	<ons-template id="create_account.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center white">
+					Register
+				</div>
+			</ons-toolbar>
+			<div class="for_log_in_page">
+				<p>
+					<ons-input id="firstname" class="registr_input" modifier="underbar" placeholder="First Name" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="lastname" class="registr_input" modifier="underbar" placeholder="Last Name" float></ons-input>
+				</p>
+				<p>
+					<ons-input type="tel" id="mobile" class="registr_input"	  modifier="underbar" placeholder="Mobile Phone"  float></ons-input>
+				</p>
+				<p>
+					<ons-input id="email" class="registr_input" modifier="underbar" placeholder="Email Address" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="reg_password" class="registr_input" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="reg_password_confirm" class="registr_input" modifier="underbar" type="password" placeholder="Confirm Password" float></ons-input>
+				</p>
+				<p class="agree_sms">By creating an account, you agree to receive sms from vendor.</p>
+				<p class="text_red">{{signup_valid}}</p>
+				<ons-button modifier="large" class="log_in_but margin_bottom_20" ng-click='signup()'> Create Account
+					<ons-icon icon="ion-chevron-right" class="login_icon ons-icon ons-icon--ion ion-checkmark-round fa-lg"></ons-icon>
+				</ons-button>
+			</div>
+
+		</ons-page>
+	</ons-template>
+
+<!-- create account page  end-->
+
+<!-- Login page -->
+
+	<ons-template id="login.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center white">
+					Log in
+				</div>
+			</ons-toolbar>
+			<div class="for_log_in_page">
+				<p>
+					<ons-input id="username" modifier="underbar" placeholder="Username" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+				</p>
+				<p class="text_red">{{msg}}</p>
+				<ons-button modifier="large" class="log_in_but margin_bottom_20" ng-click="login()">Log In
+					<ons-icon icon="ion-checkmark-round" class="login_icon ons-icon ons-icon--ion ion-checkmark-round fa-lg"></ons-icon>
+				</ons-button>
+				<ons-button modifier="quiet" class="create_account" ng-click="dialog.show()">
+					Forgot your password?
+				</ons-button>
+				<p class="or">Or</p>
+				<ons-button modifier="quiet" class="create_account" ng-click="goverify()">
+					Verify your account
+				</ons-button>
+			</div>
+
+		</ons-page>
+	</ons-template>
+<!-- Login page end -->
+<!-- forgot password dialog page -->
+	<ons-dialog var="dialog">
+		<div class="reset_passsword">
+			<p class="bgcolor_purple forgot_p">
+				Forgot Password
+			</p>
+			<p class="center">
+				Enter your email address you registered
+				<br>with and we will send you instruction
+				<br>on how to reset your password
+			</p>
+			<p>
+				<ons-input id="email_pass_forgot" modifier="underbar" placeholder="Username" float></ons-input>
+			</p>
+			<p>
+				<ons-button ng-click="reset()" class="reset" modifier="tappable">Resset Password</ons-button>
+			</p>
+		</div>
+	</ons-dialog>
+<!-- forgot password dialog page end -->
+<!-- navbar for restaurant pade -->
+	<ons-template id="restaurantLocation.html">
+		<ons-page>
+			<span class="notification cart-num ng-scope" onclick="showCart();" style="display:none;     bottom: 29px;left: 69%; z-index: 44;  position: absolute; margin-left: -10px;"> </span>
+			<ons-tabbar var="tabbar" position="bottom">
+				<ons-tab icon="th" label="Restaurants" page="restaurantlocnav.html" active="true"></ons-tab>
+				<ons-tab icon="chevron-circle-up" ng-click="clear_food()" label="Food Search" page="food.html"></ons-tab>
+				<ons-tab icon="cutlery" label="Orders"  onclick="showOrders()"></ons-tab>
+				<ons-tab icon="shopping-basket" label="Basket" onclick="showCart()"></ons-tab>
+				<ons-tab icon="ion-more" label="More" page="more.html"></ons-tab>
+			</ons-tabbar>
+		</ons-page>
+	</ons-template>
+<!-- navbar for restaurant pade end-->
+
+	<script type="text/ons-template" id="order-options.html">
+		<ons-page id="page-order-options">
+
+			<ons-toolbar class="bgcolor_purple toolbar">
+				<div class="left"><ons-back-button class="white"></ons-back-button></div>
+				<div class="center white">
+					<span  class="trn" data-trn-key="order_option">Order Options</span></div>
+			</ons-toolbar>
+
+			<input type="hidden" name="order_option_order_id" class="order_option_order_id">
+
+			<ons-list>
+
+				<ons-list-item modifier="chevron" onclick="showOrderDetails2();" >
+					<span class="trn" data-trn-key="show_order_details">Show Order Details</span>
+				</ons-list-item>
+
+				<ons-list-item modifier="chevron" onclick="reOrder2();" >
+					<span class="trn" data-trn-key="click_here_to_reorder">Click here to Re-order</span>
+				</ons-list-item>
+
+				<ons-list-item modifier="chevron" onclick="showTrackPage();" >
+					<span class="trn" data-trn-key="track_your_order">Track your Order</span>
+				</ons-list-item>
+
+			</ons-list>
+
+		</ons-page>
+	</script>
+	<script type="text/ons-template" id="ordersDetails.html">
+		<ons-page id="page-orderdetails">
+
+			<ons-toolbar class="bgcolor_purple toolbar">
+				<div class="left"><ons-back-button class="white"></ons-back-button></div>
+				<div class="center white"><span id="search-text"></span></div>
+			</ons-toolbar>
+
+			<div class="wrapper center">
+				<h3 class="text-big title"><span class="trn" data-trn-key="total">Total</span> : $ 0.00</h3>
+			</div>
+
+			<ons-list class="list-dim-text" id="item-details">
+			</ons-list>
+
+			<ons-list class="list-dim-text" id="item-history">
+			</ons-list>
+
+			<div id="re-order-wrap">
+			</div>
+
+		</ons-page>
+	</script>
+	<ons-template id="basket.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-button class="white" modifier="light" onclick="myNavigator.resetToPage('restaurantLocation.html')">
+						<span class="back-button__icon back-button--material__icon"></span>
+					</ons-button>
+				</div>
+				<div class="center white">
+					Basket
+				</div>
+			</ons-toolbar>
+			<div   class="basket-bg">
+				<div class="basket_info">
+					<p class="empty_basket">Basket is empty</p>
+					<p class="add_some">You have to add something first</p>
+				</div>
+			</div>
+
+		</ons-page>
+	</ons-template>
+	<script type="text/ons-template" id="track-order.html">
+		<ons-page id="page-track-order" modifier="page-track">
+
+			<ons-toolbar class="bgcolor_purple toolbar">
+				<div class="left"><ons-back-button class="white"></ons-back-button></div>
+				<div class="center white">
+					<span  class="trn" data-trn-key="order_status">Order Status</span></div>
+			</ons-toolbar>
+
+			<input type="hidden" name="driver_lat" class="driver_lat">
+			<input type="hidden" name="driver_lng" class="driver_lng">
+
+			<input type="hidden" name="task_lat" class="task_lat">
+			<input type="hidden" name="task_lng" class="task_lng">
+
+			<input type="hidden" name="driver_name" class="driver_name">
+			<input type="hidden" name="driver_email" class="driver_email">
+			<input type="hidden" name="driver_phone" class="driver_phone">
+			<input type="hidden" name="transport_type" class="transport_type">
+			<input type="hidden" name="licence_plate" class="licence_plate">
+
+			<input type="hidden" name="delivery_address" class="delivery_address">
+			<input type="hidden" name="driver_icon" class="driver_icon">
+			<input type="hidden" name="address_icon" class="address_icon">
+			<input type="hidden" name="driver_avatar" class="driver_avatar">
+
+			<div class="time-remaining-wrap">
+				<div class="rounded-green">
+					<h2 class="time-left"></h2>
+					<p class="remaining"></p>
+				</div>
+			</div>
+
+			<div class="track-status-wrap">
+				<div class="horizontal-line"></div>
+			</div>
+
+			<button class="button green-btn button--large trn track_driver" onclick="showTrackingPage();" data-trn-key="track_driver">
+				Track Driver
+			</button>
+
+		</ons-page>
+	</script>
+
+	<script type="text/ons-template" id="orders.html">
+			<ons-page id="page-orders" on-device-backbutton="backtoHome()" >
+				<ons-toolbar class="bgcolor_purple toolbar">
+
+					<div class="left">
+						<ons-toolbar-button ng-click="restaurant()">
+							<ons-icon icon="fa-chevron-left"></ons-icon>
+						</ons-toolbar-button>
+					</div>
+
+					<div class="center white"><span id="search-text" class="trn" data-trn-key="your_recent_order">Your Recent Order</span></div>
+				</ons-toolbar>
+
+				<ons-scroller id="recent-orders">
+				</ons-scroller>
+
+			</ons-page>
+	</script>
+
+<ons-template id="food.html">
+  <ons-page>
+   <ons-toolbar class="bgcolor_purple">
+    <div class="left">
+     <img src='img/logo.png' class="logo">
+    </div>
+    <div class="center white">
+     {{address}}
+    </div>
+    <div class="right">
+     <ons-icon icon="location-arrow" class="loc_arrow_img" ng-click="first_page()"></ons-icon>
+     <p class="white detect_loc">Detect Location</p>
+    </div>
+   </ons-toolbar>
+   <div class="search_input_part">
+    <i class="fa fa-search" aria-hidden="true"></i>
+    <input type="text" placeholder="Type food name" id="food1">
+    <ons-button modifier="large" style="search_button" ng-click="getfood()">Search</ons-button>
+   </div>
+   <div class="center spons" ng-style="hide_part">Featured Restaurants </div>
+   <div ng-repeat ="res in rest_part.details.data" >
+    <div class="menu_pic1 menu_pics menu-pics_part" ng-style="hide_part" style="background-image:url(http://mealoop.com/upload/{{res.bg_img}});background-size:contain" ng-click="menu_restaurant(res.merchant_id,res.services.delivery,res.services.pickup)">
+    </div>  
+   </div>
+   <div class="clearfix"></div>
+  
+
+  <ons-list ng-repeat = 'food in arr_food'>
+    <ons-list-item class="border_bot_top" ng-click="item_details(food.item_id,food.merchant_id,food.category)">
+ <div class="all_rest">
+     
+     <div class="img_rest left"><img ng-src="http://mealoop.com/upload/{{food.photo}}" style="width:90px;height:80px">
+     <p class="rest_address food_price">${{food.price}}</p>
+      </div>
+     
+      <div class="float_left about_rest">
+       <p class="rest_address ">{{food.item_name}}</p>
+       
+       <p class="rest_name">{{food.restaurant_name}}</p>
+       <div class="icon_p_rest float_left"></div>
+       <div class="clearfix"></div>
+       <span class="gray_font" ng-if="food.services.pickup">{{food.services.pickup}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
+      <span class="gray_font" ng-if="food.services.delivery">{{food.services.delivery}} <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> </span>
+      <span></span>
+<!--       <div>
+      <img ng-src="{{food.logo}}" style="width:44px;height:48px">
+     </div>-->
+      </div>
+      
+     </div>
+    </ons-list-item>
+
+   </ons-list>
+  </ons-page>
+ </ons-template>
+<!-- food page end -->
+
+
+
+<!-- cart page -->
+
+ <script type="text/ons-template" id="cart.html">
+    <ons-page id="page-cart" class="onsen-display">
+        <ons-toolbar class="bgcolor_purple">
+            <div class="left"><ons-back-button class="white"></ons-back-button></div>
+            <div class="center white">
+     <span id="search-text" class="trn" data-trn-key="cart">
+     Cart
+     </span>
+            </div>
+            <div class="right">
+                <ons-toolbar-button onclick="checkOut();"><ons-icon class="checkout-icon" icon="ion-ios-arrow-thin-right"></ons-toolbar-button>
+            </div>
+        </ons-toolbar>
+
+        <div class="orange-header myorange">
+            <ons-row >
+                <ons-col width="40%" class="my">
+                    <div class="logo-wrap logo-non-auto" >
+                    </div>
+                </ons-col>
+                <ons-col class="text-right pos_rel">
+                    <p class="restauran-title concat-text trn" data-trn-key="total">Total</p>
+                    <p class="text-big total-amount"></p>
+                </ons-col>
+            </ons-row>
+        </div>
+
+        <div class="wrapper">
+            <ons-row class="row">
+                <ons-col class="text-big concat-text trn" width="60%" data-trn-key="your_order">Your Order</ons-col>
+                <ons-col class="text-right" >
+                    <button class="edit-order button button--quiet green trn" data-trn-key="edit_order">Edit Order</button>
+                    <button class="order-apply-changes button button--quiet green trn" data-trn-key="apply_changes">
+                        Apply Changes</button>
+                </ons-col>
+            </ons-row>
+        </div>
+
+        <form id="frm-cart" class="frm-cart" method="post">
+            <ons-list id="cart-item">
+            </ons-list>
+        </form>
+
+        <div class="checkout-footer">
+
+            <div class="field-wrapper">
+                <input type="text" name="delivery_date"  class="width_input delivery_date text-input text-input--underbar"
+                       placeholder="Delivery Date" value="">
+            </div>
+
+            <div class="field-wrapper">
+                <input type="text" name="delivery_time" class="width_input delivery_time text-input text-input--underbar"
+                       placeholder="Delivery Time" value="">
+            </div>
+
+
+			<ons-list-item modifier="tappable" class="delivery_asap_wrap">
+				<label class="checkbox"  class="margin_left10">
+					<input type="checkbox" name="delivery_asap" value="1" class="delivery_asap">
+					<div class="checkbox__checkmark"></div>
+					<span class="ons-checkbox-inner small-font-dim trn" data-trn-key="deliver_asap">
+    Deliver Asap
+    </span>
+				</label>
+			</ons-list-item>
+            <div class="wrapper">
+                <p class="p-normal pts_earn_label"></p>
+            </div>
+
+
+            <ons-list>
+
+                <ons-list-item modifier="chevron" onclick="showTip();" class="tip_amount_wrap" >
+                    <span class="trn tip_amount" data-trn-key="tip_amount">Tip Amount</span>
+                </ons-list-item>
+
+                <ons-list-item modifier="chevron" onclick="showChangeAddressPage();" >
+                    <span class="trn" data-trn-key="change_your_address">Change your address here</span>
+                </ons-list-item>
+
+            </ons-list>
+
+            <button class="button green-btn button--large trn" onclick="checkOut();" data-trn-key="checkout">
+                Checkout
+                <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
+            </button>
+
+        </div>
+
+
+    </ons-page>
+</script>
+
+
+ 	<script type="text/ons-template" id="cartcreate_account.html">
+		<ons-page id="page-checkoutsignup" class="onsen-display ">
+			<ons-toolbar class="bgcolor_purple toolbar">
+				<div class="left"><ons-back-button class="white"></ons-back-button></div>
+				<div class="center white"><span id="search-text" class="trn" data-trn-key="cart">Cart</span></div>
+				<div class="right">
+				</div>
+			</ons-toolbar>
+
+			<div class="orange-header myorange">
+				<ons-row >
+					<ons-col width="40%" class="my">
+						<div class="logo-wrap logo-non-auto" >
+						</div>
+					</ons-col>
+					<ons-col class="text-right">
+						<p class="restauran-title concat-text white trn" data-trn-key="total">Total</p>
+						<p class="text-big white total-amount"></p>
+					</ons-col>
+				</ons-row>
+			</div>
+
+			<div class="wrapper">
+				<ons-row class="row">
+					<ons-col class="text-big concat-text trn" width="60%" data-trn-key="signup" >Signup</ons-col>
+					<ons-col class="text-right" >
+						<button class="button button--quiet green trn" ng-click="gologin()" data-trn-key="sign_in">
+							Sign in
+						</button>
+					</ons-col>
+				</ons-row>
+			</div>
+			<div class="for_log_in_page">
+
+				<p>
+					<ons-input id="firstname" class="registr_input" modifier="underbar" placeholder="First Name" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="lastname" class="registr_input" modifier="underbar" placeholder="Last Name" float></ons-input>
+				</p>
+				<p>
+					<ons-input input-id="mobile" type="tel" class="registr_input" modifier="underbar" placeholder="Mobile Phone" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="email" class="registr_input" modifier="underbar" placeholder="Email Address" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="reg_password" class="registr_input" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+				</p>
+				<p>
+					<ons-input id="reg_password_confirm" class="registr_input" modifier="underbar" type="password" placeholder="Confirm Password" float></ons-input>
+				</p>
+				<p class="agree_sms">By creating an account, you agree to receive sms from vendor.</p>
+				<p class="text_red">{{signup_valid}}</p>
+				<ons-button modifier="large" class="log_in_but margin_bottom_20" ng-click='signup()'> Create Account
+					<ons-icon icon="ion-chevron-right" class="login_icon ons-icon ons-icon--ion ion-checkmark-round fa-lg"></ons-icon>
+				</ons-button>
+			</div>
+
+
+		</ons-page>
+	</script>
+
+
+<!-- cart page end -->
+
+
+<!-- profile when login page -->
+	<ons-template id="loginProfile.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center white">
+					Profile
+				</div>
+			</ons-toolbar>
+			<div class="checked_food">
+				<img class="checked_food_circle" src="img/spageti.jpeg">
+			</div>
+
+			<div class="for_log_in_page">
+				<p>
+					<ons-input input-id="name_rof" class="registr_input" modifier="underbar" ng-model="pr_firstname" placeholder="First Name" float></ons-input>
+				</p>
+				<p>
+					<ons-input input-id="surname_prof" class="registr_input" modifier="underbar" ng-model="pr_lastname" placeholder="Last Name" float></ons-input>
+				</p>
+				<p>
+					<ons-input input-id="email_prof" class="registr_input" modifier="underbar" ng-model="pr_email" placeholder="something@something.com" disabled="true" float></ons-input>
+				</p>
+				<p>
+					<ons-input input-id="tel_prof" class="registr_input" modifier="underbar" ng-model="pr_tel" placeholder="Number" float></ons-input>
+				</p>
+				<p>
+					<ons-input input-id="pass_prof" class="registr_input" modifier="underbar" placeholder="password" type="Password" float></ons-input>
+				</p>
+				<ons-button modifier="large" class="log_in_but" ng-click="save_profile()">Save
+					<ons-icon icon="ion-checkmark-round" class="login_icon ons-icon ons-icon--ion ion-checkmark-round fa-lg"></ons-icon>
+				</ons-button>
+			</div>
+		</ons-page>
+	</ons-template>
+<!-- profile when login page end -->
+
+
+<!-- nextstep page -->
+ <ons-template id="orderlogin.html">
+  <ons-page>
+   <ons-toolbar class="bgcolor_purple">
+    <div class="left">
+     <ons-back-button class="white"></ons-back-button>
+    </div>
+    <div class="center white">
+     Orders
+    </div>
+   </ons-toolbar>
+   <div class="wrapper center wrapper-white page-login-fb">   
+         <button class="button blue-btn button--large fb-loginbutton" id="fb-loginbutton" onclick="myFacebookLogin()">
+           <ons-icon icon="fa-facebook"></ons-icon> 
+           <span class="sigin_fb trn" data-trn-key="sigin_fb">Connect in with Facebook</span>
+         </button>                   
+   </div>
+   <div class="or_div">
+    <p class="line_div_p"></p>
+    <p class="or_or"> OR</p>
+    <p class="line_div_p"></p>
+    <div class="clearfix"></div>
+   </div>
+   <div class="email_pat_order">
+    <p>
+     <ons-input  class="registr_input" modifier="underbar" placeholder="First Name" float></ons-input>
+    </p>
+    <p>
+     <ons-input  class="registr_input" modifier="underbar" placeholder="Last Name" float></ons-input>
+    </p>
+    <p>
+     <ons-input  class="registr_input" modifier="underbar" placeholder="a@gmail.com" desabled float></ons-input>
+    </p>
+    <p>
+     <ons-input  class="registr_input" modifier="underbar" placeholder="Password" float></ons-input>
+    </p>
+    <div class="block margin-top10">
+        <label class="label_part">
+          <input type="checkbox" class="square" checked><span class="font_size15">Yes, I want to receive the NewsLetter</span>
+       </label>  
+    </div>
+    <div class="block margin-top10">
+        <label class="label_part">
+          <input type="checkbox" class="square"><span class="font_size15 span_accept_order">I have read and accept  the FoodPanda <br><span class="green_color_inp">Terms and Conditions</span></span>
+       </label>  
+    </div>
+       <ons-button modifier="large" class="log_in_but">
+        Create Account
+       </ons-button>
+   </div>
+  </ons-page>
+ </ons-template>
+<!-- nextstep page end -->
+
+<!-- more page -->
+	<ons-template id="more.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="center white">
+					More
+				</div>
+
+			</ons-toolbar>
+			<div class="eating"></div>
+			<ons-list>
+				<ons-list-item class="menu_part_border" ng-click="goprofile()" tappable>
+					<span class="menu_item">Account</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+				<ons-list-item class="menu_part_border" ng-click="gonews()" tappable>
+					<span class="menu_item">News and Promotions</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+				<ons-list-item class="menu_part_border" ng-click="RequestCancelOrder()" tappable>
+					<span class="menu_item"> Request Cancel Order</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+				<ons-list-item class="menu_part_border" ng-click="showAddressBook()" tappable>
+					<span class="menu_item"> Address Book</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+				<ons-list-item class="menu_part_border" ng-click="goLiveSupport()" tappable>
+					<span class="menu_item"> Live Support</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+				<ons-list-item class="menu_part_border" ng-click="goRestaurantSignup()" tappable>
+					<span class="menu_item">Restaurant Signup</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+				<ons-list-item class="menu_part_border" ng-click="goSettings()" tappable>
+					<span class="menu_item">Settings</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+<!--				<ons-list-item class="menu_part_border" ng-click="gohelp()" tappable>
+					<span class="menu_item">Help</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+				<ons-list-item class="menu_part_border" ng-click="goabout()" tappable>
+					<span class="menu_item">About</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>-->
+				<ons-list-item class="menu_part_border " id="log_out" ng-style="style_load" ng-click="logout()" tappable>
+					<span class="menu_item">Logout</span>
+					<ons-icon icon="fa-chevron-right" class="ons_icon_style ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+				</ons-list-item>
+			</ons-list>
+		</ons-page>
+	</ons-template>
+<!-- more page end -->
+
+<!-- restaurant location page -->
+	<ons-template id="restaurantlocnav.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left white loc_selected">
+					<span>SELECTED LOCATION</span>
+					<p ng-click="popoverCountry.show($event)">{{address}}
+						<ons-icon icon="angle-down" class="loc_down"></ons-icon>
+					</p>
+				</div>
+				<div class="right ">
+					<ons-icon icon="search" class="search-icon search_icon_part" ng-click="serachPage()"></ons-icon>
+					
+				</div>
+			</ons-toolbar>
+			<ons-list>
+				<ons-list-item class="border_bot_top">{{restaurants.length}} restaurants deliver to you.<span><ons-icon icon="options"></ons-icon></span>
+				<ons-icon icon="sliders" class="search-icon filter_icon_new" style="float:right;color:#80CC1D;margin-right:17px;" ng-click="filter()"></ons-icon>
+				</ons-list-item>
+			</ons-list>
+
+			<ons-list ng-repeat="restaurant in restaurants|  orderBy:propertyName:reverse">
+			
+ 				<ons-list-item ng-if=" restaurant[quickFilter1]!=quickFilter2" ng-click="menu_restaurant(restaurant.merchant_id,restaurant.services.delivery,restaurant.services.pickup)" class="border_bot_top">
+
+
+					<div class="all_rest">
+						<div class="img_rest left"><img ng-src="{{restaurant.logo}}" style="width:80px;height:80px">
+							
+						</div>
+
+
+						<div class="float_left about_rest">
+							<div class="rest_start" ng-switch="round(restaurant.ratings.ratings)">
+								<p ng-switch-when="0" class="rest_rating">
+									<img alt="1" src="img/star-off.png" title="Not rated yet!">
+									<img alt="1" src="img/star-off.png" title="Not rated yet!">
+									<img alt="1" src="img/star-off.png" title="Not rated yet!">
+									<img alt="1" src="img/star-off.png" title="Not rated yet!">
+									<img alt="1" src="img/star-off.png" title="Not rated yet!">
+								</p>
+								<p ng-switch-when="1" class="rest_rating">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-off.png">
+									<img alt="1" src="img/star-off.png">
+									<img alt="1" src="img/star-off.png">
+									<img alt="1" src="img/star-off.png">
+								</p>
+								<p ng-switch-when="2" class="rest_rating">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-off.png">
+									<img alt="1" src="img/star-off.png">
+									<img alt="1" src="img/star-off.png">
+								</p>
+								<p ng-switch-when="3" class="rest_rating">
+
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-off.png">
+									<img alt="1" src="img/star-off.png">
+								</p>
+								<p ng-switch-when="4" class="rest_rating">
+
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-off.png">
+								</p>
+								<p ng-switch-when="5" class="rest_rating">
+
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+									<img alt="1" src="img/star-on.png">
+								</p>
+							</div>
+							<p class="rest_addresss">{{restaurant.restaurant_name}}</p>
+							<p class="rest_foodd">{{restaurant.cuisine}}</p>
+							<div class="icon_p_rest float_left"></div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="clearfix"></div>
+						<p class="float_left dollar">$<span>$$</span></p>
+						<div class="float_left"><span class="icon_pers_card margin_icon"><ons-icon icon="percent"></ons-icon></span><span class="icon_pers_card"><ons-icon icon="credit-card"></ons-icon></span>
+							
+							<span ng-if="restaurant.is_open == 'open'" class="green_open">{{restaurant.is_open}}</span>
+							<span ng-if="restaurant.is_open == 'closed'" class="red_close">{{restaurant.is_open}}</span>
+							<span ng-if="restaurant.is_open == 'pre-order'" class="green_open">{{restaurant.is_open}}</span>
+							
+						</div>
+						<p class="deliver_min float_right">delivers in 60min </p>
+						<div class="clearfix"></div>
+					</div>
+				</ons-list-item>
+
+			</ons-list>
+
+		</ons-page>
+	</ons-template>
+
+<!-- restaurant location page end -->
+
+<!-- Menu Category   page  -->
+	<ons-template id="menucategory.html">
+		<ons-page>
+			<ons-toolbar class = "bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center white">
+					Menu
+				</div>
+			</ons-toolbar>
+			<div class="">
+			
+						<div class="logo-wrap logo-non-auto">
+							<img class="menu_img" style="width:100%" ng-src="{{menu_category.details.bg_image}}" />
+							 <div class="rest_start"  ng-switch="round(menu_category.details.ratings.ratings)">
+              <p ng-switch-when="0" class="stars_of_menu_img" ng-click="addReviewsPage(menu_category.details.merchant_id)">
+               <img alt="1" src="img/star-off.png" title="Not rated yet!">
+               <img alt="1" src="img/star-off.png" title="Not rated yet!">
+               <img alt="1" src="img/star-off.png" title="Not rated yet!">
+               <img alt="1" src="img/star-off.png" title="Not rated yet!">
+               <img alt="1" src="img/star-off.png" title="Not rated yet!">
+              </p>
+              <p ng-switch-when="1" class="stars_of_menu_img">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-off.png">
+               <img alt="1" src="img/star-off.png">
+               <img alt="1" src="img/star-off.png">
+               <img alt="1" src="img/star-off.png">
+              </p>
+              <p ng-switch-when="2" class="stars_of_menu_img">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-off.png">
+               <img alt="1" src="img/star-off.png">
+               <img alt="1" src="img/star-off.png">
+              </p>
+              <p ng-switch-when="3" class="stars_of_menu_img">
+
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-off.png">
+               <img alt="1" src="img/star-off.png">
+              </p>
+              <p ng-switch-when="4" class="stars_of_menu_img">
+
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-off.png">
+              </p>
+              <p ng-switch-when="5" class="stars_of_menu_img">
+
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+               <img alt="1" src="img/star-on.png">
+              </p>
+             </div>
+						</div>
+						<p class="restauran-title rest_name_text concat-text menu_rest_name">{{menu_category.details.restaurant_name}}</p>
+
+						<p class="menu_rest_address">{{menu_category.details.cuisine}}</p>
+						<p class="menu_rest_address" ng-style="co_lor">{{menu_category.details.open}}</p>
+						<p class="del_fee"><span class="fee">Delivery FEE: </span><span ng-bind-html=" menu_category.details.delivery_fee|html"></span></p>
+						
+						<p class="del_pickup">
+							<span class="del_fee_pick" ng-if= "content == 'Delivery'">{{content}}
+                     <i class="fa fa-check-circle-o check_color margin_right_7" aria-hidden="true"></i>
+                     </span>
+
+							<span class="del_fee_pick" ng-if= "content1 == 'Pickup'">{{content1}}
+                     <i class="fa fa-check-circle-o check_color" aria-hidden="true"></i> 
+                     </span>	
+
+						</p>
+						<ons-col></ons-col>
+						<ons-col>
+					<ul class="list_menu_page" style="padding:0">
+       <li class="float_left" onclick="loadBookingForm1()">Book Table</li>
+       <li class="float_left" onclick="loadMap()">Map</li>
+       <li class="float_left" ng-click="reviewsPage(menu_category.details.merchant_id)">Info</li>
+       <li class="float_left" ng-click="photos()">Photos</li>
+       <li class="float_left" ng-click="addReviewsPage(menu_category.details.merchant_id)">Reviews</li>
+      </ul>
+      </ons-col>
+			<ons-col></ons-col>		
+			</div>
+<br>
+<br>
+			<ons-scroller class="menu_all">
+				<ons-list>
+					<ons-list-item modifier="tappable" class="row menu_name">Menu</ons-list-item>
+				</ons-list>
+
+				<ons-list ng-repeat="menu in menu_category.details.menu_category ">
+					<ons-list-item modifier="tappable" ng-click="foods_menu(menu.cat_id,menu.merchant_id)" class="row">{{menu.category_name}}</ons-list-item>
+				</ons-list>
+			</ons-scroller>
+
+		</ons-page>
+	</ons-template>
+<!-- End Menu Category Page -->
+<!-- ShowAddressBook  -->
+ <ons-template id="showAddressBook.html">
+  <ons-page>
+   <ons-toolbar class="bgcolor_purple">
+    <div class="left">
+     <ons-button class="white" modifier="light" onclick="myNavigator.popPage(['page', 'more.html'])">
+      <span class="back-button__icon back-button--material__icon"></span>
+     </ons-button>
+    </div>
+    <div class="center">
+      Address Book
+    </div>
+    <div class="right">
+    <ons-icon icon="plus" class="white" ng-click="newshowAddressBook()" style="margin-right:10px"></ons-icon>
+    </div>
+   </ons-toolbar>
+   <ons-list>
+    <ons-list-item style="border-bottom:1px solid gray" ng-repeat="addressobj1 in addressobj">
+     <ons-row  >
+      <ons-col >
+
+       <p  ng-click="edit_address(addressobj1.id)"><strong>State</strong> {{addressobj1.state}},<ons-icon ng-if="addressobj1.as_default==2" icon="map-marker" style="position:absolute;right:11px"></ons-icon> <br> <strong>City</strong> {{ addressobj1.city}},<br><strong>Street</strong> {{addressobj1.street}} <br><strong> Address</strong> {{addressobj1.address}},<br><strong>Zip Code</strong> {{addressobj1.zipcode}},
+        ,<br> <strong>Contact Phone</strong> {{addressobj1.contact_phone}},<br><strong>Location Name</strong> {{addressobj1.location_name}}
+        {{addressobj1.country_code}}
+        </p>
+      </ons-col>
+     </ons-row>
+    </ons-list-item>
+   </ons-list>
+  </ons-page>
+ </ons-template>
+<!-- ShowAddressBook End -->
+<!--edit ShowAddressBook  -->
+
+
+ <ons-template id="editshowAddressBook.html">
+  <ons-page>
+   <ons-toolbar class="bgcolor_purple  toolbar">
+    <div class="left">
+     <ons-button class="white" modifier="light" onclick="myNavigator.popPage(['page','showAddressBook.html']  )">
+      <span class="back-button__icon back-button--material__icon"></span>
+     </ons-button>
+    </div>
+    <div class="center">
+     Address Book Details
+    </div>
+    <p class="right" ng-click="confirm(true,edraddid)">
+     Confirm
+    </p>
+   </ons-toolbar>
+     <div class="for_log_in_page">
+    <p>
+     <ons-input input-id="edrstreet" ng-model="Street" class="registr_input" modifier="underbar"    placeholder="Street" float></ons-input>
+     <span class="left valid">{{valid_eadrstreet}}</span>
+
+    </p>
+    <p>
+     <ons-input input-id="edrcity" ng-model="City" class="registr_input" modifier="underbar"   placeholder="City" float></ons-input>
+     <span class="left valid">{{valid_ecity}}</span>
+
+    </p>
+    <p>
+     <ons-input input-id="edrstate" ng-model="State" class="registr_input" modifier="underbar"   placeholder="State"  float></ons-input>
+     <span class="left valid" >{{valid_estate}}</span>
+
+    </p>
+    <p>
+     <ons-input input-id="edrzip" ng-model="Zip" class="registr_input" modifier="underbar"  placeholder="Postal code/Zip Code" float></ons-input>
+       <span class="left valid">{{valid_ezip}}</span>
+
+    </p>
+    <p>
+     <ons-input input-id="edrlocation" ng-model="Location" class="registr_input" modifier="underbar"   placeholder="Location name"  float></ons-input>
+     <span class="left valid">{{valid_elocation}}</span>
+
+    </p>
+    <p class="fl_left col_gr">
+    Default address
+    <ons-switch ng-model="checkboxModel.value2"  ></ons-switch>
+    </p>
+    <ons-button modifier="large" class="log_in_but" ng-click="edit_address_save(edraddid)">Save
+     <ons-icon icon="ion-checkmark-round" class="login_icon ons-icon ons-icon--ion ion-checkmark-round fa-lg"></ons-icon>
+    </ons-button>
+   </div>
+  </ons-page>
+ </ons-template>
+<!--edit ShowAddressBook End -->
+<!--New ShowAddressBook  -->
+ <ons-template id="newshowAddressBook.html">
+  <ons-page>
+   <ons-toolbar class="bgcolor_purple">
+    <div class="left">
+     <ons-back-button class="white"></ons-back-button>
+    </div>
+    <div class="center">
+     Address Details
+    </div>
+
+   </ons-toolbar>
+     <div class="for_log_in_page">
+    <p>
+     <ons-input input-id="adrstreet"   class="registr_input" modifier="underbar" ng-model="adrstreet" placeholder="Street" float></ons-input>
+     <span class="left valid">{{valid_adrstreet}}</span>
+    </p>
+    <p>
+     <ons-input input-id="adrcity"   class="registr_input" modifier="underbar" ng-model="adrcity" placeholder="City" float></ons-input>
+     <span class="left valid">{{valid_city}}</span>
+    </p>
+    <p>
+     <ons-input input-id="adrstate"    class="registr_input" modifier="underbar" ng-model="adrstate" placeholder="State"  float></ons-input>
+     <span class="left valid" >{{valid_state}}</span>
+    </p>
+    <p>
+     <ons-input input-id="adrzip"  class="registr_input" modifier="underbar" ng-model="adrzip" placeholder="Postal code/Zip Code" float></ons-input>
+     <span class="left valid">{{valid_zip}}</span>
+    </p>
+    <p>
+     <ons-input input-id="adrlocation"  class="registr_input" modifier="underbar" ng-model="adrlocation" placeholder="Location name"  float></ons-input>
+     <span class="left valid">{{valid_location}}</span>
+    </p>
+    <p class="fl_left col_gr">
+    Default address
+    <ons-switch ng-model="checkboxModel.value1"></ons-switch>
+    </p>
+    <ons-button modifier="large" class="log_in_but" ng-click="add_address()">Save
+     <ons-icon icon="ion-checkmark-round" class="login_icon ons-icon ons-icon--ion ion-checkmark-round fa-lg"></ons-icon>
+    </ons-button>
+   </div>
+  </ons-page>
+ </ons-template>
+<!--New ShowAddressBook End -->
+<!-- Settings  -->
+	<ons-template id="settings.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center">
+					Settings
+				</div>
+			</ons-toolbar>
+		</ons-page>
+	</ons-template>
+<!-- Settings End -->
+<!--  Restaurant Signup    -->
+	<ons-template id="RestaurantSignup.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+		     <div class="left">
+		     <ons-back-button class="white"></ons-back-button>
+		    </div>
+		    <div class="center white">Restaurant Signup</div>
+		   </ons-toolbar>
+			<iframe src="http://smarturl.it/restsignup" width="100%" height="100%"></iframe>
+		</ons-page>
+	</ons-template>
+<!--  End   Restaurant Signup   -->
+<!--  Go News    -->
+	<ons-template id="gonews.html">
+
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+		     <div class="left">
+		     <ons-back-button class="white"></ons-back-button>
+		    </div>
+		    <div class="center white"> News and Promotions</div>
+		   </ons-toolbar>
+			<iframe src="http://smarturl.it/newsandpromo" width="100%" height="100%"></iframe>
+		</ons-page>
+	</ons-template>
+<!--  End Go News   -->
+<!--  Request Cancel Order    -->
+	<ons-template id="RequestCancelOrder.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+		     <div class="left">
+		     <ons-back-button class="white"></ons-back-button>
+		    </div> 
+		    <div class="center white">Request Cancel Order </div>
+		   </ons-toolbar>
+			<iframe src="http://smarturl.it/RequestCancelOrder" width="100%" height="100%"></iframe>
+		</ons-page>
+	</ons-template>
+<!--  Request Cancel Order   -->
+<!--  Live Support    -->
+	<ons-template id="LiveSupport.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+		     <div class="left">
+		     <ons-back-button class="white"></ons-back-button>
+		    </div>
+		    <div class="center white">Live Support </div>
+		   </ons-toolbar>
+			<iframe src="http://smarturl.it/livehelp" width="100%" height="100%"></iframe>
+		</ons-page>
+	</ons-template>
+<!--  End   Live Support   -->
+<!-- Food in Menu     page  -->
+	<ons-template id="foodinmenu.html">
+		<ons-page>
+		<ons-toolbar class = "bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center white">
+					Menu
+				</div>
+				<div class="right">
+					<ons-icon icon="fa-shopping-cart" class="white icon_size cart ng-scope ons-icon fa-shopping-cart fa fa-lg" onclick="showCart()"></ons-icon> 
+					<ons-icon icon="file-text-o" size="22px" class="white icon_size" ng-click="popover.show($event)"></ons-icon>
+				</div>
+		</ons-toolbar>
+			<div class="orange-header">
+				<ons-row>
+					<ons-col width="40%">
+						<div class="logo-wrap logo-non-auto food_logo_part">
+							<img ng-src="{{food_category.details.merchant_info.logo}}" />
+
+						</div>
+					</ons-col>
+					<ons-col class="text-right">
+						<div class="stars_part_food">
+							<p>
+								<img alt="1" src="img/star-off.png" title="Not rated yet!">
+								<img alt="1" src="img/star-off.png" title="Not rated yet!">
+								<img alt="1" src="img/star-off.png" title="Not rated yet!">
+								<img alt="1" src="img/star-off.png" title="Not rated yet!">
+								<img alt="1" src="img/star-off.png" title="Not rated yet!">
+							</p>
+							
+							<p class=" restauran-title concat-text ">{{food_category.details.merchant_info.restaurant_name}}</p>
+						</div>
+					</ons-col>
+				</ons-row>
+			</div>
+			<ons-scroller id="category-list">
+				<ons-list ng-repeat="menus in food_category.details.item ">
+					<ons-list-item ng-click="item_details(menus.item_id,food_category.details.merchant_info.merchant_id,food_category.details.category_info.cat_id)" modifier="tappable" class="row">
+						<img style="width: 80px;height:65px" ng-src="{{menus.photo}}" />
+						<p class="name_food_item">{{menus.item_name}}</p>
+						<p class="price_food" ng-bind-html="menus.prices[0]['price_pretty']|html"></p>
+					</ons-list-item>
+				</ons-list>
+			</ons-scroller>
+
+		</ons-page>
+	</ons-template>
+<!-- Food in Menu  page end -->
+<!-- dialog -->
+	<script type="text/ons-template" id="tipsDialog.html">
+	 <ons-dialog var="tipsDialog" style="width:60%;height:290px;" cancelable  >
+
+	  <ons-page id="page-tips" >
+	   <ons-toolbar>
+	    <div class="center white trn" data-trn-key="select_tips">Select Tips</div>
+	   </ons-toolbar>
+
+	   <ons-list>
+	    <ons-list-item modifier="tappable" onclick="setTips(10);" >
+	     10%
+	    </ons-list-item>
+	    <ons-list-item modifier="tappable" onclick="setTips(15);" >
+	     15%
+	    </ons-list-item>
+	    <ons-list-item modifier="tappable" onclick="setTips(20);" >
+	     20%
+	    </ons-list-item>
+	    <ons-list-item modifier="tappable" onclick="setTips(25);" >
+	     25%
+	    </ons-list-item>
+	    <ons-list-item modifier="tappable" onclick="removeTips();" >
+	     <span class="trn" data-trn-key="remove_tips" >Remove Tips</span>
+	    </ons-list-item>
+	   </ons-list>
+
+	  </ons-page>
+	 </ons-dialog>
+	</script>
+<!-- dialog end -->
+<!-- change address -->
+	<script type="text/ons-template" id="change-address.html">
+	 <ons-page id="page-change-address">
+		 <ons-dialog id="dialog-1">
+			 <ons-toolbar class="toolbarColor">
+				 <div class="center white trn" data-trn-key="enter_your_location">Enter your location</div>
+			 </ons-toolbar>
+
+			 <form id="frm-adddresspopup" class="frm-adddresspopup" method="post">
+				 <div class="wrapper center pad-top20">
+					 <div class="field-wrapper">
+						 <input style="width: 100%;" type="text" id="new_ss" name="new_s"  class="new_s text-input text-input--underbar has_validation"
+								placeholder="Enter your address" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+					 </div>
+				 </div>
+
+				 <div class="wrapper center " style="text-align: center;">
+					 <button class="button green-btn trn" onclick="changeAddress();" data-trn-key="change_address">
+						 Change address
+					 </button>
+				 </div>
+			 </form>
+		 </ons-dialog>
+
+	  <ons-toolbar class="bgcolor_purple">
+	   <div class="left"><ons-back-button class="white"></ons-back-button></div>
+	   <div class="center white">
+	    <span  class="trn" data-trn-key="change_address">Change Address</span></div>
+	  </ons-toolbar>
+
+	  <ons-list>
+
+	   <ons-list-item modifier="chevron" onclick="showMapAddress('changeaddress');" >
+	    <span class="trn" data-trn-key="select_from_address_map">Select your address from map</span>
+	   </ons-list-item>
+
+	   <ons-list-item modifier="chevron" onclick="addressPopup();" >
+	    <span class="trn" data-trn-key="enter_your_address">Enter your address</span>
+	   </ons-list-item>
+
+	  </ons-list>
+
+	 </ons-page>
+	</script>
+
+<!-- change address end -->
+<!-- address bymap -->
+<script type="text/ons-template" id="address-bymap.html">
+ <ons-page id="address-bymap" modifier="map-page" >
+
+  <ons-toolbar class="bgcolor_purple">
+   <div class="left"><ons-back-button class="white"></ons-back-button></div>
+   <div class="center white">
+     <span class="trn" data-trn-key="search_restaurant_by_map" >
+      Search Restaurant by map
+     </span>
+   </div>
+  </ons-toolbar>
+
+  <input type="hidden" name="change_cemara_action" class="change_cemara_action">
+  <input type="hidden" name="change_cemara_lat" class="change_cemara_lat">
+  <input type="hidden" name="change_cemara_lng" class="change_cemara_lng">
+
+  <div class="map_search_field_wrap">
+   <ons-icon icon="ion-ios-search" modifier="iconsearch" ></ons-icon>
+   <input id="search_address_geo" value="" type="text" class="search_address_geo text-input text-input--underbar trn" ng-model="text" placeholder="Street Address,City,State" data-trn-key="home_search_placeholder" >
+  </div>
+
+  <div id="map_canvas_address" class="maps">
+
+   
+  </div>
+  <div class="list-wrapper" id="direction-wrap">
+    <ons-button class="button green-btn button--large" onclick="useThisLocation()" >
+     <span class="trn use-location" data-trn-key="use_this_address">Use this address</span>
+    </ons-button>
+   </div>
+
+ </ons-page>
+</script>
+<!-- address bymap end -->
+
+<!-- shipping -->
+ <script type="text/ons-template" id="shipping.html">
+ <ons-page id="page-shipping" class="onsen-display  ">
+  <ons-toolbar class="bgcolor_purple toolbar toolbar--material">
+   <div class="left"><ons-back-button class="white"></ons-back-button></div>
+   <div class="center white"><span id="search-text" class="trn" data-trn-key="cart">Cart</span></div>
+  </ons-toolbar>
+
+	 <div class="orange-header myorange">
+   <ons-row >
+    <ons-col width="70%" class="my">
+     <div class="logo-wrap logo-non-auto" >
+     </div>
+    </ons-col>
+    <ons-col class="text-right">
+     <p class="restauran-title total-tittle concat-text white trn" data-trn-key="total">Total</p>
+     <p class="text-big white total-amount"></p>
+    </ons-col>
+   </ons-row>
+  </div>
+
+  <div class="wrapper">
+   <ons-row class="row">
+    <ons-col class="text-big concat-text trn" width="60%" data-trn-key="shipping_address">
+     Shipping address
+    </ons-col>
+   </ons-row>
+  </div>
+
+  <ons-list>
+
+   <ons-list-item modifier="chevron" onclick="showPageAdressSelection();" >
+    <span class="trn" data-trn-key="delivery_address">Delivery Address</span>
+    <p class="small-font-dim delivery-address-text"></p>
+   </ons-list-item>
+
+  </ons-list>
+
+  <form id="frm-shipping" class="frm-shipping" method="post">
+   <input type="hidden" name="next_step" value="payment_option">
+
+   <input type="hidden" name="street" class="street">
+   <input type="hidden" name="city" class="city">
+   <input type="hidden" name="state" class="state">
+   <input type="hidden" name="zipcode" class="zipcode">
+
+   <input type="hidden" name="formatted_address" class="formatted_address">
+   <input type="hidden" name="google_lat" class="google_lat">
+   <input type="hidden" name="google_lng" class="google_lng">
+
+   <div class="wrapper">
+    <div class="field-wrapper">
+     <input type="tel" id="cont_tel" name="contact_phone"  class="width_input mobile_inputs contact_phone text-input text-input--underbar has_validation"
+         placeholder="Contact phone" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+    </div>
+   </div>
+
+   <div class="wrapper">
+    <div class="field-wrapper">
+     <input type="text" name="location_name"  class="width_input location_name text-input text-input--underbar"
+         placeholder="Apartment suite, unit number, or company name"  >
+    </div>
+   </div>
+
+   <div class="wrapper">
+    <div class="field-wrapper">
+     <input type="text" name="delivery_instruction"  class="width_input delivery_instruction text-input text-input--underbar"
+         placeholder="Delivery instructions" value="" >
+    </div>
+   </div>
+
+   <div class="wrapper">
+    <div class="field-wrapper">
+     <label class="switch">
+     	    <input type="checkbox" value="2" class="switch__input save_address" name="save_address" >
+      		<div class="switch__toggle"></div>
+     </label>
+     <span class="small-font-dim trn" data-trn-key="save_address_book" style="margin-top: 8px; display: inline-block">
+      Save to my address book
+    </span>
+    </div>
+   </div>
+
+   <button class="button green-btn button--large trn" onclick="clientShipping();" data-trn-key="select_payment_method">
+    Select Payment Method
+    <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
+   </button>
+  </form>
+
+ </ons-page>
+</script>
+<!-- shipping end  -->
+
+	<script type="text/ons-template" id="dialogAddressBook.html">
+		<ons-dialog var="dialogAddressBook"  cancelable  >
+
+			<ons-page id="page-dialog-addressbook" >
+				<ons-toolbar  class="toolbarColor toolbar">
+					<div class="center white trn" data-trn-key="address_book">Address Book</div>
+				</ons-toolbar>
+
+				<ons-scroller id="addressbook-popup">
+				</ons-scroller>
+
+			</ons-page>
+		</ons-dialog>
+	</script>
+	<ons-template id="address-selection.html">
+  <ons-page id="page-address-selection">
+
+   <ons-toolbar class="bgcolor_purple toolbar">
+    <div class="left"><ons-back-button class="white"></ons-back-button></div>
+    <div class="center white">
+     <span  class="trn" data-trn-key="address">Address</span></div>
+   </ons-toolbar>
+
+	  <ons-list>
+    <ons-list-item modifier="chevron" onclick="popUpAddressBook();" >
+     <span class="trn" data-trn-key="select_from_address">Select from your address book</span>
+    </ons-list-item>
+
+    <ons-list-item modifier="chevron" onclick="showMapAddress('mapaddress');" >
+     <span class="trn" data-trn-key="select_from_address_map">Select your address from map</span>
+    </ons-list-item>
+
+    <ons-list-item modifier="chevron" onclick="showManualAddressInput();" >
+     <span class="trn" data-trn-key="enter_your_address">Enter your address</span>
+    </ons-list-item>
+   </ons-list>
+
+	  <div class="manual-address-input">
+
+    <form id="frm-manual-address" class="frm-manual-address" method="post">
+     <div class="wrapper">
+      <div class="field-wrapper">
+       <input type="text" name="stree_1"  class="stree_1 text-input text-input--underbar has_validation"
+           placeholder="Street" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+      </div>
+     </div>
+     <div class="wrapper">
+      <div class="field-wrapper">
+       <input type="text" name="city_1"  class="city_1 text-input text-input--underbar has_validation"
+           placeholder="City" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+      </div>
+     </div>
+     <div class="wrapper">
+      <div class="field-wrapper">
+       <input type="text" name="state_1"  class="state_1 text-input text-input--underbar has_validation"
+           placeholder="State" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+      </div>
+     </div>
+     <div class="wrapper">
+      <div class="field-wrapper">
+       <input type="text" name="zipcode_1"  class="zipcode_1 text-input text-input--underbar"
+           placeholder="Postal code/Zip Code" value=""  >
+      </div>
+     </div>
+
+     <div class="wrapper">
+      <button class="button green-btn button--large trn" onclick="setManualAddress();" data-trn-key="submit">
+       Submit
+      </button>
+     </div>
+    </form>
+   </div>
+
+  </ons-page>
+ </ons-template>
+ <script type="text/ons-template" id="receipt.html">
+  <ons-page id="page-receipt" class="onsen-display" on-device-backbutton="deviceBackReceipt()" >
+   <ons-toolbar>
+    <div class="left">
+
+     <ons-toolbar-button>
+      <ons-icon icon="fa-home" ng-click="restaurant()" >
+     </ons-toolbar-button>
+
+    </div>
+    <div class="center white"><span id="search-text" class="trn" data-trn-key="receipt">Receipt</span></div>
+    <div class="right">
+    </div>
+   </ons-toolbar>
+
+   <div class="orange-header myorange">
+    <ons-row >
+     <ons-col width="40%" class="my">
+      <div class="logo-wrap logo-non-auto" >
+      </div>
+     </ons-col>
+     <ons-col class="text-right">
+      <p class="restauran-title concat-text white">Total Paid</p>
+      <p class="text-big white total-amount"></p>
+     </ons-col>
+    </ons-row>
+   </div>
+
+   <div class="wrapper center">
+    <h2 class="trn" data-trn-key="thank_you">Thank You</h2>
+    <p class="receipt-msg"></p>
+    <ons-icon icon="fa-check-circle" class="myfa-check">
+     <br/>
+     <button class="button button--quiet green" ng-click="restaurant()" >
+      <span class="trn" data-trn-key="back_to_home">back to home</span>
+      <ons-icon icon="fa-long-arrow-right"></ons-icon>
+     </button>
+   </div>
+
+  </ons-page>
+ </script>
+
+
+<!-- payment -->
+<script type="text/ons-template" id="paymentOption.html">
+    <ons-page id="page-paymentoption" class="onsen-display">
+        <ons-toolbar class="bgcolor_purple toolbar toolbar--material">
+            <div class="left"><ons-back-button class="white"></ons-back-button></div>
+            <div class="center white"><span id="search-text" class="trn" data-trn-key="cart">Cart</span></div>
+            <div class="right">
+            </div>
+        </ons-toolbar>
+
+        <div class="orange-header myorange">
+            <ons-row >
+                <ons-col width="40%" class="my">
+                    <div class="logo-wrap logo-non-auto" >
+                    </div>
+                </ons-col>
+                <ons-col class="text-right">
+                    <p class="restauran-title concat-text white trn" data-trn-key="total">Total</p>
+                    <p class="text-big white total-amount"></p>
+                </ons-col>
+            </ons-row>
+        </div>
+
+        <div class="wrapper">
+            <ons-row class="row">
+                <ons-col class="text-big trn" data-trn-key="how_you_like_pay" >How would you like to pay?</ons-col>
+            </ons-row>
+        </div>
+
+        <form id="frm-paymentoption" class="frm-paymentoption" method="post">
+
+            <input type="hidden" name="paypal_flag" id="paypal_flag" class="paypal_flag">
+            <input type="hidden" name="paypal_mode" id="paypal_mode" class="paypal_mode">
+            <input type="hidden" name="client_id_sandbox" id="client_id_sandbox" class="client_id_sandbox">
+            <input type="hidden" name="client_id_live" id="client_id_live" class="client_id_live">
+
+            <input type="hidden" name="paypal_card_fee" id="paypal_card_fee" class="paypal_card_fee">
+
+            <input type="hidden" name="voucher_amount" id="voucher_amount" class="voucher_amount">
+            <input type="hidden" name="voucher_type" id="voucher_type" class="voucher_type">
+
+            <input type="hidden" name="pts_redeem_points" id="pts_redeem_points" class="pts_redeem_points">
+            <input type="hidden" name="pts_redeem_amount" id="pts_redeem_amount" class="pts_redeem_amount">
+
+            <div class="wrapper">
+                <ons-list id="payment-list">
+                </ons-list>
+            </div>
+
+            <div class="wrapper order-change-wrapper">
+                <div class="field-wrapper">
+                    <input type="number" name="order_change"  class="numeric_only order_change text-input text-input--underbar"
+                           placeholder="change? For how much?" value="" min="0" inputmode="numeric" pattern="[0-9]*"  >
+                </div>
+            </div>
+
+            <div class="wrapper payon-delivery-wrapper">
+                <ons-list id="payon-deliver-list">
+                </ons-list>
+            </div>
+
+            <div class="wrapper voucher-wrap">
+
+                <ons-list id="voucher-wrap">
+                    <ons-list-header class="center voucher-header trn" data-trn-key="voucher">Voucher</ons-list-header>
+
+                    <ons-list-item class="center apply-voucher">
+                        <input type="text" name="voucher_code"  class="voucher_code text-input text-input--underbar"
+                               placeholder="Enter Voucher here" value=""  >
+                    </ons-list-item>
+
+                    <ons-list-item class="center apply-voucher">
+                        <button class="button button--quiet green" onclick="applyVoucher();" >
+                            <span class="trn" data-trn-key="apply_voucher">Apply Voucher</span>
+                        </button>
+                    </ons-list-item>
+
+                    <ons-list-item class="center remove-voucher">
+                        <button class="button button--quiet green" onclick="removeVoucher();" >
+                            <span class="trn" data-trn-key="remove_voucher">Remove Voucher</span>
+                        </button>
+                    </ons-list-item>
+
+                </ons-list>
+            </div>
+
+            <div class="wrapper pts-apply-points-wrap">
+                <ons-list >
+                    <ons-list-header class="center" >
+                        <span class="trn" data-trn-key="your_points" >Your points</span> :
+                        <span class="pts_available_points"></span>
+                    </ons-list-header>
+
+                    <ons-list-item class="center pts_pts">
+                        <input type="number" name="redeem_points"  class="redeem_points center numeric_only text-input text-input--underbar"
+                               value=""  >
+                    </ons-list-item>
+
+                    <ons-list-item class="center pts_pts">
+                        <button class="button button--quiet green" onclick="applyRedeem();" >
+                            <span class="trn" data-trn-key="redeem">Redeem</span>
+                        </button>
+                    </ons-list-item>
+
+                    <p class="center pts_pts_cancel pts_points_label small-font-dim"></p>
+
+                    <ons-list-item class="center pts_pts_cancel">
+                        <button class="button button--quiet green" onclick="cancelRedeem();" >
+                            <span class="trn" data-trn-key="cancel">Cancel</span>
+                        </button>
+                    </ons-list-item>
+
+                </ons-list>
+            </div>
+
+            <button class="button green-btn button--large trn" onclick="placeOrder();" data-trn-key="place_order">
+                Place Order
+                <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
+            </button>
+        </form>
+
+    </ons-page>
+</script>
+<!-- payment end -->
+<!-- enter contact -->
+<script type="text/ons-template" id="enterContact.html">
+    <ons-page id="page-enter-contact" >
+
+        <ons-toolbar>
+            <div class="left"><ons-back-button class="white"></ons-back-button></div>
+            <div class="center white">
+     <span class="trn" data-trn-key="enter_your_contact" >
+      Enter Your Contact Number
+     </span>
+            </div>
+        </ons-toolbar>
+
+        <div class="wrapper" style="margin-top:10px;">
+
+            <form id="frm-enter-contact" class="frm-enter-contact" method="post">
+                <div class="field-wrapper">
+
+                    <input type="tel" id="mob_phone" name="contact_phone"  class="mobile_inputs contact_phone text-input text-input--underbar has_validation"
+                           placeholder="Mobile Phone" value="" data-validation="required" data-validation-error-msg="this field is mandatory!" >
+
+                </div>
+
+                <button class="button green-btn button--large trn" onclick="submitContactForm();" data-trn-key="submit" style="margin-top:10px;" >
+                    Submit
+                    <div class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></div>
+                </button>
+
+            </form>
+
+        </div>
+
+    </ons-page>
+</script>
+<!--enter contact  end -->
+<!-- intem Food in Menu  page  -->
+	<script type="text/ons-template" id="itemDisplay.html">
+	 <ons-page id="page-itemdisplay">
+	  <ons-toolbar class="bgcolor_purple">
+	   <div class="left"><ons-back-button class="white"></ons-back-button></div>
+	   <div class="center white"><span id="search-text"></span></div>
+	  </ons-toolbar>
+
+	  <div class="item-header"></div>
+
+	  <div class="wrapper">
+	   <p class="title concat-text"></p>
+	   <p class="description"></p>
+	  </div>
+
+
+	  <form id="frm-foodorder" class="frm-foodorder" method="post">
+	   <ons-list id="item-info">
+	   </ons-list>
+	  </form>
+
+	 </ons-page>
+	</script>
+
+	<ons-template id="itemdetails.html">
+		<ons-page>
+		<ons-toolbar class="bgcolor_purple">
+    <div class="left">
+     <ons-back-button  class="white"></ons-back-button>
+    </div>
+    <div class="center">
+     Item Details
+    </div>
+   </ons-toolbar>
+			<div class="item-header" style="background-image: url({{item_foods.photo}} )"></div>
+			<div class="wrapper" id="intemFood ">
+				<p class="title concat-text">{{item_foods.item_name}}</p>
+				<p class="description">{{item_foods.item_description}}</p>
+			</div>
+			<ons-list id="item-info" class="list ons-list-inner ng-scope">
+				<ons-list-header class="list-header trn list__header ons-list-header-inner" data-trn-key="price">Price</ons-list-header>
+				<ons-list-item ng-repeat="price in item_foods.prices" modifier="tappable" class="list__item ons-list-item-inner list__item--tappable">
+					<ons-row class="row ons-row-inner">
+						<ons-col class="concat-text col ons-col-inner" width="60%" style="-webkit-box-flex: 0; flex: 0 0 60%; max-width: 60%;">
+							<label class="left">
+							<ons-if platform="ios">
+								<ons-input ng-model="prices" ng-change="get_price(price.price)" type="radio" name="color" class="country_list check price" input-class="check    " value="{{price.price}}" ng-checked="true"></ons-input>	
+							</ons-if>
+							<ons-if platform="android">
+								<ons-input ng-model="prices" ng-change="get_price(price.price)" type="radio" name="color" class="country_list check price" input-class="check    " value="{{price.price}}" ng-checked="true"></ons-input>							
+							</ons-if>
+							
+							<ons-if platform="other">
+								<ons-input ng-model="prices" ng-change="get_price(price.price)" type="radio" name="color" class="country_list check price" input-class="check    " value="{{price.price}}" ng-checked="true"></ons-input>
+							</ons-if>
+								
+							</label>
+
+						</ons-col>
+						<ons-col class="text-right col ons-col-inner">
+							<price ng-bind-html="price.pretty_price |html"></price>
+						</ons-col>
+					</ons-row>
+				</ons-list-item>
+
+				<ons-list ng-if="item_foods.addon_item"  ng-repeat="item in item_foods.addon_item" class="list ons-list-inner ng-scope">
+
+                    <ons-list-header class="list-header require_addon_34  list__header ons-list-header-inner">{{item.subcat_name}}</ons-list-header>
+                    <span ng-if="reqValid&&item.require_addons=='2'" style="color: red;">{{reqValid}}</span>
+
+                    <ons-list-item modifier="tappable" ng-repeat="sub in item['sub_item']" class="list__item ons-list-item-inner list__item--tappable">
+							<ons-row class="row ons-row-inner">
+								<ons-col class="concat-text col ons-col-inner">
+									<label class="left">
+ 									 <ons-input ng-show="item.multi_option=='custom'||item.multi_option=='one'" type="radio" id="a{{item['subcat_id']}}{{sub['sub_item_id']}}"  name="{{item.subcat_name}}"    ng-model="upd" data-value="on" ng-change="updrate( item.subcat_name ,sub['price'],sub['sub_item_id'],sub['sub_item_name'], item['subcat_id'],'{{upd}}',item.multi_option  )"  class="country_list check"  input-class="check"></ons-input>
+                                        <ons-input ng-show="item.multi_option=='multiple'" type="checkbox" id="c{{item['subcat_id']}}{{sub['sub_item_id']}}"  name="{{item.subcat_name}}" ng-checked="false"  ng-model="upd" data-value="on" ng-change="updrate( item.subcat_name ,sub['price'],sub['sub_item_id'],sub['sub_item_name'], item['subcat_id'],'{{upd}}',item.multi_option  )"  class="country_list check"  input-class="check"></ons-input>
+
+									</label>
+
+                                </ons-col>
+
+								<ons-col class="small-font-dim col ons-col-inner" width="30%" style="text-align:center;  -webkit-box-flex: 0; flex: 0 0 30%; max-width: 30%;">{{sub['sub_item_name']}}
+								</ons-col>
+                                <ons-col class="small-font-dim col ons-col-inner" width="30%" style="text-align:center;  -webkit-box-flex: 0; flex: 0 0 30%; max-width: 30%;">{{sub.item_description}}
+								</ons-col>
+
+								<ons-col class="text-right col ons-col-inner">
+
+							<ons-if platform="ios">
+								<ons-input ng-show="item.multi_option=='multiple'" ng-change="updrate(item.subcat_name ,sub['price'],sub['sub_item_id'],sub['sub_item_name'], item['subcat_id'],'{{upd}}',item.multi_option  )" id="b{{sub['sub_item_id']}}"  class="country_list text-center" input-class="text-center" value="1"  type="number" ng-model="num"></ons-input>
+							
+							</ons-if>
+							<ons-if platform="android">
+								<ons-input ng-show="item.multi_option=='multiple'" ng-change="updrate(item.subcat_name ,sub['price'],sub['sub_item_id'],sub['sub_item_name'], item['subcat_id'],'{{upd}}',item.multi_option  )" id="b{{sub['sub_item_id']}}"  class="country_list text-center" input-class="text-center" value="1"  type="number" ng-model="num"></ons-input>
+														
+							</ons-if>
+							
+							<ons-if platform="other">
+								<ons-input ng-show="item.multi_option=='multiple'" ng-change="updrate(item.subcat_name ,sub['price'],sub['sub_item_id'],sub['sub_item_name'], item['subcat_id'],'{{upd}}',item.multi_option  )" id="b{{sub['sub_item_id']}}"  class="country_list text-center" input-class="text-center" value="1"  type="number" ng-model="num"></ons-input>
+							
+							</ons-if>
+									<price ng-bind-html="sub['pretty_price']|html"></price>
+								</ons-col>
+							</ons-row>
+						</ons-list-item>
+
+				</ons-list>
+				<div class="wrapper">
+					<div class="field-wrapper">
+						<textarea name="order_notes" id="order_nodes" class="trn order_notes text-input text-input--underbar" placeholder="Special Instructions"></textarea>
+					</div>
+				</div>
+				<ons-row class="row cart-total-wrap ons-row-inner">
+					<ons-col class="concat-text col ons-col-inner" width="20%" style="text-align: right; text-align: right; -webkit-box-flex: 0; flex: 0 0 20%; max-width: 20%;">
+						<button class="button button--quiet" ng-click="qty_num('-')">
+							<ons-icon class="icon-green ons-icon fa-minus-square fa fa-lg" icon="fa-minus-square">
+
+							</ons-icon>
+						</button>
+					</ons-col>
+					<ons-col class="col ons-col-inner" width="60%" style="-webkit-box-flex: 0; flex: 0 0 60%; max-width: 60%;">
+						<ons-row class="row grey-border-bottom ons-row-inner">
+							<ons-col class="quantity-center trn col ons-col-inner" data-trn-key="quantity">Quantity</ons-col>
+							<ons-col class="col ons-col-inner">
+								<input name="qty" type="number" class="qty numeric_only text-input text-input--transparent" ng-model="qty">
+							</ons-col>
+						</ons-row>
+					</ons-col>
+					<ons-col class="concat-text col ons-col-inner" width="20%" style="-webkit-box-flex: 0; flex: 0 0 20%; max-width: 20%;">
+						<button class="button button--quiet" ng-click="qty_num('+')">
+							<ons-icon class="icon-green ons-icon fa-plus-square fa fa-lg" icon="fa-plus-square">
+
+							</ons-icon>
+						</button>
+					</ons-col>
+				</ons-row>
+				<div class="wrapper cart-total-wrap">
+					<ons-row class="row ons-row-inner">
+						<ons-col class="total   trn col ons-col-inner" width="50%" data-trn-key="total" style="-webkit-box-flex: 0; flex: 0 0 50%; max-width: 50%;text-align:left!important">Total</ons-col>
+						<ons-col class="total_value text-right col ons-col-inner" width="50%" style="-webkit-box-flex: 0; flex: 0 0 50%; max-width: 50%;">
+							${{total}}
+						</ons-col>
+					</ons-row>
+				</div>
+				<button class="button green-btn button--large trn" ng-click="addToCart(item_foods.item_id,item_foods.merchant_id,item_foods.ingredients,item_foods.cooking_ref,item_foods.discount)" data-trn-key="add_to_cart">Add to Cart
+					<span class="search-btn">
+						<ons-icon icon="fa-chevron-right" class="ons-icon fa-chevron-right fa fa-lg"></ons-icon>
+					</span>
+				</button>
+			</ons-list>
+		</ons-page>
+	</ons-template>
+<!-- intem Food in Menu  page end  -->
+
+<!-- Ons Modal -->
+	<ons-modal direction="up">
+		<div style="text-align: center">
+			<p>
+				<ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
+			</p>
+		</div>
+	</ons-modal>
+<!-- End Ons Modal -->
+
+<!-- Settingspart  -->
+	<ons-template id="settingspart.html">
+  <ons-page>
+   <ons-toolbar class="bgcolor_purple">
+    <div class="left">
+     <ons-back-button class="white"></ons-back-button>
+    </div>
+    <div class="center white">
+     Settings
+    </div>
+   </ons-toolbar>
+   <form id="frm-settings" class="frm-settings" method="post">   
+      <div class="wrapper">
+      
+         <div class="settings_text">Device ID</div>
+        <ons-list modifier="inset">        
+            <ons-list-item>
+              <span class="device_id_val">{{device_id}}</span>          
+            </ons-list-item>
+         </ons-list>
+      
+         <div class="settings_text">Notifications</div>
+         <ons-list modifier="inset">         
+            <ons-list-item>
+    <span>Enabled Push Notification</span>
+      <ons-switch modifier="list-item" var="enabled_push" ng-model='cool' name="enabled_push" class="switch_inp" id="enabled_push"  >
+          </ons-switch>
+            </ons-list-item>
+          </ons-list>
+         
+           <div class="settings_text">Others</div>
+                
+         
+        <ons-list modifier="inset" class="lang_part">
+            <ons-list-item class=" device_id_val" tappable ng-click = "languageDialog.show()">
+              Select your language
+              <ons-icon icon="chevron-right" class="icon_chevron"></ons-icon>
+            </ons-list-item>        
+        </ons-list>
+               
+      
+       <ons-button modifier="large" class="log_in_but" onclick="saveSettings();">
+     Save
+     <ons-icon icon="ion-checkmark-round" class="login_icon "></ons-icon>
+       </ons-button>
+                   
+    </div>
+      </form>
+  </ons-page>
+ </ons-template>
+
+<!-- Settingspart End -->
+
+
+<!-- LOCATION DIALOG -->
+	<ons-dialog var="locationDialog">
+		  	<p class="bgcolor_purple bgcolor_purple forgot_p  white">
+				Select Country
+				<ons-icon icon="ion-checkmark-round" class="select_cont_icon"></ons-icon>
+			</p>
+			<div>
+			<ons-list>
+				<ons-list-header class="list_head_dialog">Country</ons-list-header>
+					<ons-list-item ng-repeat="_country in country" tappable>
+						<label class="left">
+						<ons-if platform="ios">
+							<ons-input type="radio" class="radio_inp" name="color" ng-click="locationDialog.hide()" class="country_list" input-id="" value="{{_country.value}}"></ons-input>
+						</ons-if>
+						<ons-if platform="android">
+							<ons-input type="radio"  name="color" class="country_list" ng-click="locationDialog.hide()" input-id="" value="{{_country.value}}"></ons-input>
+						</ons-if>
+						
+						<ons-if platform="other">
+							<ons-input type="radio"  name="color" class="country_list" ng-click="locationDialog.hide()" input-id="" value="{{_country.value}}"></ons-input>
+						</ons-if>
+						</label>
+						<label for="" class="center">
+							{{ _country.name }}
+						</label>
+					</ons-list-item>
+				</ons-list>
+		    </div>
+	</ons-dialog>
+<!-- LOCATION DIALOG END  -->
+
+
+<!-- language DIALOG -->
+	<ons-dialog var="languageDialog">
+		  	<p class="bgcolor_purple bgcolor_purple forgot_p  white">
+				Select your language
+				<ons-icon icon="ion-checkmark-round" class="select_cont_icon"></ons-icon>
+			</p>
+			<div class="languages">
+				<p class="languages_p">No language available</p>
+				<ons-button modifier="quiet" ng-click="languageDialog.hide()">OK</ons-button>
+		    </div>
+	</ons-dialog>
+<!-- language DIALOG END  -->
+<!-- cart page -->
+	<ons-template id="carts.html">
+		<ons-page>
+			<ons-toolbar class="bgcolor_purple">
+				<div class="left">
+					<ons-back-button class="white"></ons-back-button>
+				</div>
+				<div class="center white">
+					Cart
+				</div>
+			</ons-toolbar>
+			
+		   
+		   	<div class="orange-header">
+		      <ons-row >
+		        <ons-col width="40%">
+		           <div class="logo-wrap logo-non-auto menu-cart" >        
+		           		<img class="menu_img_cart" ng-src="{{menu_category.details.logo}}" />
+		           </div>
+		        </ons-col>
+		        <ons-col class="text-right cart_p_div">           
+		           <p class="about_cart_p">Total</p>  
+		           <p class="about_cart_p">$44.50</p>         
+		        </ons-col>
+		      </ons-row>
+		   	</div> 
+		   <ons-list>
+			   	<ons-list-item>
+			   		<ons-row class="row">
+				           <ons-col class="your-order" width="60%" >Your Order</ons-col>
+				           <ons-col class="text-right" >
+				              <ons-button modifier="quiet" class="green text_transform">Edit Order</ons-button>
+				           </ons-col>
+				       </ons-row>
+			   	</ons-list-item>
+			   	<ons-list-item>
+			    
+			       <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><strong><span>4</span>*10 Mini Burger</strong></ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			              <span>$40.00</span>
+			           </ons-col>
+			       </ons-row>
+
+				</ons-list-item>
+				<ons-list-header class="gray_part_row">
+			        <ons-row class="row ">
+			       		<ons-col class="item_gray_part">Sauces</ons-col>
+			        </ons-row>
+				</ons-list-header> 
+				<ons-list-item>
+			       <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><span>4x</span> 0 Chipotle</ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			              <span>0</span>
+			           </ons-col>
+			       </ons-row>
+				</ons-list-item>
+				<ons-list-header class="gray_part_row">
+			        <ons-row class="row ">
+			       		<ons-col class="item_gray_part">Burger Add-ons</ons-col>
+			        </ons-row>
+				</ons-list-header> 
+				<ons-list-item>
+			       <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><span>1x</span> 1 Crispy Onions</ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			            	 <price>$1.00</price>
+			           </ons-col>
+			       </ons-row>
+				</ons-list-item>
+				<ons-list-header class="gray_part_row">
+			        <ons-row class="row ">
+			       		<ons-col class="item_gray_part">Sides Add-ons</ons-col>
+			        </ons-row>
+				</ons-list-header> 
+				<ons-list-item>
+			       <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><span>1x</span>  5 Coleslaw</ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			            	 <price>$5.00</price>
+			           </ons-col>
+			       </ons-row>
+				</ons-list-item>
+				<ons-list-header class="gray_part_row">
+			        <ons-row class="row ">
+			       		<ons-col class="item_gray_part">Xtra sauces</ons-col>
+			        </ons-row>
+				</ons-list-header> 
+				<ons-list-item>
+			       <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><span>1x</span>   1.00 Balsamic Dressing</ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			            	 <price>$1.00</price>
+			           </ons-col>
+			       </ons-row>
+				  			       
+				</ons-list-item>
+				<ons-list-item>
+					 <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><strong><span >1x</span> 18 BBQ 1/2 Chicken</strong></ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			            	 <price>$12.00</price>
+			           </ons-col>
+			       </ons-row>
+				</ons-list-item>
+				<ons-list-header class="gray_part_row">
+			        <ons-row class="row ">
+			       		<ons-col class="item_gray_part">Sauces</ons-col>
+			        </ons-row>
+				</ons-list-header> 
+				<ons-list-item>
+			       <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><span>1x</span>   0 Kids</ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			            	 <price>0</price>
+			           </ons-col>
+			       </ons-row>
+				</ons-list-item>
+				<ons-list-header class="gray_part_row">
+			        <ons-row class="row ">
+			       		<ons-col class="item_gray_part">Sides Add-ons</ons-col>
+			        </ons-row>
+				</ons-list-header> 
+				<ons-list-item>
+			       <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><span>1x</span>   7 Salad</ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			            	 <price>$7.00</price>
+			           </ons-col>
+			       </ons-row>
+				</ons-list-item>	
+				<ons-list-header class="gray_part_row">
+			        <ons-row class="row ">
+			       		<ons-col class="item_gray_part">Xtra sauces</ons-col>
+			        </ons-row>
+				</ons-list-header> 
+				<ons-list-item>
+			       <ons-row class="row">
+			           <ons-col class="your-order" width="60%" ><span>1x</span>   1.00 Balsamic Dressing</ons-col>
+			           <ons-col class="text-right price_food_menu" >
+			            	 <price>$1.00</price>
+			           </ons-col>
+			       </ons-row>
+			    </ons-list-item>
+			    <ons-list-header class="gray_part_row">
+			        <ons-row class="row ">
+			       		<ons-col class="item_gray_part">Delivery Options</ons-col>
+			        </ons-row>
+				</ons-list-header>
+				<ons-list-item  tappable class="checkbox_part">
+					
+				   	<div class="block">
+					   <label class="label_part">
+					   		<input type="checkbox" class="square"><span>Delivery</span>
+					 	</label>  
+					</div>
+				</ons-list-item>
+   				<ons-list-item tappable class="checkbox_part">	
+				   	<div class="block">
+					   <label class="label_part">
+					   		<input type="checkbox" class="square"><span>Pickup</span>
+					 	</label>  
+					</div>
+   				</ons-list-item>
+     			<ons-list-item>
+     			 	<div class="checkout-footer">
+   
+						   <div class="inp_date">
+						   <ons-input type="text"  placeholder="Delivery Date" value=""></ons-input>
+						   </div>
+						   
+						   <div class="inp_date">
+						   <ons-input type="text" name="delivery_time" placeholder="Delivery Time" value=""></ons-input>	
+						   </div>
+						   
+						   
+						   <ons-list-item modifier="tappable" class="delivery_asap_wrap" >
+						      	<label class="left">
+									<ons-if platform="ios">
+										<ons-input type="radio"  class="radio_inp"></ons-input>
+									</ons-if>
+
+									<ons-if platform="android">
+										<ons-input type="radio"  class=""></ons-input>
+									</ons-if>
+									<ons-if platform="other">
+										<ons-input type="radio"  class=""></ons-input>
+									</ons-if>
+									<span class="asap">Deliver Asap</span>
+								</label>
+							</ons-list-item>
+						   
+						   <div class="wrapper">
+						     <p class="p-normal pts_earn_label"></p>
+						   </div>
+						      
+						   
+						   <ons-list>       
+						   
+						       <ons-list-item modifier="chevron"  class="tip_amount_wrap"> 
+						       <span class="trn tip_amount" data-trn-key="tip_amount">Tip Amount</span>       
+						       </ons-list-item>    
+						       
+						       <ons-list-item modifier="chevron"  class="tip_amount_wrap"  > 
+						       <span class="trn" data-trn-key="change_your_address">Change your address here</span>       
+						       </ons-list-item>    
+						       
+						   </ons-list>       
+						      
+						   <button  class="button green-btn button--large trn" >
+							Checkout
+							<span class="search-btn"><ons-icon icon="fa-chevron-right"></ons-icon></span>
+						   </button>
+   
+   					</div>
+   	
+     			</ons-list-item>
+   
+ 
+   			</ons-list>
+
+		</ons-page>
+	</ons-template>
+
+
+
+<!-- cart page end -->
+<!-- search page -->
+ <ons-template id="serachPage.html">
+  <ons-page>
+   <ons-toolbar class="bgcolor_purple">
+	   <div class="left">
+		   <ons-button class="white" modifier="light" onclick="myNavigator.resetToPage('restaurantLocation.html')">
+			   <span class="back-button__icon back-button--material__icon"></span>
+		   </ons-button>
+	   </div>
+    <div class="white center searching_menu_input">
+     
+         <ons-input modifier="underbar" ng-model="searchString" id="search_rest" class="search_input"  placeholder="Search" float ></ons-input>
+    </div>
+   </ons-toolbar>
+   <div class="searching_menu">
+    <p>Trendinng searches</p>
+   </div>
+     
+      <ons-list  ng-repeat="restaurant in restaurants| searchFor:searchString" ng-if="searchString">
+
+    <ons-list-item  ng-click="menu_restaurant(restaurant.merchant_id)" class="border_bot_top">
+
+     <div class="all_rest">
+      <div class="img_rest left"><img ng-src="{{restaurant.logo}}" style="width:80px;height:80px">
+
+      </div>
+
+
+      <div class="float_left about_rest">
+       <div class="rest_start" ng-switch="round(restaurant.ratings.ratings)">
+        <p ng-switch-when="0" class="rest_rating">
+         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+         <img alt="1" src="img/star-off.png" title="Not rated yet!">
+        </p>
+        <p ng-switch-when="1" class="rest_rating">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-off.png">
+         <img alt="1" src="img/star-off.png">
+         <img alt="1" src="img/star-off.png">
+         <img alt="1" src="img/star-off.png">
+        </p>
+        <p ng-switch-when="2" class="rest_rating">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-off.png">
+         <img alt="1" src="img/star-off.png">
+         <img alt="1" src="img/star-off.png">
+        </p>
+        <p ng-switch-when="3" class="rest_rating">
+
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-off.png">
+         <img alt="1" src="img/star-off.png">
+        </p>
+        <p ng-switch-when="4" class="rest_rating">
+
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-off.png">
+        </p>
+        <p ng-switch-when="5" class="rest_rating">
+
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+         <img alt="1" src="img/star-on.png">
+        </p>
+       </div>
+       <p class="rest_address">{{restaurant.restaurant_name}}</p>
+       <p class="rest_food">{{restaurant.cuisine}}</p>
+       <div class="icon_p_rest float_left"></div>
+       <div class="clearfix"></div>
+      </div>
+      <div class="clearfix"></div>
+      <p class="float_left dollar">$<span>$$</span></p>
+      <div class="float_left"><span class="icon_pers_card margin_icon"><ons-icon icon="percent"></ons-icon></span><span class="icon_pers_card"><ons-icon icon="credit-card"></ons-icon></span>
+	      <span ng-if="restaurant.is_open == 'open'" class="green_open">{{restaurant.is_open}}</span>
+	      <span ng-if="restaurant.is_open == 'closed'" class="red_close">{{restaurant.is_open}}</span>
+	      <span ng-if="restaurant.is_open == 'pre-order'" class="green_open">{{restaurant.is_open}}</span>
+      </div>
+      <p class="deliver_min float_right">delivers in 60min </p>
+      <div class="clearfix"></div>
+     </div>
+    </ons-list-item>
+
+   </ons-list>
+
+   <ul class="searching_menu_items" ng-if="!searchString">
+    <li ng-click="searchs('Sandwiches')">Sandwiches</li>
+    <li ng-click="searchs('Burgers')">Burgers</li>
+    <li ng-click="searchs('Breakfast')">Breakfast</li>
+    <li ng-click="searchs('Lunch')">Lunch</li>
+    <li ng-click="searchs('Dinner')">Dinner</li>
+    <li ng-click="searchs('Healthy')">Healthy</li>
+    <li ng-click="searchs('Barbeque')">Barbeque</li>
+    <li ng-click="searchs('Seafood')">Seafood</li>
+   </ul>
+   
+  </ons-page>
+ </ons-template>
+
+
+<!-- search page end -->
+<!-- filers  -->
+ <ons-template id="filter.html">
+  <ons-page>
+   <ons-toolbar class="bgcolor_purple">
+    <div class="left">
+     <ons-back-button class="white"></ons-back-button>
+    </div>
+    <div class="center white">
+      Filters
+    </div>
+    <div class="clear_all right white" ng-click="clearFilter()">
+     <span>Clear all</span>
+    </div>
+   </ons-toolbar>
+   <ul class="menu_sort_icons">
+    <li class="forsort"  ng-click="ascDesc()">
+     <span class="icons_menu_part" ng-class="{actibveIcons : activeMenuR === 'true',actibveIconsss : activeMenuR === 'false'}">
+      <ons-icon icon="sort-amount-desc"  ng-class="{whiteIcon : activeMenuR === 'true',iconsa : activeMenuR === 'false'}"></ons-icon>
+     </span><br>
+     <span class="text_sort_menu">Rrelevance</span>
+    </li>
+    <li  class="forsort"  ng-click="sortBy('ratings.ratings')">
+     <span class="icons_menu_part" ng-class="{actibveIcons : activeMenu === 'ratings.ratings'}">
+      <ons-icon icon="star-o" ng-class="{whiteIcon : activeMenu === 'ratings.ratings'}"></ons-icon>
+     </span><br>
+     <span class="text_sort_menu" >Rating</span>
+    </li>
+    <li class="forsort"  ng-click="sortBy('delivery_est')" >
+     <span class="icons_menu_part" ng-class="{actibveIcons : activeMenu === 'restaurant_name'}">
+      <ons-icon icon="clock-o"  ng-class="{whiteIcon : activeMenu === 'restaurant_name'}"></ons-icon>
+     </span><br>
+     <span class="text_sort_menu"  >Deliver/<br>Pick Up Time</span>
+    </li>
+    <li class="forsort"  ng-click="sortBy('delivery_fee')">
+     <span class="icons_menu_part" ng-class="{actibveIcons : activeMenu === 'delivery_fee'}" >
+      <ons-icon icon="motorcycle" ng-class="{whiteIcon : activeMenu === 'delivery_fee'}"></ons-icon>
+     </span><br>
+     <span class="text_sort_menu">Delivery Fee</span>
+    </li>
+    <li class="forsort" ng-click="sortBy('minimum_order')">
+     <span class="icons_menu_part" ng-class="{actibveIcons : activeMenu === 'minimum_order'}">
+      <ons-icon icon="database" ng-class="{whiteIcon : activeMenu === 'minimum_order'}"></ons-icon>
+     </span><br>
+     <span class="text_sort_menu">Minimum Order</span>
+    </li>
+    <li class="clearfix"></li>
+   </ul>
+   <p class="filter_by">Filter by</p>
+   <p class="filter_by">Budget</p>
+   <ul class="dollar_menu_part">
+    <li>
+     <ons-icon icon="usd"></ons-icon>
+    </li>
+    <li>
+     <ons-icon icon="usd"></ons-icon>
+     <ons-icon icon="usd"></ons-icon>
+    </li>
+    <li>
+     <ons-icon icon="usd"></ons-icon>
+     <ons-icon icon="usd"></ons-icon>
+     <ons-icon icon="usd"></ons-icon>
+    </li>
+    <li class="clearfix"></li>
+   </ul>
+
+	<p class="filter_by">Quick filters</p>
+	<ul class="about_menus_part fasting_part">
+
+		<li ng-click='quichfilter("fasting")' ng-class="{activeli : fastClickItem === 'fasting'}">FASTING</li>
+		<li ng-click='quichfilter("newpickup")' ng-class="{activeli : fastClickItem === 'newpickup'}">PICK UP</li>
+		<li ng-click="quichfilter('is_open', 'closed')" ng-class="{activeli : fastClickItem === 'is_open'}">IS OPEN</li>
+		<li ng-click='quichfilter("newonline")' ng-class="{activeli : fastClickItem === 'newonline'}">ONLINE PAYMENT IS AVAILABLE</li>
+		<li class = "clearfix"></li>
+	</ul>
+
+	<p class="filter_by">Cuisines</p>
+	<ul class="about_menus_part">
+		<li ng-click="searchs('Sandwiches')"  ng-class="{activeli : clickItem === 'Sandwiches'}">Sandwiches</li>
+		<li ng-click="searchs('Burgers')"  ng-class="{activeli : clickItem === 'Burgers'}">Burgers</li>
+		<li ng-click="searchs('Breakfast')"  ng-class="{activeli : clickItem === 'Breakfast'}">Breakfast</li>
+		<li ng-click="searchs('Lunch')"  ng-class="{activeli : clickItem === 'Lunch'}">Lunch</li>
+		<li ng-click="searchs('Dinner')"  ng-class="{activeli : clickItem === 'Dinner'}">Dinner</li>
+		<li ng-click="searchs('Healthy')"  ng-class="{activeli : clickItem === 'Healthy'}">Healthy</li>
+		<li ng-click="searchs('Barbeque')"  ng-class="{activeli : clickItem === 'Barbeque'}">Barbeque</li>
+		<li ng-click="searchs('Seafood')"  ng-class="{activeli : clickItem === 'Seafood'}">Seafood</li>
+	    <li class="clearfix"></li>
+	</ul>
+ 
+
+  </ons-page>
+ </ons-template> 
+<!-- Filters End -->
+<!-- popoverCountry -->
+
+<ons-popover direction="down" var="popoverCountry" cancelable class="country_pop">
+  <div>
+    
+    <p ng-click="first_page()">
+      <span ng-click="popoverCountry.hide()">Go Back to Country Page</span> 
+    </p>
+  </div>
+</ons-popover>
+<!-- popoverCountry end -->
+</body>
