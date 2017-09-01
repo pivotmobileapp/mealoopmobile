@@ -4736,7 +4736,7 @@ function toggleToast() {
         map: map,
         position: new google.maps.LatLng( parsLat,parsLong),
     }));
-        marker.setMap(map);
+        markers.setMap(map);
 
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
