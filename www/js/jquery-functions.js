@@ -4691,6 +4691,8 @@ function toggleToast() {
          var longitude = position.coords.longitude;
         var latitude = position.coords.latitude;
         var latLong = new google.maps.LatLng(latitude, longitude);
+     var parsLat =    parseFloat(localStorage.getItem('changeLat'));
+     var parsLong =    parseFloat(localStorage.getItem('changeLng'));
          /*
         var mapOptions = {
             center: latLong,
@@ -4707,7 +4709,7 @@ function toggleToast() {
           });
         */
         var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {lat:latitude, lng: longitude},
+            center: {lat:parsLat, lng: parsLong},
             zoom: 13,
             mapTypeId: 'roadmap',
             mapTypeControl: true,
@@ -4732,8 +4734,10 @@ function toggleToast() {
     markers= [];
     markers.push(new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng( Number(localStorage.getItem('changeLat')), Number(localStorage.getItem('changeLng'))),
+        position: new google.maps.LatLng( parsLat,parsLong),
     }));
+        marker.setMap(map);
+
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {
@@ -4793,13 +4797,15 @@ function toggleToast() {
         localStorage.removeItem('changeLng')
         localStorage.setItem('changeLat',e.latLng.lat())
         localStorage.setItem('changeLng',e.latLng.lng())
+           parsLat =    parseFloat(localStorage.getItem('changeLat'));
+       parsLong =    parseFloat(localStorage.getItem('changeLng'));
         markers.forEach(function(marker) {
             marker.setMap(null);
         });
         markers= [];
         markers.push(new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng( Number(localStorage.getItem("changeLat")), Number(localStorage.getItem("changeLng"))),
+            position: new google.maps.LatLng(parsLat,parsLong),
         }));
     });
  
