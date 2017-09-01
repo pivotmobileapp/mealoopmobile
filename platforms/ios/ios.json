@@ -43,10 +43,6 @@
                         {
                             "xml": "<feature name=\"Diagnostic\"><param name=\"ios-package\" value=\"Diagnostic\" /></feature>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
-                            "count": 1
                         }
                     ]
                 }
@@ -128,44 +124,6 @@
                             "xml": "<string>This app requires reminders access to function properly.</string>",
                             "count": 1
                         }
-                    ],
-                    "UIBackgroundModes": [
-                        {
-                            "xml": "<array><string>remote-notification</string></array>",
-                            "count": 1
-                        }
-                    ],
-                    "GCM_SENDER_ID": [
-                        {
-                            "xml": "<string>XXXXXXX</string>",
-                            "count": 1
-                        }
-                    ],
-                    "IS_GCM_ENABLED": [
-                        {
-                            "xml": "<true />",
-                            "count": 1
-                        }
-                    ]
-                }
-            },
-            "*-Debug.plist": {
-                "parents": {
-                    "aps-environment": [
-                        {
-                            "xml": "<string>development</string>",
-                            "count": 1
-                        }
-                    ]
-                }
-            },
-            "*-Release.plist": {
-                "parents": {
-                    "aps-environment": [
-                        {
-                            "xml": "<string>production</string>",
-                            "count": 1
-                        }
                     ]
                 }
             }
@@ -204,10 +162,6 @@
             "PACKAGE_NAME": "com.mealoop"
         },
         "cordova.plugins.diagnostic": {
-            "PACKAGE_NAME": "com.mealoop"
-        },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "XXXXXXX",
             "PACKAGE_NAME": "com.mealoop"
         }
     },
@@ -541,14 +495,6 @@
             "clobbers": [
                 "cordova.plugins.diagnostic"
             ]
-        },
-        {
-            "id": "phonegap-plugin-push.PushNotification",
-            "file": "plugins/phonegap-plugin-push/www/push.js",
-            "pluginId": "phonegap-plugin-push",
-            "clobbers": [
-                "PushNotification"
-            ]
         }
     ],
     "plugin_metadata": {
@@ -561,7 +507,6 @@
         "cordova-plugin-request-location-accuracy": "2.2.0",
         "cordova-plugin-splashscreen": "4.0.1",
         "cordova-plugin-x-toast": "2.5.2",
-        "cordova.plugins.diagnostic": "3.3.2",
-        "phonegap-plugin-push": "1.9.2"
+        "cordova.plugins.diagnostic": "3.3.2"
     }
 }

@@ -4707,7 +4707,7 @@ function toggleToast() {
           });
         */
         var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {lat:parseFloat(localStorage.getItem('changeLat')) , lng: parseFloat(localStorage.getItem('changeLng'))},
+            center: {lat:latitude, lng: longitude},
             zoom: 13,
             mapTypeId: 'roadmap',
             mapTypeControl: true,
@@ -4732,7 +4732,7 @@ function toggleToast() {
     markers= [];
     markers.push(new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng( parseFloat(localStorage.getItem('changeLat')), parseFloat(localStorage.getItem('changeLng'))),
+        position: new google.maps.LatLng( Number(localStorage.getItem('changeLat')), Number(localStorage.getItem('changeLng'))),
     }));
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
@@ -4799,7 +4799,7 @@ function toggleToast() {
         markers= [];
         markers.push(new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng( parseFloat(localStorage.getItem("changeLat")), parseFloat(localStorage.getItem("changeLng"))),
+            position: new google.maps.LatLng( Number(localStorage.getItem("changeLat")), Number(localStorage.getItem("changeLng"))),
         }));
     });
  

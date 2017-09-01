@@ -328,14 +328,6 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.diagnostic"
         ]
-    },
-    {
-        "id": "phonegap-plugin-push.PushNotification",
-        "file": "plugins/phonegap-plugin-push/www/push.js",
-        "pluginId": "phonegap-plugin-push",
-        "clobbers": [
-            "PushNotification"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -350,8 +342,7 @@ module.exports.metadata =
     "cordova-plugin-request-location-accuracy": "2.2.0",
     "cordova-plugin-splashscreen": "4.0.1",
     "cordova-plugin-x-toast": "2.5.2",
-    "cordova.plugins.diagnostic": "3.3.2",
-    "phonegap-plugin-push": "1.9.2"
+    "cordova.plugins.diagnostic": "3.3.2"
 };
 // BOTTOM OF METADATA
 });
