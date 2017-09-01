@@ -4732,12 +4732,15 @@ function toggleToast() {
         searchBox.setBounds(map.getBounds());
     });
     markers= [];
+        if( !parsLat&&!parsLong){
+         parsLat=    latitude
+          parsLong =   longitude
+        }
     markers.push(new google.maps.Marker({
         map: map,
         position: new google.maps.LatLng( parsLat,parsLong),
     }));
-        markers.setMap(map);
-
+ 
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {
