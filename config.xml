@@ -54,6 +54,8 @@
     <splash platform="android" qualifier="land-xhdpi" src="screen-xhdpi-landscape.png" />
     <content src="index.html" />
     <preference value="portrait" name="orientation"/>
+        <preference name="phonegap-version" value="cli-7.0.1" />
+<!--    <preference name="pgb-builder-version" value="2" />-->
 <preference value="gradle" name="android-build-tool"/>
 <gap:plugin name="cordova-plugin-whitelist" source="npm"/>
 <gap:plugin name="phonegap-plugin-push" source="npm" spec="1.5.3"/>
