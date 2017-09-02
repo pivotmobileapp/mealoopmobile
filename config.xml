@@ -88,6 +88,7 @@
         <application android:theme="@android:style/Theme.NoTitleBar">
         </application>
     </gap:config-file>
+    <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-media-capture" spec="*">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="App would like to access the camera." />
