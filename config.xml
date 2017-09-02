@@ -65,7 +65,7 @@
 <gap:plugin name="cordova-plugin-network-information" source="npm"/>
 <gap:plugin name="cordova-plugin-request-location-accuracy" source="npm" spec="2.2.0"/>
 <gap:plugin name="cordova-plugin-x-toast" source="npm" spec="2.6.0"/>
-<gap:plugin name="cordova-plugin-fastrde-checkgps" source="npm" />
+
 <gap:plugin source="git" spec="https://github.com/rodrigo-martinezd/cordova-dialog-gps.git"/>
 <gap:plugin source="git" spec="https://github.com/razorpay/razorpay-cordova.git"/>
 <gap:plugin name="cordova-plugin-media" source="npm" spec="3.0.0"/>
