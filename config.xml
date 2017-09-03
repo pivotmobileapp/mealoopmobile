@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget versioncode="4.4.0" id="com.mealoop" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.mealoop" versioncode="4.4.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Mealoop</name>
     <description>
         Mealoop
@@ -53,41 +53,35 @@
     <splash platform="android" qualifier="xhdpi" src="screen-xhdpi-portrait.png" />
     <splash platform="android" qualifier="land-xhdpi" src="screen-xhdpi-landscape.png" />
     <content src="index.html" />
-    <preference value="portrait" name="orientation"/>
-        <preference name="phonegap-version" value="cli-7.0.1" />
-
-    <preference name="pgb-builder-version" value="1" /> 
-<preference value="gradle" name="android-build-tool"/>
-<gap:plugin name="cordova-plugin-whitelist" source="npm"/>
-<gap:plugin name="phonegap-plugin-push" source="npm" spec="1.5.3"/>
-<gap:plugin name="com.paypal.cordova.mobilesdk" source="npm"/>
-<gap:plugin name="cordova-plugin-device" source="npm"/>
-<gap:plugin name="cordova-plugin-inappbrowser" source="npm"/>
-<gap:plugin name="cordova-plugin-splashscreen" source="npm"/>
-<gap:plugin name="cordova-plugin-geolocation" source="npm"/>
-<gap:plugin name="cordova-plugin-network-information" source="npm"/>
-<gap:plugin name="cordova-plugin-request-location-accuracy" source="npm" spec="2.2.0"/>
-<gap:plugin name="cordova-plugin-x-toast" source="npm" spec="2.6.0"/>
-
-<gap:plugin source="git" spec="https://github.com/rodrigo-martinezd/cordova-dialog-gps.git"/>
-<gap:plugin source="git" spec="https://github.com/razorpay/razorpay-cordova.git"/>
-<gap:plugin name="cordova-plugin-media" source="npm" spec="3.0.0"/>
-<gap:plugin name="cordova.plugins.diagnostic" source="npm" spec="3.4.2"/>
-<gap:plugin name="cordova-plugin-googlemaps" source="npm">
-    
-    
- 
+    <preference name="orientation" value="portrait" />
+    <preference name="phonegap-version" value="cli-7.0.1" />
+    <preference name="pgb-builder-version" value="1" />
+    <preference name="android-build-tool" value="gradle" />
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" />
+    <gap:plugin name="phonegap-plugin-push" source="npm" spec="1.5.3" />
+    <gap:plugin name="com.paypal.cordova.mobilesdk" source="npm" />
+    <gap:plugin name="cordova-plugin-device" source="npm" />
+    <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
+    <gap:plugin name="cordova-plugin-splashscreen" source="npm" />
+    <gap:plugin name="cordova-plugin-geolocation" source="npm" />
+    <gap:plugin name="cordova-plugin-network-information" source="npm" />
+    <gap:plugin name="cordova-plugin-request-location-accuracy" source="npm" spec="2.2.0" />
+    <gap:plugin name="cordova-plugin-x-toast" source="npm" spec="2.6.0" />
+    <gap:plugin source="git" spec="https://github.com/rodrigo-martinezd/cordova-dialog-gps.git" />
+    <gap:plugin source="git" spec="https://github.com/razorpay/razorpay-cordova.git" />
+    <gap:plugin name="cordova-plugin-media" source="npm" spec="3.0.0" />
+    <gap:plugin name="cordova.plugins.diagnostic" source="npm" spec="3.4.2" />
+    <gap:plugin name="cordova-plugin-googlemaps" source="npm">
         <param name="API_KEY_FOR_ANDROID" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
         <param name="API_KEY_FOR_IOS" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
-</gap:plugin>
-<gap:plugin name="cordova-plugin-buildinfo" source="npm" spec="1.1.0"/>
-<gap:config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist" platform="ios">
-<string>My custom message for always using location.</string>
-</gap:config-file>
-<gap:config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist" platform="ios">
-<string>My custom message for using location when in use.</string>
-</gap:config-file>
-    
+    </gap:plugin>
+    <gap:plugin name="cordova-plugin-buildinfo" source="npm" spec="1.1.0" />
+    <gap:config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
+        <string>My custom message for always using location.</string>
+    </gap:config-file>
+    <gap:config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
+        <string>My custom message for using location when in use.</string>
+    </gap:config-file>
     <gap:splash src="splash.png" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="SplashScreenDelay" value="10000" />

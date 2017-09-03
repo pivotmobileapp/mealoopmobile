@@ -2968,11 +2968,15 @@ function newFuncChange(){
     });
  
 */
-    setTimeout(app.initialize() , 500);
+    app.initialize();
+      setTimeout(function () {
+          app.initialize();
+ }, 1000);
+
 }
 function useThisLocation() {
-      codeLatLng3(localStorage.getItem("changeLat"),localStorage.getItem("changeLng"))
-      console.log(codeLatLng3(localStorage.getItem("changeLat"),localStorage.getItem("changeLng")));
+      codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng"))
+      console.log(codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng")));
 
  
 }
@@ -4235,12 +4239,12 @@ function geolocationSuccess(position) {
     })
     sessionStorage.removeItem("_lat");
     sessionStorage.removeItem("_long");
-    localStorage.removeItem("changeLat");
-    localStorage.removeItem("changeLng");
+    sessionStorage.removeItem("changeLat");
+    sessionStorage.removeItem("changeLng");
     sessionStorage.setItem("_lat", position.coords.latitude);
     sessionStorage.setItem("_long", position.coords.longitude);
-    localStorage.setItem('changeLat',position.coords.latitude)
-    localStorage.setItem('changeLng',position.coords.longitude)
+    sessionStorage.setItem('changeLat',position.coords.latitude)
+    sessionStorage.setItem('changeLng',position.coords.longitude)
 }
 
 
@@ -4688,12 +4692,21 @@ function toggleToast() {
     },
 
     onSuccess: function(position){
-         var longitude = position.coords.longitude;
-        var latitude = position.coords.latitude;
+         var longitude; 
+        var latitude;
+           if(parseFloat(sessionStorage.getItem('changeLat')) && parseFloat(sessionStorage.getItem('changeLng')))
+        {
+            latitude = parseFloat(sessionStorage.getItem('changeLat'));
+            longitude =  parseFloat(sessionStorage.getItem('changeLng'));
+        }
+        else{
+                longitude = position.coords.longitude;
+                latitude = position.coords.latitude;
+        }
         var latLong = new google.maps.LatLng(latitude, longitude);
-        var latParse = parseFloat(localStorage.getItem('changeLat'));
-        var longParse = parseFloat(localStorage.getItem('changeLng'));
-         /*
+ 
+     
+ /*
         var mapOptions = {
             center: latLong,
             zoom: 13,
@@ -4708,20 +4721,10 @@ function toggleToast() {
               title: 'my location'
           });
         */
-       console.warn( latParse,longParse);
-
         var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {lat:latParse , lng: longParse},
+            center: {lat:  latitude, lng: longitude},
             zoom: 13,
-            mapTypeId: 'roadmap',
-            mapTypeControl: true,
-            fullscreenControl:false,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.LEFT_TOP
-            },
-
-
+            mapTypeId: 'roadmap'
         });
         var input = document.getElementById('search_address_geo');
         var latlngbounds = new google.maps.LatLngBounds();
@@ -4737,7 +4740,7 @@ function toggleToast() {
     markers= [];
     markers.push(new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng( latParse, longParse),
+        position: new google.maps.LatLng( parseFloat(sessionStorage.getItem('changeLat')), parseFloat(sessionStorage.getItem('changeLng'))),
     }));
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
@@ -4773,16 +4776,14 @@ function toggleToast() {
             };
 
             // Create a marker for each place.
-            localStorage.removeItem('changeLat')
-            localStorage.removeItem('changeLng')
-            localStorage.setItem('changeLat',place.geometry.location.lat())
-            localStorage.setItem('changeLng',place.geometry.location.lng())
-            latParse = parseFloat(localStorage.getItem('changeLat'));
-            longParse = parseFloat(localStorage.getItem('changeLng'));
+            sessionStorage.removeItem('changeLat')
+            sessionStorage.removeItem('changeLng')
+            sessionStorage.setItem('changeLat',place.geometry.location.lat())
+            sessionStorage.setItem('changeLng',place.geometry.location.lng())
             markers.push(new google.maps.Marker({
                 map: map,
                 title: place.name,
-                position: new google.maps.LatLng( latParse, longParse),
+                position: place.geometry.location
             }));
 
             if (place.geometry.viewport) {
@@ -4796,19 +4797,17 @@ function toggleToast() {
     });
     google.maps.event.addListener(map, 'click', function (e) {
         console.log('e',e);
-         localStorage.removeItem('changeLat')
-        localStorage.removeItem('changeLng')
-        localStorage.setItem('changeLat',e.latLng.lat())
-        localStorage.setItem('changeLng',e.latLng.lng())
+         sessionStorage.removeItem('changeLat')
+        sessionStorage.removeItem('changeLng')
+        sessionStorage.setItem('changeLat',e.latLng.lat())
+        sessionStorage.setItem('changeLng',e.latLng.lng())
         markers.forEach(function(marker) {
             marker.setMap(null);
         });
-         latParse = parseFloat(localStorage.getItem('changeLat'));
-         longParse = parseFloat(localStorage.getItem('changeLng'));
         markers= [];
         markers.push(new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng( latParse, longParse),
+            position: new google.maps.LatLng( parseFloat(sessionStorage.getItem("changeLat")), parseFloat(sessionStorage.getItem("changeLng"))),
         }));
     });
  
