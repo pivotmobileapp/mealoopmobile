@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<<<<<<< HEAD
-<widget id="com.mealoop" version="3.0.1" versionCode="30.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-=======
-<widget android-versionCode="45.0" id="com.mealoop" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
->>>>>>> ba884a328d401b0bd00d635be30f90a7fb8353a3
+<widget id="com.mealoop" version="0.0.1" versioncode="4.4.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
@@ -57,7 +53,6 @@
     <splash platform="android" qualifier="xhdpi" src="screen-xhdpi-portrait.png" />
     <splash platform="android" qualifier="land-xhdpi" src="screen-xhdpi-landscape.png" />
     <content src="index.html" />
-    <gap:plugin name="onesignal-cordova-plugin" source="npm" spec="^2.0.10" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <gap:plugin name="phonegap-plugin-push" source="npm" spec="1.5.3" />
     <gap:plugin name="com.paypal.cordova.mobilesdk" source="npm" />
@@ -66,15 +61,23 @@
     <gap:plugin name="cordova-plugin-splashscreen" source="npm" />
     <gap:plugin name="cordova-plugin-geolocation" source="npm" />
     <gap:plugin name="cordova-plugin-network-information" source="npm" />
-    <gap:plugin name="cordova-plugin-request-location-accuracy" source="npm" />
-    <gap:plugin name="cordova-plugin-x-toast" source="npm" />
+    <gap:plugin name="cordova-plugin-request-location-accuracy" source="npm" spec="2.2.0" />
+    <gap:plugin name="cordova-plugin-x-toast" source="npm" spec="2.6.0" />
     <gap:plugin source="git" spec="https://github.com/rodrigo-martinezd/cordova-dialog-gps.git" />
-    <gap:plugin name="cordova-plugin-media" source="npm" />
-    <gap:plugin name="cordova.plugins.diagnostic" source="npm" />
+    <gap:plugin source="git" spec="https://github.com/razorpay/razorpay-cordova.git" />
+    <gap:plugin name="cordova-plugin-media" source="npm" spec="3.0.0" />
+    <gap:plugin name="cordova.plugins.diagnostic" source="npm" spec="3.4.2" />
     <gap:plugin name="cordova-plugin-googlemaps" source="npm">
         <param name="API_KEY_FOR_ANDROID" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
         <param name="API_KEY_FOR_IOS" value="AIzaSyB23iFb59u5J1gfXe04OtkepXcq9nZQVRs" />
     </gap:plugin>
+    <gap:plugin name="cordova-plugin-buildinfo" source="npm" spec="1.1.0" />
+    <gap:config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
+        <string>My custom message for always using location.</string>
+    </gap:config-file>
+    <gap:config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
+        <string>My custom message for using location when in use.</string>
+    </gap:config-file>
     <gap:splash src="splash.png" />
     <allow-navigation href="*" />
     <allow-intent href="*" />
@@ -85,15 +88,12 @@
         <application android:theme="@android:style/Theme.NoTitleBar">
         </application>
     </gap:config-file>
-    <preference name="android-build-tool" value="gradle" />
-<<<<<<< HEAD
-=======
-    <preference name="phonegap-version" value="cli-6.5.0" />
-    <preference name="pgb-builder-version" value="2" />
     <preference name="orientation" value="portrait" />
->>>>>>> ba884a328d401b0bd00d635be30f90a7fb8353a3
+    <preference name="phonegap-version" value="cli-7.0.1" />
+    <preference name="pgb-builder-version" value="1" />
+    <preference name="android-build-tool" value="gradle" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="SplashScreenDelay" value="10000" />
     <preference name="fullscreen" value="false" />
-    <preference name="android-minSdkVersion" value="22" />
+    <preference name="android-minSdkVersion" value="16" />
 </widget>

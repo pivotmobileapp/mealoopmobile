@@ -2921,7 +2921,7 @@ var app = {
     markers= [];
     markers.push(new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng( parseFloat(sessionStorage.getItem('changeLat')), parseFloat(sessionStorage.getItem('changeLng'))),
+        position: new google.maps.LatLng( latitude, longitude),
     }));
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
