@@ -8,7 +8,7 @@
  * @version 0.4
  */
 var openFB = (function () {
-
+var fbAppId  = "1785452871717052";
     var FB_LOGIN_URL = 'https://www.facebook.com/dialog/oauth',
         FB_LOGOUT_URL = 'https://www.facebook.com/logout.php',
 
