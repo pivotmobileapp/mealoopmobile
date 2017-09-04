@@ -2914,8 +2914,7 @@ var app = {
           title: 'my location'
       });
     */
-   console.warn( latParse,longParse);
-
+ 
     var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
         center: {lat:latParse , lng: longParse},
         zoom: 13,
@@ -3123,7 +3122,7 @@ function newFuncChange(){
     });
  
 */
-app.initialize();
+setTimeout(app.initialize(),500);
 }
 function useThisLocation() {
       codeLatLng3(localStorage.getItem("changeLat"),localStorage.getItem("changeLng"))

@@ -2914,8 +2914,7 @@ var app = {
           title: 'my location'
       });
     */
-   console.warn( latParse,longParse);
-
+ 
     var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
         center: {lat:latParse , lng: longParse},
         zoom: 13,
@@ -3123,12 +3122,11 @@ function newFuncChange(){
     });
  
 */
-app.initialize();
+setTimeout(app.initialize(),500);
 }
 function useThisLocation() {
       codeLatLng3(localStorage.getItem("changeLat"),localStorage.getItem("changeLng"))
-      console.log(codeLatLng3(sessionStorage.getItem("changeLat"),sessionStorage.getItem("changeLng")));
-
+ 
  
 }
 function checkGPS_AddressMap() {
@@ -3858,7 +3856,7 @@ function checkGPS(){
         var directionsService = new google.maps.DirectionsService;
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 17,
-          center: {lat: Number(sessionStorage.getItem('changeLat')), lng: Number(sessionStorage.getItem('changeLng'))}
+          center: {lat: Number(localStorage.getItem('changeLat')), lng: Number(localStorage.getItem('changeLng'))}
 
         });
         directionsDisplay.setMap(map);
