@@ -2897,8 +2897,8 @@ var app = {
      var longitude = position.coords.longitude;
     var latitude = position.coords.latitude;
     var latLong = new google.maps.LatLng(latitude, longitude);
-    var latParse = parseFloat(localStorage.getItem('changeLat'));
-    var longParse = parseFloat(localStorage.getItem('changeLng'));
+    var latParse = Number(localStorage.getItem('changeLat'));
+    var longParse = Number(localStorage.getItem('changeLng'));
      /*
     var mapOptions = {
         center: latLong,
@@ -2982,8 +2982,8 @@ searchBox.addListener('places_changed', function() {
         localStorage.removeItem('changeLng')
         localStorage.setItem('changeLat',place.geometry.location.lat())
         localStorage.setItem('changeLng',place.geometry.location.lng())
-        latParse = parseFloat(localStorage.getItem('changeLat'));
-        longParse = parseFloat(localStorage.getItem('changeLng'));
+        latParse = Number(localStorage.getItem('changeLat'));
+        longParse = Number(localStorage.getItem('changeLng'));
         markers.push(new google.maps.Marker({
             map: map,
             title: place.name,

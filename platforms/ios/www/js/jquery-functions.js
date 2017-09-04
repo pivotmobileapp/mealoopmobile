@@ -271,6 +271,7 @@ setInterval(function(){
 
     },1000)
     getCurrentLocation();
+    setTimeout(getCurrentLocation,1000)
     myFunction();
     var krms_config ={  
     'ApiUrl' : "http://mealoop.com/mobileapp/api",
@@ -2871,7 +2872,160 @@ function showMapAddress(map_address_action) {
     myNavigator.pushPage("address-bymap.html", options);
 }
 var markers = [];
+var app = {
+    // Application Constructor
+    initialize: function() {
+        this.bindEvents();
+    },
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'app.receivedEvent(...);'
+    onDeviceReady: function() {
+       // app.receivedEvent('deviceready');
+       navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
+    },
 
+  onSuccess: function(position){
+     var longitude = position.coords.longitude;
+    var latitude = position.coords.latitude;
+    var latLong = new google.maps.LatLng(latitude, longitude);
+    var latParse = Number(localStorage.getItem('changeLat'));
+    var longParse = Number(localStorage.getItem('changeLng'));
+     /*
+    var mapOptions = {
+        center: latLong,
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var map = new google.maps.Map(document.getElementById("map_canvas_address"), mapOptions);
+
+    var marker = new google.maps.Marker({
+          position: latLong,
+          map: map,
+          title: 'my location'
+      });
+    */
+ 
+    var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
+        center: {lat:latParse , lng: longParse},
+        zoom: 13,
+        mapTypeId: 'roadmap',
+        mapTypeControl: true,
+        fullscreenControl:false,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: google.maps.ControlPosition.LEFT_TOP
+        },
+
+
+    });
+    var input = document.getElementById('search_address_geo');
+    var latlngbounds = new google.maps.LatLngBounds();
+
+
+var searchBox = new google.maps.places.SearchBox(input);
+map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+// Bias the SearchBox results towards current map's viewport.
+map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+});
+markers= [];
+markers.push(new google.maps.Marker({
+    map: map,
+    position: new google.maps.LatLng( latParse, longParse),
+}));
+// Listen for the event fired when the user selects a prediction and retrieve
+// more details for that place.
+searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+        return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+        marker.setMap(null);
+    });
+    markers = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+   
+
+    places.forEach(function(place) {
+       
+        if (!place.geometry) {
+      
+            return;
+        }
+        var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+        };
+
+        // Create a marker for each place.
+        localStorage.removeItem('changeLat')
+        localStorage.removeItem('changeLng')
+        localStorage.setItem('changeLat',place.geometry.location.lat())
+        localStorage.setItem('changeLng',place.geometry.location.lng())
+        latParse = Number(localStorage.getItem('changeLat'));
+        longParse = Number(localStorage.getItem('changeLng'));
+        markers.push(new google.maps.Marker({
+            map: map,
+            title: place.name,
+            position: new google.maps.LatLng( latParse, longParse),
+        }));
+
+        if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+        } else {
+            bounds.extend(place.geometry.location);
+        }
+    });
+    map.fitBounds(bounds);
+});
+google.maps.event.addListener(map, 'click', function (e) {
+    console.log('e',e);
+     localStorage.removeItem('changeLat')
+    localStorage.removeItem('changeLng')
+    localStorage.setItem('changeLat',e.latLng.lat())
+    localStorage.setItem('changeLng',e.latLng.lng())
+    markers.forEach(function(marker) {
+        marker.setMap(null);
+    });
+     latParse = parseFloat(localStorage.getItem('changeLat'));
+     longParse = parseFloat(localStorage.getItem('changeLng'));
+    markers= [];
+    markers.push(new google.maps.Marker({
+        map: map,
+        position: new google.maps.LatLng( latParse, longParse),
+    }));
+});
+
+    
+},
+
+
+    
+    onError: function(error){
+        alert("the code is " + error.code + ". \n" + "message: " + error.message);
+    },
+};
 function newFuncChange(){
  
 /*
@@ -2968,12 +3122,11 @@ function newFuncChange(){
     });
  
 */
-app.initialize();
+setTimeout(app.initialize(),500);
 }
 function useThisLocation() {
       codeLatLng3(localStorage.getItem("changeLat"),localStorage.getItem("changeLng"))
-      console.log(codeLatLng3(localStorage.getItem("changeLat"),localStorage.getItem("changeLng")));
-
+ 
  
 }
 function checkGPS_AddressMap() {
@@ -3703,7 +3856,8 @@ function checkGPS(){
         var directionsService = new google.maps.DirectionsService;
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 17,
-          center: {lat: 40.151994, lng: 44.542117}
+          center: {lat: Number(localStorage.getItem('changeLat')), lng: Number(localStorage.getItem('changeLng'))}
+
         });
         directionsDisplay.setMap(map);
 
@@ -4235,8 +4389,8 @@ function geolocationSuccess(position) {
     })
     sessionStorage.removeItem("_lat");
     sessionStorage.removeItem("_long");
-    localStorage.removeItem("changeLat");
-    localStorage.removeItem("changeLng");
+    sessionStorage.removeItem("changeLat");
+    sessionStorage.removeItem("changeLng");
     sessionStorage.setItem("_lat", position.coords.latitude);
     sessionStorage.setItem("_long", position.coords.longitude);
     localStorage.setItem('changeLat',position.coords.latitude)
@@ -4666,154 +4820,5 @@ function toggleToast() {
 			});
 		}
 	/***************************End Alert*****************************************************/
- var app = {
-    // Application Constructor
-    initialize: function() {
-        this.bindEvents();
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-       // app.receivedEvent('deviceready');
-       navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
-    },
-
-    onSuccess: function(position){
-         var longitude = position.coords.longitude;
-        var latitude = position.coords.latitude;
-        var latLong = new google.maps.LatLng(latitude, longitude);
-     var parsLat =    parseFloat(localStorage.getItem('changeLat'));
-     var parsLong =    parseFloat(localStorage.getItem('changeLng'));
-         /*
-        var mapOptions = {
-            center: latLong,
-            zoom: 13,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-
-        var map = new google.maps.Map(document.getElementById("map_canvas_address"), mapOptions);
-	
-        var marker = new google.maps.Marker({
-              position: latLong,
-              map: map,
-              title: 'my location'
-          });
-        */
-        var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {lat:parsLat, lng: parsLong},
-            zoom: 13,
-            mapTypeId: 'roadmap',
-            mapTypeControl: true,
-            fullscreenControl:false,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.LEFT_TOP
-            },
-
-        });
-        var input = document.getElementById('search_address_geo');
-        var latlngbounds = new google.maps.LatLngBounds();
-
-
-    var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-    // Bias the SearchBox results towards current map's viewport.
-    map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-    });
-    markers= [];
-    markers.push(new google.maps.Marker({
-        map: map,
-        position: new google.maps.LatLng( parsLat,parsLong),
-    }));
-        marker.setMap(map);
-
-    // Listen for the event fired when the user selects a prediction and retrieve
-    // more details for that place.
-    searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
-
-        if (places.length == 0) {
-            return;
-        }
-
-        // Clear out the old markers.
-        markers.forEach(function(marker) {
-            marker.setMap(null);
-        });
-        markers = [];
-
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-       
-
-        places.forEach(function(place) {
-           
-            if (!place.geometry) {
-          
-                return;
-            }
-            var icon = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            localStorage.removeItem('changeLat')
-            localStorage.removeItem('changeLng')
-            localStorage.setItem('changeLat',place.geometry.location.lat())
-            localStorage.setItem('changeLng',place.geometry.location.lng())
-            markers.push(new google.maps.Marker({
-                map: map,
-                title: place.name,
-                position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport) {
-                // Only geocodes have viewport.
-                bounds.union(place.geometry.viewport);
-            } else {
-                bounds.extend(place.geometry.location);
-            }
-        });
-        map.fitBounds(bounds);
-    });
-    google.maps.event.addListener(map, 'click', function (e) {
-        console.log('e',e);
-         localStorage.removeItem('changeLat')
-        localStorage.removeItem('changeLng')
-        localStorage.setItem('changeLat',e.latLng.lat())
-        localStorage.setItem('changeLng',e.latLng.lng())
-           parsLat =    parseFloat(localStorage.getItem('changeLat'));
-       parsLong =    parseFloat(localStorage.getItem('changeLng'));
-        markers.forEach(function(marker) {
-            marker.setMap(null);
-        });
-        markers= [];
-        markers.push(new google.maps.Marker({
-            map: map,
-            position: new google.maps.LatLng(parsLat,parsLong),
-        }));
-    });
  
-        
-    },
-    
-    onError: function(error){
-        alert("the code is " + error.code + ". \n" + "message: " + error.message);
-    },
-};
 
