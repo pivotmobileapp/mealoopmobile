@@ -2893,19 +2893,37 @@ var app = {
     },
 
     onSuccess: function(position){
-         var longitude; 
-        var latitude;
-     
-    
-                longitude = position.coords.longitude;
-                latitude = position.coords.latitude;
-        
+         var longitude = position.coords.longitude;
+        var latitude = position.coords.latitude;
         var latLong = new google.maps.LatLng(latitude, longitude);
-
-        var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
-            center: {lat:  latitude, lng: longitude},
+     var parsLat =    parseFloat(localStorage.getItem('changeLat'));
+     var parsLong =    parseFloat(localStorage.getItem('changeLng'));
+         /*
+        var mapOptions = {
+            center: latLong,
             zoom: 13,
-            mapTypeId: 'roadmap'
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map_canvas_address"), mapOptions);
+	
+        var marker = new google.maps.Marker({
+              position: latLong,
+              map: map,
+              title: 'my location'
+          });
+        */
+        var map = new google.maps.Map(document.getElementById('map_canvas_address'), {
+            center: {lat:parsLat, lng: parsLong},
+            zoom: 13,
+            mapTypeId: 'roadmap',
+            mapTypeControl: true,
+            fullscreenControl:false,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+
         });
         var input = document.getElementById('search_address_geo');
         var latlngbounds = new google.maps.LatLngBounds();
@@ -2921,8 +2939,9 @@ var app = {
     markers= [];
     markers.push(new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng( latitude, longitude),
+        position: new google.maps.LatLng( parsLat,parsLong),
     }));
+      
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {
@@ -2957,10 +2976,10 @@ var app = {
             };
 
             // Create a marker for each place.
-            sessionStorage.removeItem('changeLat')
-            sessionStorage.removeItem('changeLng')
-            sessionStorage.setItem('changeLat',place.geometry.location.lat())
-            sessionStorage.setItem('changeLng',place.geometry.location.lng())
+            localStorage.removeItem('changeLat')
+            localStorage.removeItem('changeLng')
+            localStorage.setItem('changeLat',place.geometry.location.lat())
+            localStorage.setItem('changeLng',place.geometry.location.lng())
             markers.push(new google.maps.Marker({
                 map: map,
                 title: place.name,
@@ -2976,24 +2995,30 @@ var app = {
         });
         map.fitBounds(bounds);
     });
-    google.maps.event.addListener(map, 'click', function (e) {
+  
+        
+        
+        
+        google.maps.event.addListener(map, 'click', function (e) {
         console.log('e',e);
-         sessionStorage.removeItem('changeLat')
-        sessionStorage.removeItem('changeLng')
-        sessionStorage.setItem('changeLat',e.latLng.lat())
-        sessionStorage.setItem('changeLng',e.latLng.lng())
+         localStorage.removeItem('changeLat')
+        localStorage.removeItem('changeLng')
+        localStorage.setItem('changeLat',e.latLng.lat())
+        localStorage.setItem('changeLng',e.latLng.lng())
+           parsLat =    parseFloat(localStorage.getItem('changeLat'));
+       parsLong =    parseFloat(localStorage.getItem('changeLng'));
         markers.forEach(function(marker) {
             marker.setMap(null);
         });
         markers= [];
         markers.push(new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng( parseFloat(sessionStorage.getItem("changeLat")), parseFloat(sessionStorage.getItem("changeLng"))),
+            position: new google.maps.LatLng(parsLat,parsLong),
         }));
     });
  
         
-    },
+    }
     
     onError: function(error){
         alert("the code is " + error.code + ". \n" + "message: " + error.message);
